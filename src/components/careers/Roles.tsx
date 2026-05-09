@@ -4,49 +4,16 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FadeInView } from "@/components/animations/FadeInView";
 
-type Role = {
-  title: string;
-  location: string;
-  type: string;
-  level: string;
-  tags: string[];
-  summary: string;
-  href: string;
-};
+import { roles as roleData } from "@/data/roles";
 
-// MOCK DATA - replace with real openings
-const roles: Role[] = [
-  {
-    title: "Founding ML Engineer",
-    location: "Hybrid · London",
-    type: "Full-time",
-    level: "Senior",
-    tags: ["Vision models", "RL", "Zero-shot"],
-    summary:
-      "Train and deploy vision-driven agents that explore unfamiliar games end to end.",
-    href: "/careers/founding-ml-engineer",
-  },
-  {
-    title: "Founding Software Engineer",
-    location: "Hybrid · London",
-    type: "Full-time",
-    level: "Senior",
-    tags: ["Distributed systems", "Game integrations", "TypeScript"],
-    summary:
-      "Build the systems that turn raw game inputs into actionable test results at scale.",
-    href: "/careers/founding-software-engineer",
-  },
-  {
-    title: "Research Engineer",
-    location: "Hybrid · London",
-    type: "Full-time",
-    level: "Mid / Senior",
-    tags: ["Agents", "World models", "Eval design"],
-    summary:
-      "Push the frontier of zero-shot agent behaviour in interactive 3D worlds.",
-    href: "/careers/research-engineer",
-  },
-];
+const roles = roleData.map((r) => ({
+  title: r.title,
+  location: `Hybrid · ${r.location.replace(" (Hybrid)", "").replace(", UK", "")}`,
+  type: r.type,
+  tags: r.tags,
+  summary: r.summary,
+  href: `/careers/${r.slug}`,
+}));
 
 export function Roles() {
   return (
@@ -102,9 +69,6 @@ export function Roles() {
                     </span>
                     <span className="rounded-full border border-white/[0.08] px-2.5 py-0.5">
                       {role.type}
-                    </span>
-                    <span className="rounded-full border border-primary/30 bg-primary/[0.05] px-2.5 py-0.5 text-primary">
-                      {role.level}
                     </span>
                   </div>
 

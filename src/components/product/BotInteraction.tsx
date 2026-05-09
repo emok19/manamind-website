@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { FadeInView } from "@/components/animations/FadeInView";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { CTAButton } from "@/components/shared/CTAButton";
+import { BugReportModal } from "@/components/product/BugReportModal";
 
 const pipeline = [
   {
@@ -142,6 +142,7 @@ function PipelineStep({
 export function BotInteraction() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [reportOpen, setReportOpen] = useState(false);
 
   return (
     <section ref={ref} className="border-t border-white/5 bg-bg-card py-24 md:py-32">
@@ -180,11 +181,19 @@ export function BotInteraction() {
               </span>
             </div>
             <div className="mt-8">
-              <CTAButton href="/contact">View a Sample Bug Report</CTAButton>
+              <button
+                type="button"
+                onClick={() => setReportOpen(true)}
+                className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-background transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,150,0.3)]"
+              >
+                View a Sample Bug Report
+              </button>
             </div>
           </div>
         </FadeInView>
       </div>
+
+      <BugReportModal open={reportOpen} onClose={() => setReportOpen(false)} />
     </section>
   );
 }

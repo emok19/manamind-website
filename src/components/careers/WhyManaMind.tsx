@@ -22,6 +22,12 @@ export function WhyManaMind() {
             <h2 className="font-mono text-3xl font-bold uppercase tracking-tight text-primary md:text-4xl">
               {`// WHY_MANAMIND`}
             </h2>
+            <p className="mt-6 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              Bring sci-fi into reality
+            </p>
+            <p className="mt-3 text-sm text-text-muted md:text-base">
+              Work on the kind of technology you grew up dreaming about.
+            </p>
           </div>
         </FadeInView>
 
@@ -40,7 +46,7 @@ export function WhyManaMind() {
               <span className="shrink-0 font-mono text-sm font-bold text-primary/50 transition-colors duration-300 group-hover:text-primary">
                 0{i + 1}
               </span>
-              <p className="text-base font-medium leading-snug text-foreground transition-transform duration-300 group-hover:translate-x-1 md:text-lg">
+              <p className="text-sm font-medium leading-snug text-foreground transition-transform duration-300 group-hover:translate-x-1 md:text-base">
                 {reason}
               </p>
             </motion.div>

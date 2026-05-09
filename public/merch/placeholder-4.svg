@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="g4" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#F59E0B" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="#1e0d26"/>
+  <rect width="800" height="600" fill="url(#g4)"/>
+  <g opacity="0.5">
+    <rect x="320" y="220" width="160" height="160" rx="14" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="4 6"/>
+    <path d="M360 280 L380 320 L420 260 L440 340" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="400" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#F59E0B" text-anchor="middle" font-weight="700" letter-spacing="3">MERCH PHOTO 04</text>
+  <text x="400" y="455" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#9CA3AF" text-anchor="middle" letter-spacing="2">PLACEHOLDER · REPLACE LATER</text>
+</svg>

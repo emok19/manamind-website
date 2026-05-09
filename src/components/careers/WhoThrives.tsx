@@ -21,12 +21,12 @@ export function WhoThrives() {
           {/* Left: heading column */}
           <FadeInView>
             <div className="md:sticky md:top-24">
-              <span className="mb-4 inline-block font-mono text-[10px] font-bold uppercase tracking-widest text-primary">
+              <h2 className="font-mono text-3xl font-bold uppercase tracking-tight text-primary md:text-4xl">
                 {`// WHO_THRIVES_HERE`}
-              </span>
-              <h2 className="text-3xl font-bold leading-tight text-foreground md:text-5xl">
-                You&rsquo;ll feel at home if you<span className="text-primary">...</span>
               </h2>
+              <p className="mt-6 text-2xl font-bold leading-tight tracking-tight text-foreground md:text-3xl">
+                You&rsquo;ll feel at home if you<span className="text-primary">...</span>
+              </p>
               <p className="mt-6 text-base leading-relaxed text-text-muted">
                 We&rsquo;re not looking for everyone. We&rsquo;re looking for
                 the few who recognise themselves in this list.
