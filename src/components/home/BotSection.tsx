@@ -172,10 +172,8 @@ function BotCard({ bot, onOpen }: { bot: BotWithTeam; onOpen: () => void }) {
 
       {/* 3D model */}
       <div
-        className="relative aspect-square overflow-hidden border-b border-white/[0.06] bg-[#0D0515]"
-        style={{
-          background: `radial-gradient(circle at 50% 40%, ${bot.color}22 0%, #0D0515 70%)`,
-        }}
+        className="relative aspect-square overflow-hidden border-b border-white/[0.06]"
+        style={{ background: "#3D1F4A" }}
       >
         <div className="pointer-events-none absolute inset-0 z-10 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.015)_2px,rgba(255,255,255,0.015)_4px)]" />
         {visible && bot.model ? (
@@ -268,9 +266,7 @@ function BotModal({ bot, onClose }: { bot: BotWithTeam | null; onClose: () => vo
               {/* 3D model panel */}
               <div
                 className="relative flex aspect-square min-h-[280px] items-center justify-center overflow-hidden border-b border-white/[0.06] md:aspect-auto md:border-b-0 md:border-r"
-                style={{
-                  background: `radial-gradient(circle at 50% 40%, ${bot.color}26 0%, #0D0515 70%)`,
-                }}
+                style={{ background: "#3D1F4A" }}
               >
                 <div className="pointer-events-none absolute inset-0 z-10 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.02)_2px,rgba(255,255,255,0.02)_4px)]" />
                 {bot.model ? (

@@ -1,5 +1,25 @@
-import { StubPage } from "@/components/layout/StubPage";
+import { CareersHero } from "@/components/careers/CareersHero";
+import { WhyManaMind } from "@/components/careers/WhyManaMind";
+import { HowWeWork } from "@/components/careers/HowWeWork";
+import { Roles } from "@/components/careers/Roles";
+import { WhoThrives } from "@/components/careers/WhoThrives";
+import { Perks } from "@/components/careers/Perks";
+
+export const metadata = {
+  title: "Careers | ManaMind",
+  description:
+    "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
+};
 
 export default function CareersPage() {
-  return <StubPage title="Careers" description="Join us and build the most fun company to work at." />;
+  return (
+    <>
+      <CareersHero />
+      <WhyManaMind />
+      <HowWeWork />
+      <Roles />
+      <WhoThrives />
+      <Perks />
+    </>
+  );
 }

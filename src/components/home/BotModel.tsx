@@ -12,7 +12,7 @@ function centerAndScale(object: THREE.Object3D) {
   const center = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
   const maxDim = Math.max(size.x, size.y, size.z);
-  const scale = 1.3 / maxDim;
+  const scale = 1.7 / maxDim;
   object.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
   object.scale.setScalar(scale);
 }
@@ -32,8 +32,11 @@ function ObjModel({ modelPath, objFile, pngFile }: { modelPath: string; objFile:
       if (child instanceof THREE.Mesh) {
         child.material = new THREE.MeshStandardMaterial({
           map: texture,
-          metalness: 0.2,
-          roughness: 0.6,
+          emissiveMap: texture,
+          emissive: new THREE.Color(0xffffff),
+          emissiveIntensity: 0.65,
+          metalness: 0.1,
+          roughness: 0.7,
         });
       }
     });
@@ -78,6 +81,11 @@ function GlbModel({ modelPath, glbFile }: { modelPath: string; glbFile: string }
         if (mat.map) {
           mat.map = mat.map.clone();
           mat.map.colorSpace = THREE.SRGBColorSpace;
+          mat.emissiveMap = mat.map;
+          mat.emissive = new THREE.Color(0xffffff);
+          mat.emissiveIntensity = 0.65;
+          mat.metalness = 0.1;
+          mat.roughness = 0.7;
           mat.needsUpdate = true;
         }
       }

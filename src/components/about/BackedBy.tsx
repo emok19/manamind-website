@@ -8,6 +8,7 @@ import { INVESTORS, PARTNERS, PRESS_MENTIONS } from "@/lib/constants";
 function PressMarquee() {
   const articles = PRESS_MENTIONS.filter((p) => p.type === "article");
   const podcasts = PRESS_MENTIONS.filter((p) => p.type === "podcast");
+  const mentions = PRESS_MENTIONS.filter((p) => p.type === "mention");
 
   return (
     <div className="space-y-14">
@@ -108,6 +109,47 @@ function PressMarquee() {
           ))}
         </div>
       </div>
+
+      {/* More coverage, compact text-only cards */}
+      {mentions.length > 0 && (
+        <div>
+          <h3 className="mb-5 text-center font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+            More coverage
+          </h3>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {mentions.map((item, i) => (
+              <motion.a
+                key={item.url}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.05 + i * 0.04 }}
+                className="group flex flex-col justify-between gap-3 rounded-xl border border-white/[0.07] bg-white/[0.02] p-5 transition-all duration-300 hover:border-primary/30 hover:bg-white/[0.04]"
+              >
+                <div>
+                  {item.source && (
+                    <p className="mb-2 font-mono text-[10px] font-bold uppercase tracking-widest text-primary/60">
+                      {item.source}
+                    </p>
+                  )}
+                  <p className="line-clamp-3 text-sm font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
+                    {item.title}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-text-muted transition-colors group-hover:text-primary">
+                  Read
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3 w-3 transition-transform group-hover:translate-x-0.5">
+                    <path d="M7 17L17 7M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

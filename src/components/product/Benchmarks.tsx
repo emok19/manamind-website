@@ -98,6 +98,7 @@ export function Benchmarks() {
           <SectionHeading
             label="Performance Benchmarks"
             title="Results that speak for themselves"
+            description="Faster testing, broader coverage, and higher bug capture rates"
           />
         </FadeInView>
 

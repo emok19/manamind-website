@@ -26,7 +26,7 @@ export const PARTNERS: Array<{ name: string; logo: string | null; scale?: number
 
 export type PressMention = {
   title: string;
-  type: "article" | "podcast";
+  type: "article" | "podcast" | "mention";
   url: string;
   source?: string;
   thumbnail?: string;
@@ -67,6 +67,48 @@ export const PRESS_MENTIONS: PressMention[] = [
     source: "Tech Finds Tech Podcast",
     url: "https://www.youtube.com/watch?v=QCSOwrarwFU&t=3s",
     thumbnail: "/press/tech-finds-tech-podcast.jpg",
+  },
+  {
+    title: "ManaMind Raises $1.5M Pre-Seed",
+    type: "mention",
+    source: "The SaaS News",
+    url: "https://www.thesaasnews.com/news/manamind-raises-1-5m-pre-seed",
+  },
+  {
+    title: "AI Game Testing Startup ManaMind Lands €1.2 Million to Automate Quality Assurance",
+    type: "mention",
+    source: "EU-Startups",
+    url: "https://www.eu-startups.com/2026/04/ai-game-testing-startup-manamind-lands-e1-2-million-to-automate-quality-assurance/",
+  },
+  {
+    title: "ManaMind secures $1.5M to develop autonomous testing for gaming",
+    type: "mention",
+    source: "Tech.eu",
+    url: "https://tech.eu/2026/04/30/manamind-secures-15m-to-develop-autonomous-testing-for-gaming/",
+  },
+  {
+    title: "ManaMind raises $1.5M pre-seed led by Sure Valley to scale AI agents for game QA",
+    type: "mention",
+    source: "Tech Funding News",
+    url: "https://techfundingnews.com/manamind-1-5m-pre-seed-sure-valley-game-qa-ai-agents/",
+  },
+  {
+    title: "If Rockstar had ManaMind, we'd be on GTA 10",
+    type: "mention",
+    source: "Jesse Heasman on LinkedIn",
+    url: "https://www.linkedin.com/posts/jesseheasman_if-rockstar-had-manamind-wed-be-on-gta-10-ugcPost-7455550801319702528-MVyV/",
+  },
+  {
+    title: "ManaMind Pre-Seed",
+    type: "mention",
+    source: "Soapbox VC",
+    url: "https://www.soapbox.vc/feed/manamind-pre-seed",
+  },
+  {
+    title: "ManaMind Raises $1.5M to Build AI Game Testing Platform",
+    type: "mention",
+    source: "StartupRise",
+    url: "https://startuprise.co.uk/manamind-raises-1-5m-to-build-ai-game-testing-platform/",
   },
 ];
 

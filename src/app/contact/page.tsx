@@ -1,5 +1,17 @@
-import { StubPage } from "@/components/layout/StubPage";
+import { ContactHero } from "@/components/contact/ContactHero";
+import { ContactConsole } from "@/components/contact/ContactConsole";
+
+export const metadata = {
+  title: "Contact | ManaMind",
+  description:
+    "Get in touch with the ManaMind team about studios, partnerships, press, or general enquiries.",
+};
 
 export default function ContactPage() {
-  return <StubPage title="Contact" description="Get in touch - we'd love to hear from you." />;
+  return (
+    <>
+      <ContactHero />
+      <ContactConsole />
+    </>
+  );
 }
