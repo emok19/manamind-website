@@ -1,6 +1,6 @@
 ---
 order: 3
-title: Founder's Associate
+title: Founder's
 location: London, UK (Hybrid)
 type: Full-time
 tags:
