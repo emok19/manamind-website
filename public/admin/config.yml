@@ -4,9 +4,10 @@
 
 backend:
   name: github
-  repo: OWNER/REPO # TODO: set to Emil's repo, e.g. manamind/manamind-redesign
-  branch: main
-  base_url: https://AUTH-WORKER-URL # TODO: Sveltia OAuth worker URL (see HANDOFF below)
+  # Staging on Aniket's account. At handoff, change to Emil's repo.
+  repo: writetoaniketparihar-collab/-manamind-redesign
+  branch: master
+  base_url: https://manamind-cms-auth.emil-fee.workers.dev
 
 # Lets you edit local files at http://localhost:3000/admin during development,
 # no GitHub auth needed (Chrome/Edge, via the File System Access API).
