@@ -145,7 +145,7 @@ export function BotInteraction() {
   const [reportOpen, setReportOpen] = useState(false);
 
   return (
-    <section ref={ref} className="border-t border-white/5 bg-bg-card py-24 md:py-32">
+    <section id="how-it-works" ref={ref} className="border-t border-white/5 bg-bg-card py-24 md:py-32 scroll-mt-20">
       <div className="mx-auto max-w-7xl px-6">
         <FadeInView>
           <SectionHeading

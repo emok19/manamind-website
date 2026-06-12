@@ -1,35 +1,63 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import * as Flags from "country-flag-icons/react/3x2";
 import type { CaseStudy } from "@/data/case-studies";
 import { PlatformIcon } from "./PlatformIcon";
 
-function FlagBadge({ code }: { code: string }) {
+function FlagBadge({ code, name }: { code: string; name: string }) {
   const Flag = (Flags as Record<string, React.ComponentType<{ title?: string; className?: string }>>)[code.toUpperCase()];
   if (!Flag) return null;
   return (
     <span
       className="inline-flex h-4 w-6 overflow-hidden rounded-sm ring-1 ring-white/10"
-      aria-hidden
+      title={name}
+      aria-label={name}
     >
       <Flag className="h-full w-full object-cover" />
     </span>
   );
 }
 
-function StudioBadge({ initials, accent }: { initials: string; accent: string }) {
+function StudioAttribution({
+  initials,
+  accent,
+  logo,
+  name,
+}: {
+  initials: string;
+  accent: string;
+  logo?: string;
+  name: string;
+}) {
+  if (logo) {
+    return (
+      <Image
+        src={logo}
+        alt={`${name} logo`}
+        width={160}
+        height={32}
+        className="h-7 w-auto object-contain"
+      />
+    );
+  }
   return (
-    <div
-      className="flex h-12 w-12 items-center justify-center rounded-xl border text-base font-bold"
-      style={{
-        backgroundColor: `${accent}10`,
-        borderColor: `${accent}40`,
-        color: accent,
-      }}
-    >
-      {initials}
+    <div className="flex items-center gap-2">
+      <span
+        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border text-[10px] font-bold"
+        style={{
+          backgroundColor: `${accent}10`,
+          borderColor: `${accent}40`,
+          color: accent,
+        }}
+      >
+        {initials}
+      </span>
+      <p className="truncate text-xs font-semibold uppercase tracking-widest text-foreground">
+        {name}
+      </p>
     </div>
   );
 }
@@ -52,12 +80,12 @@ export function CaseStudyCard({
         href={`/case-studies/${study.slug}`}
         className="group relative block h-full overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_0_40px_rgba(0,255,150,0.08)]"
       >
-        {/* Top status bar - mimics a test session header */}
+        {/* Minimal status bar */}
         <div className="flex items-center justify-between border-b border-white/5 bg-black/20 px-5 py-2.5">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,255,150,0.6)]" />
             <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted">
-              Session // {study.game.codename}
+              Live session
             </span>
           </div>
           <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted/70">
@@ -66,43 +94,73 @@ export function CaseStudyCard({
         </div>
 
         <div className="p-6">
-          {/* Studio + Game */}
-          <div className="flex items-start gap-4">
-            <StudioBadge initials={study.studio.initials} accent={study.studio.accent} />
-            <div className="min-w-0 flex-1">
-              <p className="text-xs uppercase tracking-widest text-text-muted">
-                {study.studio.name}
-              </p>
-              <h3 className="mt-1 truncate text-xl font-bold text-foreground transition-colors group-hover:text-primary">
-                {study.game.title}
-              </h3>
-            </div>
-            <FlagBadge code={study.country.code} />
+          {/* Studio + flag */}
+          <div className="flex min-h-[28px] items-center justify-between gap-3">
+            <StudioAttribution
+              initials={study.studio.initials}
+              accent={study.studio.accent}
+              logo={study.studio.logo}
+              name={study.studio.name}
+            />
+            <FlagBadge code={study.country.code} name={study.country.name} />
           </div>
 
-          {/* Tags */}
-          <div className="mt-5 flex flex-wrap gap-1.5">
+          {/* Game logo / title block */}
+          <div className="mt-5 flex h-32 items-center justify-center rounded-xl border border-white/10 bg-black/40 px-5 py-4">
+            {study.game.logo ? (
+              <Image
+                src={study.game.logo}
+                alt={`${study.game.title} logo`}
+                width={320}
+                height={128}
+                className="max-h-full w-auto object-contain"
+              />
+            ) : (
+              <div className="text-center">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-text-muted">
+                  {study.game.codename}
+                </p>
+                <p
+                  className="mt-1.5 text-2xl font-bold leading-tight"
+                  style={{ color: study.studio.accent }}
+                >
+                  {study.game.title}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Genres + platforms */}
+          <div className="mt-4 flex flex-wrap items-center gap-1.5">
+            {study.genres.map((g) => (
+              <span
+                key={g}
+                className="inline-flex items-center rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-text-muted"
+              >
+                {g}
+              </span>
+            ))}
+            {study.genres.length > 0 && (
+              <span className="mx-1 h-3 w-px bg-white/10" aria-hidden />
+            )}
             {study.platforms.map((p) => (
               <span
                 key={p}
                 className="inline-flex items-center justify-center rounded-md border border-white/10 bg-white/[0.03] p-1.5"
                 title={p}
               >
-                <PlatformIcon
-                  platform={p}
-                  className={`h-4 w-4 ${p === "Android" ? "text-[#3DDC84]" : "text-white"}`}
-                />
+                <PlatformIcon platform={p} className="h-4 w-4 text-white" />
               </span>
             ))}
           </div>
 
           {/* Challenge */}
-          <p className="mt-5 text-sm leading-relaxed text-text-muted">
+          <p className="mt-4 text-sm leading-relaxed text-text-muted">
             {study.challengeOneLiner}
           </p>
 
           {/* Metric block */}
-          <div className="mt-6 rounded-xl border border-white/10 bg-black/20 p-4">
+          <div className="mt-5 rounded-xl border border-white/10 bg-black/20 p-4">
             <p className="text-[10px] font-semibold uppercase tracking-widest text-text-muted">
               Headline result
             </p>
@@ -117,7 +175,7 @@ export function CaseStudyCard({
             </p>
           </div>
 
-          {/* CTA hint */}
+          {/* CTA */}
           <div className="mt-5 flex items-center justify-between">
             <span className="text-xs font-medium text-text-muted">
               Read the dossier

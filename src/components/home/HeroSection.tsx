@@ -32,7 +32,7 @@ export function HeroSection() {
           className="mt-10 flex flex-wrap gap-4"
         >
           <CTAButton href="/contact">Request Demo</CTAButton>
-          <CTAButton href="/how-it-works" variant="outline">
+          <CTAButton href="#how-it-works" variant="outline">
             See How It Works
           </CTAButton>
         </motion.div>

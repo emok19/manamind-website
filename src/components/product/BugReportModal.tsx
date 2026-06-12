@@ -294,15 +294,59 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                 {/* Section 5 */}
                 <Section number="5" title="Evidence & Attachments">
                   <div className="overflow-hidden rounded-xl border border-white/[0.07]">
-                    {attachments.map((a, i) => (
-                      <KeyValue
-                        key={a.label}
-                        label={a.label}
-                        value={a.value}
-                        mono
-                        borderBottom={i < attachments.length - 1}
-                      />
-                    ))}
+                    <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 border-b border-white/[0.05] px-4 py-3">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-text-muted/70">
+                        Screenshot / Frame
+                      </span>
+                      <div className="flex items-center justify-center overflow-hidden rounded-md border border-white/[0.07] bg-black/40 p-2">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src="/bug-report-frame.jpeg"
+                          alt="Captured frame showing the player character's arm clipping through the face during the combat pose."
+                          className="block max-h-[320px] w-auto rounded"
+                        />
+                      </div>
+                    </div>
+                    <KeyValue
+                      label={attachments[1].label}
+                      value={attachments[1].value}
+                      mono
+                      borderBottom
+                    />
+                    <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 px-4 py-3">
+                      <span className="text-[10px] font-semibold uppercase tracking-widest text-text-muted/70">
+                        Log File
+                      </span>
+                      <a
+                        href="/OV-TITAN-MOB-220426-023_player_model_clipping_detailed.log"
+                        download
+                        className="group flex items-center gap-3 rounded-lg border border-white/[0.07] bg-white/[0.02] p-3 transition-colors hover:border-white/15 hover:bg-white/[0.04]"
+                      >
+                        <span
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md"
+                          style={{ backgroundColor: `${ACCENT}18`, color: ACCENT }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 1H3.5C2.67 1 2 1.67 2 2.5v11c0 .83.67 1.5 1.5 1.5h9c.83 0 1.5-.67 1.5-1.5V6L9 1z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                            <path d="M9 1v5h5" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                            <path d="M5.5 9.5h5M5.5 12h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                          </svg>
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate font-mono text-[12px] text-foreground/90">
+                            OV-TITAN-MOB-220426-023_player_model_clipping_detailed.log
+                          </p>
+                          <p className="mt-0.5 text-[11px] text-text-muted/70">
+                            5.3 KB · session log · timestamp 00:02:21.481–00:02:29.903
+                          </p>
+                        </div>
+                        <span className="shrink-0 text-text-muted transition-colors group-hover:text-foreground">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 2v9M4 8l4 4 4-4M3 14h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </span>
+                      </a>
+                    </div>
                   </div>
                 </Section>
 

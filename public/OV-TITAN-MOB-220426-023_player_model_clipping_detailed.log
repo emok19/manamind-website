@@ -1,0 +1,131 @@
+ManaMind Command Centre
+Overseer Session Log Reference
+Generated for Bug Report Evidence
+
+Report ID: BR-2026-0019
+Session ID: OV-TITAN-MOB-220426-023
+Bot: Overseer
+Analysis Mode: Active gameplay observation + frame-by-frame screenshot review
+Project: Project Titan
+Platform: Mobile
+Environment: Staging
+Build Number: 2026.04.21-rc2
+Scene: combat scene
+Issue Classification: Visual / Rendering | Geometry / Clipping | Animation
+Reference String: session OV-TITAN-MOB-220426-023 | combat scene | player model clipping
+
+----------------------------------------------------------------------
+SESSION SUMMARY
+----------------------------------------------------------------------
+Overseer agent entered a live combat encounter and monitored the player
+character, enemy state, HUD elements, and pose transitions across the scene.
+During combat-state observation, the agent detected a character model anomaly
+in which the player avatar's raised forearm/hand intersected the face region.
+The issue was persistent within the observed frame and visually inconsistent
+with expected skeletal alignment for the active animation pose.
+
+----------------------------------------------------------------------
+STEP-BY-STEP AGENT PLAY / OBSERVATION LOG
+----------------------------------------------------------------------
+
+[00:00:00.000] SESSION_START
+Agent initialized gameplay session in staging environment.
+Device profile loaded: Mobile portrait capture.
+Visual analysis layers enabled: HUD read, character pose tracking, scene anomaly detection.
+
+[00:00:02.184] NAVIGATION
+Agent entered cave-themed combat map.
+Background scene registered successfully.
+No blocking UI overlays detected.
+
+[00:00:04.009] HUD_SCAN
+Top-center round indicator detected: "Rodada 3 de 3".
+Top-left status area detected: "Bloqueado!" with counter value "0".
+Top-right collectible counter detected: "17 Coletado".
+
+[00:00:05.442] ENTITY_ACQUISITION
+Player entity identified in central foreground.
+Enemy entity identified on right side of combat field.
+Enemy metadata detected: "Nv.10" with health bar value "28/77".
+
+[00:00:06.381] GAMEPLAY_STATE_EVALUATION
+Combat scene appears active.
+Enemy remains alive.
+No victory overlay, defeat overlay, or transition banner visible.
+Agent continues observing character pose fidelity and combat presentation.
+
+[00:00:07.126] PLAYER_POSE_ANALYSIS
+Player avatar enters raised-arm combat/idle pose.
+Head, hood, shoulders, torso, and right-arm silhouette extracted for overlap analysis.
+Initial pose confidence: stable.
+Arm-to-head spacing appears narrower than expected.
+
+[00:00:07.388] FRAME_REVIEW
+Agent performs closer visual pass on upper-body mesh alignment.
+Forearm trajectory crosses face plane.
+Hand/arm geometry appears to intersect facial region rather than resting in front of it.
+Occlusion relationship inconsistent with intended layered anatomy.
+
+[00:00:07.611] ANOMALY_CANDIDATE_FLAGGED
+Candidate issue detected: possible character arm clipping through face/head.
+Trigger reason:
+  - arm silhouette overlaps facial line
+  - overlap exceeds natural animation contact threshold
+  - pose reads as mesh intersection, not perspective foreshortening
+
+[00:00:07.903] VALIDATION_PASS_1
+Agent verifies anomaly is not caused by HUD occlusion.
+Result: HUD elements are spatially separate from the player head/arm region.
+
+[00:00:08.110] VALIDATION_PASS_2
+Agent verifies anomaly is not caused by weapon, VFX, or foreground prop.
+Result: no independent object explains the overlap.
+
+[00:00:08.462] VALIDATION_PASS_3
+Agent compares visible arm contour against expected facial boundary.
+Result: arm mesh appears to pass into or through the face/hood area.
+
+[00:00:08.744] ISSUE_CONFIRMED
+Visual defect confirmed.
+Final classification:
+  - Character model clipping
+  - Upper-body animation / rigging issue
+  - Non-blocking but clearly visible during live combat presentation
+
+[00:00:09.005] PLAYER_IMPACT_ASSESSMENT
+Estimated gameplay impact: low mechanical impact, moderate presentation impact.
+Issue likely does not stop progression, but degrades perceived animation quality
+and reduces character visual polish during combat.
+
+[00:00:09.366] EVIDENCE_CAPTURE
+Agent marks frame for bug report attachment.
+Recommended evidence label: frame_arm_face_clipping.png
+Evidence focus region: player head, hood edge, raised forearm, hand position.
+
+[00:00:09.701] BUG_REPORT_DRAFT_SIGNAL
+Suggested title: "Player character arm clips through face during combat pose"
+Suggested severity: Minor
+Suggested confidence: 0.98
+
+[00:00:10.000] SESSION_END
+Combat screenshot analysis complete.
+Bug candidate exported for reporting workflow.
+
+----------------------------------------------------------------------
+STRUCTURED OBSERVATIONS
+----------------------------------------------------------------------
+Observation 1:
+The player character is centered on screen and clearly visible, allowing a clean
+view of torso, shoulders, neck, hood, and raised arm position.
+
+Observation 2:
+The raised arm does not appear to sit naturally in front of or beside the face.
+Instead, the forearm/hand region visually intersects the facial area.
+
+Observation 3:
+The overlap is consistent with clipping or rig misalignment rather than a
+normal stylized pose.
+
+Observation 4:
+The issue is presentation-facing and highly noticeable in a static screenshot,
+meaning it is likely to be even more apparent during animation playback.

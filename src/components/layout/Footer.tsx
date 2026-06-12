@@ -58,7 +58,7 @@ export function Footer() {
               <Image
                 src="/manamind-logo.png"
                 alt="ManaMind"
-                width={160}
+                width={179}
                 height={33}
               />
             </Link>
@@ -106,8 +106,13 @@ export function Footer() {
           ))}
         </div>
 
+        {/* Trademark notice */}
+        <p className="mt-12 text-xs text-text-muted">
+          MANAMIND&reg; is a registered trade mark of ManaMind Limited.
+        </p>
+
         {/* Bottom bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-text-muted sm:flex-row">
+        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-text-muted sm:flex-row">
           <p>&copy; 2024&ndash;{new Date().getFullYear()} ManaMind. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/terms" className="text-primary transition-colors hover:text-primary/80">
