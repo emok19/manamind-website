@@ -1,0 +1,222 @@
+# ManaMind CMS configuration (Sveltia CMS, Decap-compatible).
+# Edit content at /admin. Saving commits to the GitHub repo, which triggers a
+# Cloudflare Pages rebuild and republishes the site.
+
+backend:
+  name: github
+  repo: OWNER/REPO # TODO: set to Emil's repo, e.g. manamind/manamind-redesign
+  branch: main
+  base_url: https://AUTH-WORKER-URL # TODO: Sveltia OAuth worker URL (see HANDOFF below)
+
+# Lets you edit local files at http://localhost:3000/admin during development,
+# no GitHub auth needed (Chrome/Edge, via the File System Access API).
+local_backend: true
+
+site_url: https://manamind.ai
+
+# Default upload location for any field without its own media_folder.
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: case_studies
+    label: Case Studies
+    label_singular: Case Study
+    folder: content/case-studies
+    create: true
+    delete: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: challengeOneLiner
+    slug: "{{fields.studio.name}}-{{fields.game.title}}"
+    summary: "{{fields.studio.name}} - {{fields.game.title}}"
+    fields:
+      - { label: Display order, name: order, widget: number, required: false, value_type: int, default: 99 }
+      - label: Studio
+        name: studio
+        widget: object
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Initials, name: initials, widget: string, hint: "2-letter badge, e.g. IG" }
+          - { label: Accent colour, name: accent, widget: color, enableAlpha: false }
+          - { label: Logo, name: logo, widget: image, required: false, media_folder: "/public/case-studies", public_folder: "/case-studies" }
+      - label: Game
+        name: game
+        widget: object
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Codename, name: codename, widget: string }
+          - { label: Logo, name: logo, widget: image, required: false, media_folder: "/public/case-studies", public_folder: "/case-studies" }
+      - { label: Platforms, name: platforms, widget: select, multiple: true, options: [PC, PS5, Xbox Series, Switch, Mobile, Android, iOS, VR] }
+      - { label: Genres, name: genres, widget: list, required: false, field: { label: Genre, name: genre, widget: string } }
+      - label: Country
+        name: country
+        widget: object
+        fields:
+          - { label: Code, name: code, widget: string, hint: "ISO 2-letter, e.g. GB" }
+          - { label: Flag, name: flag, widget: string, hint: "ISO 2-letter, usually same as code" }
+          - { label: Name, name: name, widget: string }
+      - { label: Challenge one-liner, name: challengeOneLiner, widget: text }
+      - label: Headline metric
+        name: headlineMetric
+        widget: object
+        fields:
+          - { label: Value, name: value, widget: string, hint: "e.g. 5x" }
+          - { label: Label, name: label, widget: string }
+      - label: Snapshot
+        name: snapshot
+        widget: object
+        fields:
+          - { label: Type, name: type, widget: string }
+          - { label: Team size, name: teamSize, widget: string }
+          - { label: Stage, name: stage, widget: string }
+          - { label: Test window, name: testWindow, widget: string }
+      - label: Challenge
+        name: challenge
+        widget: object
+        fields:
+          - { label: Headline, name: headline, widget: string }
+          - { label: Problem, name: problem, widget: text }
+      - label: Deployment
+        name: deployment
+        widget: object
+        fields:
+          - { label: Headline, name: headline, widget: string }
+          - { label: Summary, name: summary, widget: text }
+          - { label: Sessions, name: sessions, widget: number, value_type: int }
+          - { label: Focus areas, name: focus, widget: list, field: { label: Focus, name: focus, widget: string } }
+      - label: Findings
+        name: findings
+        widget: list
+        label_singular: Finding
+        fields:
+          - { label: ID, name: id, widget: string, hint: "e.g. HOF-0001" }
+          - { label: Severity, name: severity, widget: select, options: [Critical, High, Medium, Low] }
+          - { label: Title, name: title, widget: string }
+          - { label: Summary, name: summary, widget: text }
+          - { label: Evidence, name: evidence, widget: select, options: [video, screenshot, log] }
+      - label: Results
+        name: results
+        widget: list
+        label_singular: Result
+        fields:
+          - { label: Metric, name: metric, widget: string }
+          - { label: Before, name: before, widget: string }
+          - { label: After, name: after, widget: string }
+          - { label: Delta, name: delta, widget: string }
+      - label: Quote
+        name: quote
+        widget: object
+        fields:
+          - { label: Body, name: body, widget: text }
+          - { label: Author, name: author, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Initials, name: initials, widget: string }
+
+  - name: roles
+    label: Careers / Roles
+    label_singular: Role
+    folder: content/roles
+    create: true
+    delete: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: title
+    fields:
+      - { label: Display order, name: order, widget: number, required: false, value_type: int, default: 99 }
+      - { label: Title, name: title, widget: string }
+      - { label: Location, name: location, widget: string, hint: "e.g. London, UK (Hybrid)" }
+      - { label: Type, name: type, widget: string, hint: "e.g. Full-time" }
+      - { label: Tags, name: tags, widget: list, field: { label: Tag, name: tag, widget: string } }
+      - { label: Summary, name: summary, widget: text }
+      - { label: Date, name: date, widget: string, hint: "e.g. Jan 2026" }
+      - { label: Hook questions, name: hookQuestions, widget: list, field: { label: Question, name: question, widget: text } }
+      - { label: About paragraphs, name: about, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+      - { label: Role paragraphs, name: roleParagraphs, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+      - label: Responsibilities
+        name: responsibilities
+        widget: list
+        label_singular: Responsibility
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: Body, name: body, widget: text }
+      - { label: Fit intro, name: fitIntro, widget: text }
+      - label: Fit boxes
+        name: fitBoxes
+        widget: list
+        label_singular: Fit box
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: Body, name: body, widget: text }
+      - label: Bonus
+        name: bonus
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: Body, name: body, widget: text }
+      - { label: Apply link, name: applyHref, widget: string, hint: "Google Form URL" }
+
+  - name: press
+    label: Press Mentions
+    label_singular: Press Mention
+    folder: content/press
+    create: true
+    delete: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: title
+    fields:
+      - { label: Display order, name: order, widget: number, required: false, value_type: int, default: 99 }
+      - { label: Title, name: title, widget: string }
+      - { label: Type, name: type, widget: select, options: [article, podcast, mention] }
+      - { label: URL, name: url, widget: string }
+      - { label: Source, name: source, widget: string, required: false }
+      - { label: Thumbnail, name: thumbnail, widget: image, required: false, media_folder: "/public/press", public_folder: "/press", hint: "Used for articles and podcasts; plain mentions can skip it." }
+
+  - name: investors
+    label: Investors
+    label_singular: Investor
+    folder: content/investors
+    create: true
+    delete: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: name
+    fields:
+      - { label: Display order, name: order, widget: number, required: false, value_type: int, default: 99 }
+      - { label: Name, name: name, widget: string }
+      - { label: Logo, name: logo, widget: image, required: false, media_folder: "/public/investors", public_folder: "/investors" }
+      - { label: Logo scale, name: scale, widget: number, required: false, value_type: float, hint: "Optional size multiplier, e.g. 1.25" }
+
+  - name: partners
+    label: Partners
+    label_singular: Partner
+    folder: content/partners
+    create: true
+    delete: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: name
+    fields:
+      - { label: Display order, name: order, widget: number, required: false, value_type: int, default: 99 }
+      - { label: Name, name: name, widget: string }
+      - { label: Logo, name: logo, widget: image, required: false, media_folder: "/public/partners", public_folder: "/partners" }
+      - { label: Logo scale, name: scale, widget: number, required: false, value_type: float, hint: "Optional size multiplier, e.g. 1.4" }
+
+  - name: team
+    label: Team Members
+    label_singular: Team Member
+    folder: content/team
+    create: true
+    delete: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: name
+    fields:
+      - { label: Display order, name: order, widget: number, required: false, value_type: int, default: 99 }
+      - { label: Name, name: name, widget: string }
+      - { label: Role, name: role, widget: string }
+      - { label: Photo, name: photo, widget: image, media_folder: "/public/team", public_folder: "/team" }
+      - { label: Bio, name: bio, widget: text, required: false }

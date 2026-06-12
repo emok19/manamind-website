@@ -8,21 +8,9 @@ export const NAV_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
-export const INVESTORS: Array<{ name: string; logo: string | null; scale?: number }> = [
-  { name: "EWOR", logo: "/investors/ewor.png", scale: 1 },
-  { name: "SVV", logo: "/investors/svv.png", scale: 1 },
-  { name: "Heartfelt Capital", logo: "/investors/heartfelt.png", scale: 1.25 },
-  { name: "Ascension", logo: "/investors/ascension.png", scale: 1.35 },
-  { name: "Syndicate Room", logo: "/investors/syndicate-room.png", scale: 2.2 },
-];
-
-export const PARTNERS: Array<{ name: string; logo: string | null; scale?: number }> = [
-  { name: "EWOR", logo: "/partners/ewor.svg", scale: 1 },
-  { name: "Microsoft for Startups", logo: "/partners/microsoft-for-startups.png", scale: 1 },
-  { name: "Nvidia Inception", logo: "/partners/nvidia-inception.svg", scale: 1.4 },
-  { name: "Google for Startups", logo: "/partners/google-for-startups.svg", scale: 1.15 },
-  { name: "UKIE", logo: "/partners/ukie.svg", scale: 1.1 },
-];
+// Investor/partner logos and press mentions now live as markdown in
+// content/investors, content/partners, and content/press, loaded at build time
+// by src/lib/content/backers.ts and src/lib/content/press.ts (editable via /admin).
 
 export type PressMention = {
   title: string;
@@ -31,86 +19,6 @@ export type PressMention = {
   source?: string;
   thumbnail?: string;
 };
-
-export const PRESS_MENTIONS: PressMention[] = [
-  {
-    title: "ManaMind Introduces Game-Playing AI To Test Titles In Production",
-    type: "article",
-    source: "Forbes",
-    url: "https://www.forbes.com/sites/charliefink/2025/11/17/manamind-introduces-game-playing-ai-to-test-titles-in-production/",
-    thumbnail: "/press/forbes-v2.webp",
-  },
-  {
-    title: "Emil Kostadinov and ManaMind's new generation of AI",
-    type: "article",
-    source: "Capital",
-    url: "https://kinsights.capital.bg/business/2026/02/16/4883084_emil_kostadinov_and_manaminds_new_generation_of_ai/",
-    thumbnail: "/press/capital.jpg",
-  },
-  {
-    title: "Creating the operating system for all future robots: Emil Kostadinov - CEO, Manamind",
-    type: "podcast",
-    source: "VENTURES with Viraj Acharya",
-    url: "https://www.youtube.com/watch?v=5mZhVkgOk7g&t=744s",
-    thumbnail: "/press/ventures-podcast.jpg",
-  },
-  {
-    title: "AI Agents That Play Video Games & Find Bugs | Startup Founder Story (Emil, ManaMind)",
-    type: "podcast",
-    source: "The Builder's Mind",
-    url: "https://www.youtube.com/watch?v=DwgZEKRGIDo",
-    thumbnail: "/press/builders-mind-podcast.jpg",
-  },
-  {
-    title: "The End of Manual QA: Automating Game Test with AI - ft. Emil Kostadinov | Founder & CEO, ManaMind",
-    type: "podcast",
-    source: "Tech Finds Tech Podcast",
-    url: "https://www.youtube.com/watch?v=QCSOwrarwFU&t=3s",
-    thumbnail: "/press/tech-finds-tech-podcast.jpg",
-  },
-  {
-    title: "ManaMind Raises $1.5M Pre-Seed",
-    type: "mention",
-    source: "The SaaS News",
-    url: "https://www.thesaasnews.com/news/manamind-raises-1-5m-pre-seed",
-  },
-  {
-    title: "AI Game Testing Startup ManaMind Lands €1.2 Million to Automate Quality Assurance",
-    type: "mention",
-    source: "EU-Startups",
-    url: "https://www.eu-startups.com/2026/04/ai-game-testing-startup-manamind-lands-e1-2-million-to-automate-quality-assurance/",
-  },
-  {
-    title: "ManaMind secures $1.5M to develop autonomous testing for gaming",
-    type: "mention",
-    source: "Tech.eu",
-    url: "https://tech.eu/2026/04/30/manamind-secures-15m-to-develop-autonomous-testing-for-gaming/",
-  },
-  {
-    title: "ManaMind raises $1.5M pre-seed led by Sure Valley to scale AI agents for game QA",
-    type: "mention",
-    source: "Tech Funding News",
-    url: "https://techfundingnews.com/manamind-1-5m-pre-seed-sure-valley-game-qa-ai-agents/",
-  },
-  {
-    title: "If Rockstar had ManaMind, we'd be on GTA 10",
-    type: "mention",
-    source: "Jesse Heasman on LinkedIn",
-    url: "https://www.linkedin.com/posts/jesseheasman_if-rockstar-had-manamind-wed-be-on-gta-10-ugcPost-7455550801319702528-MVyV/",
-  },
-  {
-    title: "ManaMind Pre-Seed",
-    type: "mention",
-    source: "Soapbox VC",
-    url: "https://www.soapbox.vc/feed/manamind-pre-seed",
-  },
-  {
-    title: "ManaMind Raises $1.5M to Build AI Game Testing Platform",
-    type: "mention",
-    source: "StartupRise",
-    url: "https://startuprise.co.uk/manamind-raises-1-5m-to-build-ai-game-testing-platform/",
-  },
-];
 
 export const BOTS = [
   {

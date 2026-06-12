@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { getRoleBySlug, roles } from "@/data/roles";
+import { getRoles, getRole } from "@/lib/content/roles";
 import { RoleDetail } from "@/components/careers/RoleDetail";
 
 export function generateStaticParams() {
-  return roles.map((r) => ({ slug: r.slug }));
+  return getRoles().map((r) => ({ slug: r.slug }));
 }
 
 export async function generateMetadata({
@@ -12,7 +12,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const role = getRoleBySlug(slug);
+  const role = getRole(slug);
   if (!role) return { title: "Role | ManaMind" };
   return {
     title: `${role.title} | ManaMind`,
@@ -26,7 +26,7 @@ export default async function RoleDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const role = getRoleBySlug(slug);
+  const role = getRole(slug);
   if (!role) notFound();
   return <RoleDetail role={role} />;
 }

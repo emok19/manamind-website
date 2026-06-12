@@ -1,6 +1,6 @@
 "use client";
 
-import { INVESTORS, PARTNERS } from "@/lib/constants";
+import type { Backer } from "@/lib/content/backers";
 import { FadeInView } from "@/components/animations/FadeInView";
 import { motion } from "framer-motion";
 
@@ -55,7 +55,13 @@ function ScrollingRow({
   );
 }
 
-export function LogoCarousel() {
+export function LogoCarousel({
+  investors,
+  partners,
+}: {
+  investors: Backer[];
+  partners: Backer[];
+}) {
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
@@ -74,8 +80,8 @@ export function LogoCarousel() {
         </FadeInView>
 
         <div className="mt-16 space-y-10">
-          <ScrollingRow items={INVESTORS} direction="left" label="Investors" />
-          <ScrollingRow items={PARTNERS} direction="right" label="Partners" />
+          <ScrollingRow items={investors} direction="left" label="Investors" />
+          <ScrollingRow items={partners} direction="right" label="Partners" />
         </div>
       </div>
     </section>

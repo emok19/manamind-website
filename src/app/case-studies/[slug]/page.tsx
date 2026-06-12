@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
-import { CASE_STUDIES } from "@/data/case-studies";
+import { getCaseStudies, getCaseStudy } from "@/lib/content/case-studies";
 import { DetailHero } from "@/components/case-studies/DetailHero";
 import { DetailSections } from "@/components/case-studies/DetailSections";
 import { CaseStudyCTA } from "@/components/case-studies/CaseStudyCTA";
+import { ComingSoon } from "@/components/layout/ComingSoon";
+import { CASE_STUDIES_LIVE } from "@/config/flags";
 
 export function generateStaticParams() {
-  return CASE_STUDIES.map((s) => ({ slug: s.slug }));
+  return getCaseStudies().map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -14,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const study = CASE_STUDIES.find((s) => s.slug === slug);
+  const study = getCaseStudy(slug);
   if (!study) return { title: "Case Study | ManaMind" };
   return {
     title: `${study.game.title} - ${study.studio.name} | ManaMind`,
@@ -28,8 +30,17 @@ export default async function CaseStudyDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const study = CASE_STUDIES.find((s) => s.slug === slug);
+  const study = getCaseStudy(slug);
   if (!study) notFound();
+
+  if (!CASE_STUDIES_LIVE) {
+    return (
+      <ComingSoon
+        title="Case Studies"
+        description="Real studio results, coming soon."
+      />
+    );
+  }
 
   return (
     <>

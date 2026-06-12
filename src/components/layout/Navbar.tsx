@@ -6,7 +6,16 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/constants";
 
-export function Navbar() {
+function OpenRolesBadge({ count }: { count: number }) {
+  if (count === 0) return null;
+  return (
+    <span className="absolute -right-5 -top-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-background ring-2 ring-background shadow-[0_0_10px_rgba(0,255,150,0.4)]">
+      {count}
+    </span>
+  );
+}
+
+export function Navbar({ openRoles = 0 }: { openRoles?: number }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -30,7 +39,7 @@ export function Navbar() {
           <Image
             src="/manamind-logo.png"
             alt="ManaMind"
-            width={160}
+            width={179}
             height={33}
             priority
           />
@@ -42,9 +51,10 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-text-muted transition-colors hover:text-primary"
+              className="relative text-sm font-medium text-text-muted transition-colors hover:text-primary"
             >
               {link.label}
+              {link.label === "Careers" && <OpenRolesBadge count={openRoles} />}
             </Link>
           ))}
         </div>
@@ -104,9 +114,10 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-lg font-medium text-text-muted transition-colors hover:text-primary"
+                  className="relative inline-block self-start text-lg font-medium text-text-muted transition-colors hover:text-primary"
                 >
                   {link.label}
+                  {link.label === "Careers" && <OpenRolesBadge count={openRoles} />}
                 </Link>
               ))}
               <Link

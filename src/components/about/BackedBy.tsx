@@ -3,12 +3,13 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FadeInView } from "@/components/animations/FadeInView";
-import { INVESTORS, PARTNERS, PRESS_MENTIONS } from "@/lib/constants";
+import type { PressMention } from "@/lib/constants";
+import type { Backer } from "@/lib/content/backers";
 
-function PressMarquee() {
-  const articles = PRESS_MENTIONS.filter((p) => p.type === "article");
-  const podcasts = PRESS_MENTIONS.filter((p) => p.type === "podcast");
-  const mentions = PRESS_MENTIONS.filter((p) => p.type === "mention");
+function PressMarquee({ press }: { press: PressMention[] }) {
+  const articles = press.filter((p) => p.type === "article");
+  const podcasts = press.filter((p) => p.type === "podcast");
+  const mentions = press.filter((p) => p.type === "mention");
 
   return (
     <div className="space-y-14">
@@ -154,7 +155,15 @@ function PressMarquee() {
   );
 }
 
-export function BackedBy() {
+export function BackedBy({
+  investors,
+  partners,
+  press,
+}: {
+  investors: Backer[];
+  partners: Backer[];
+  press: PressMention[];
+}) {
   return (
     <section className="border-t border-white/5 py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -187,7 +196,7 @@ export function BackedBy() {
                 animate={{ x: ["0%", "-50%"] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                {[...INVESTORS, ...INVESTORS].map((inv, i) => (
+                {[...investors, ...investors].map((inv, i) => (
                   <div key={`${inv.name}-${i}`} className="relative flex h-12 w-[160px] shrink-0 items-center justify-center">
                     {inv.logo ? (
                       <Image
@@ -221,7 +230,7 @@ export function BackedBy() {
                 animate={{ x: ["-50%", "0%"] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                {[...PARTNERS, ...PARTNERS].map((partner, i) => (
+                {[...partners, ...partners].map((partner, i) => (
                   <div key={`${partner.name}-${i}`} className="relative flex h-12 w-[160px] shrink-0 items-center justify-center">
                     {partner.logo ? (
                       <Image
@@ -252,7 +261,7 @@ export function BackedBy() {
           </FadeInView>
 
           <div className="mx-auto mt-10 max-w-5xl">
-            <PressMarquee />
+            <PressMarquee press={press} />
           </div>
         </div>
       </div>

@@ -4,18 +4,18 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FadeInView } from "@/components/animations/FadeInView";
 
-import { roles as roleData } from "@/data/roles";
+import type { Role } from "@/data/roles";
 
-const roles = roleData.map((r) => ({
-  title: r.title,
-  location: `Hybrid · ${r.location.replace(" (Hybrid)", "").replace(", UK", "")}`,
-  type: r.type,
-  tags: r.tags,
-  summary: r.summary,
-  href: `/careers/${r.slug}`,
-}));
+export function Roles({ roles: roleData }: { roles: Role[] }) {
+  const roles = roleData.map((r) => ({
+    title: r.title,
+    location: `Hybrid · ${r.location.replace(" (Hybrid)", "").replace(", UK", "")}`,
+    type: r.type,
+    tags: r.tags,
+    summary: r.summary,
+    href: `/careers/${r.slug}`,
+  }));
 
-export function Roles() {
   return (
     <section
       id="open-roles"

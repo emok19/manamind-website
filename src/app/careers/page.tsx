@@ -4,6 +4,7 @@ import { HowWeWork } from "@/components/careers/HowWeWork";
 import { Roles } from "@/components/careers/Roles";
 import { WhoThrives } from "@/components/careers/WhoThrives";
 import { Perks } from "@/components/careers/Perks";
+import { getRoles } from "@/lib/content/roles";
 
 export const metadata = {
   title: "Careers | ManaMind",
@@ -17,7 +18,7 @@ export default function CareersPage() {
       <CareersHero />
       <WhyManaMind />
       <HowWeWork />
-      <Roles />
+      <Roles roles={getRoles()} />
       <WhoThrives />
       <Perks />
     </>

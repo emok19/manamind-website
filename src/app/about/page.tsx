@@ -4,6 +4,9 @@ import { Philosophy } from "@/components/about/Philosophy";
 import { TeamSection } from "@/components/about/TeamSection";
 import { BackedBy } from "@/components/about/BackedBy";
 import { Vision } from "@/components/about/Vision";
+import { getTeam } from "@/lib/content/team";
+import { getInvestors, getPartners } from "@/lib/content/backers";
+import { getPress } from "@/lib/content/press";
 
 export const metadata = {
   title: "About | ManaMind",
@@ -17,8 +20,12 @@ export default function AboutPage() {
       <AboutHero />
       <OriginStory />
       <Philosophy />
-      <TeamSection />
-      <BackedBy />
+      <TeamSection team={getTeam()} />
+      <BackedBy
+        investors={getInvestors()}
+        partners={getPartners()}
+        press={getPress()}
+      />
       <Vision />
     </>
   );

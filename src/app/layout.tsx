@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { GA_MEASUREMENT_ID } from "@/lib/constants";
+import { getRoles } from "@/lib/content/roles";
 import "./globals.css";
 
 const swiza = localFont({
@@ -57,7 +58,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={`${swiza.variable} font-sans antialiased`}>
-        <Navbar />
+        <Navbar openRoles={getRoles().length} />
         <main>{children}</main>
         <Footer />
         <CookieBanner />
