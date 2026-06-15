@@ -1,6 +1,6 @@
 // Type definitions for careers/roles. The actual content now lives as markdown
 // files in content/roles/ and is loaded at build time by
-// src/lib/content/roles.ts (editable via the CMS at /admin).
+// src/lib/content/roles.ts (edit the markdown files directly).
 
 export type RoleResponsibility = { label: string; body: string };
 export type RoleFitBox = { label: string; body: string };

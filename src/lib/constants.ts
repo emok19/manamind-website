@@ -10,7 +10,7 @@ export const NAV_LINKS = [
 
 // Investor/partner logos and press mentions now live as markdown in
 // content/investors, content/partners, and content/press, loaded at build time
-// by src/lib/content/backers.ts and src/lib/content/press.ts (editable via /admin).
+// by src/lib/content/backers.ts and src/lib/content/press.ts (edit the markdown files directly).
 
 export type PressMention = {
   title: string;

@@ -1,6 +1,6 @@
 // Type definitions for case studies. The actual content now lives as markdown
 // files in content/case-studies/ and is loaded at build time by
-// src/lib/content/case-studies.ts (editable via the CMS at /admin).
+// src/lib/content/case-studies.ts (edit the markdown files directly).
 
 export type Platform = "PC" | "PS5" | "Xbox Series" | "Switch" | "Mobile" | "Android" | "iOS" | "VR";
 
