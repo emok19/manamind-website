@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { GA_MEASUREMENT_ID } from "@/lib/constants";
 import { getRoles } from "@/lib/content/roles";
 import "./globals.css";
@@ -26,6 +27,29 @@ const swiza = localFont({
     { path: "../../public/fonts/swiza-bolditalic-webfont.woff2", weight: "700", style: "italic" },
   ],
 });
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ManaMind",
+  url: "https://manamind.ai",
+  logo: "https://manamind.ai/manamind-logo.png",
+  sameAs: [
+    "https://www.linkedin.com/company/manamind",
+    "https://www.youtube.com/@ManaMindAI",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "ManaMind",
+  url: "https://manamind.ai",
+  publisher: {
+    "@type": "Organization",
+    name: "ManaMind",
+  },
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://manamind.ai"),
@@ -66,6 +90,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <JsonLd data={organizationJsonLd} />
+        <JsonLd data={websiteJsonLd} />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"

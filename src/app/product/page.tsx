@@ -8,6 +8,7 @@ import { BotSection } from "@/components/home/BotSection";
 import { Benchmarks } from "@/components/product/Benchmarks";
 import { SecuritySection } from "@/components/product/SecuritySection";
 import { ProductCTA } from "@/components/product/ProductCTA";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export const metadata = {
   title: "Product | ManaMind",
@@ -39,9 +40,25 @@ export const metadata = {
   },
 };
 
+const softwareApplicationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "ManaMind",
+  url: "https://manamind.ai/product",
+  image: "https://manamind.ai/product-screenshot.png",
+  description:
+    "Autonomous AI game testing software built around Hivemind, Command Centre, Legion, and autonomous bots.",
+  publisher: {
+    "@type": "Organization",
+    name: "ManaMind",
+    url: "https://manamind.ai",
+  },
+};
+
 export default function ProductPage() {
   return (
     <>
+      <JsonLd data={softwareApplicationJsonLd} />
       <ProductHero />
       <ArchitectureSection />
       <BotInteraction />
