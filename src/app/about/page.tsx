@@ -12,6 +12,9 @@ export const metadata = {
   title: "About | ManaMind",
   description:
     "Our mission, team, and the story behind ManaMind - building the autonomous testing infrastructure for interactive worlds.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

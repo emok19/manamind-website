@@ -1,6 +1,15 @@
 import Link from "next/link";
 import { FadeInView } from "@/components/animations/FadeInView";
 
+export const metadata = {
+  title: "Cookie Policy | ManaMind",
+  description:
+    "ManaMind's cookie policy covering analytics cookies, consent, and cookie management.",
+  alternates: {
+    canonical: "/cookies",
+  },
+};
+
 export default function CookiePolicyPage() {
   return (
     <section className="py-24 md:py-32">

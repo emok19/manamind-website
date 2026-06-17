@@ -4,6 +4,12 @@ import { BotInteraction } from "@/components/product/BotInteraction";
 import { ValueProps } from "@/components/home/ValueProps";
 import { DemoReel } from "@/components/home/DemoReel";
 
+export const metadata = {
+  alternates: {
+    canonical: "https://manamind.ai/",
+  },
+};
+
 export default function HomePage() {
   return (
     <>

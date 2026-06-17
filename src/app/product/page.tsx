@@ -13,6 +13,9 @@ export const metadata = {
   title: "Product | ManaMind",
   description:
     "Hivemind, Command Centre, Legion, and autonomous bots - four layers powering fully autonomous AI game testing at machine scale.",
+  alternates: {
+    canonical: "/product",
+  },
 };
 
 export default function ProductPage() {

@@ -28,6 +28,7 @@ const swiza = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://manamind.ai"),
   title: "ManaMind - Autonomous AI Quality Assurance for Video Games",
   description:
     "Human-like testing at machine scale. ManaMind delivers fully autonomous QA testing for video games - zero-shot, no code access, infinitely scalable.",

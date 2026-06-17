@@ -10,6 +10,9 @@ export const metadata = {
   title: "Careers | ManaMind",
   description:
     "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
+  alternates: {
+    canonical: "/careers",
+  },
 };
 
 export default function CareersPage() {

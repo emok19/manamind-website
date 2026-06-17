@@ -17,6 +17,9 @@ export async function generateMetadata({
   return {
     title: `${role.title} | ManaMind`,
     description: role.summary,
+    alternates: {
+      canonical: `/careers/${slug}`,
+    },
   };
 }
 
