@@ -15,6 +15,27 @@ export const metadata = {
   alternates: {
     canonical: "/about",
   },
+  openGraph: {
+    title: "About | ManaMind",
+    description:
+      "Our mission, team, and the story behind ManaMind - building the autonomous testing infrastructure for interactive worlds.",
+    url: "/about",
+    images: [
+      {
+        url: "/manamind-logo.png",
+        width: 179,
+        height: 33,
+        alt: "ManaMind logo.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "About | ManaMind",
+    description:
+      "Our mission, team, and the story behind ManaMind - building the autonomous testing infrastructure for interactive worlds.",
+    images: ["/manamind-logo.png"],
+  },
 };
 
 export default function AboutPage() {

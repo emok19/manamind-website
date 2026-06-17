@@ -16,6 +16,27 @@ export const metadata = {
   alternates: {
     canonical: "/product",
   },
+  openGraph: {
+    title: "Product | ManaMind",
+    description:
+      "Hivemind, Command Centre, Legion, and autonomous bots - four layers powering fully autonomous AI game testing at machine scale.",
+    url: "/product",
+    images: [
+      {
+        url: "/product-screenshot.png",
+        width: 1920,
+        height: 1080,
+        alt: "ManaMind Command Centre dashboard showing automated game QA results.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Product | ManaMind",
+    description:
+      "Hivemind, Command Centre, Legion, and autonomous bots - four layers powering fully autonomous AI game testing at machine scale.",
+    images: ["/product-screenshot.png"],
+  },
 };
 
 export default function ProductPage() {
