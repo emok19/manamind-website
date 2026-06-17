@@ -21,6 +21,7 @@ export async function generateMetadata({
   return {
     title: `${study.game.title} - ${study.studio.name} | ManaMind`,
     description: study.challengeOneLiner,
+    robots: CASE_STUDIES_LIVE ? undefined : { index: false, follow: true },
   };
 }
 

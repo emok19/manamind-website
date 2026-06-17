@@ -2,7 +2,7 @@ import Script from "next/script";
 
 export const metadata = {
   title: "Apply (test) | ManaMind",
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: true },
 };
 
 export default function ApplyTestPage() {
