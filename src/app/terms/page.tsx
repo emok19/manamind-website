@@ -1,5 +1,35 @@
 import { FadeInView } from "@/components/animations/FadeInView";
 
+export const metadata = {
+  title: "Terms of Use | ManaMind",
+  description:
+    "Terms governing access to and use of ManaMind's AI QA automation platform.",
+  alternates: {
+    canonical: "/terms",
+  },
+  openGraph: {
+    title: "Terms of Use | ManaMind",
+    description:
+      "Terms governing access to and use of ManaMind's AI QA automation platform.",
+    url: "/terms",
+    images: [
+      {
+        url: "/manamind-logo.png",
+        width: 179,
+        height: 33,
+        alt: "ManaMind logo.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Terms of Use | ManaMind",
+    description:
+      "Terms governing access to and use of ManaMind's AI QA automation platform.",
+    images: ["/manamind-logo.png"],
+  },
+};
+
 export default function TermsPage() {
   return (
     <section className="py-24 md:py-32">

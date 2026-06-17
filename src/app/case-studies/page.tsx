@@ -9,6 +9,7 @@ export const metadata = {
   title: "Case Studies | ManaMind",
   description:
     "See how studios use ManaMind to uncover issues earlier, increase test coverage, and reduce QA costs.",
+  robots: CASE_STUDIES_LIVE ? undefined : { index: false, follow: true },
 };
 
 export default function CaseStudiesPage() {

@@ -10,6 +10,30 @@ export const metadata = {
   title: "Careers | ManaMind",
   description:
     "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
+  alternates: {
+    canonical: "/careers",
+  },
+  openGraph: {
+    title: "Careers | ManaMind",
+    description:
+      "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
+    url: "/careers",
+    images: [
+      {
+        url: "/manamind-logo.png",
+        width: 179,
+        height: 33,
+        alt: "ManaMind logo.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Careers | ManaMind",
+    description:
+      "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
+    images: ["/manamind-logo.png"],
+  },
 };
 
 export default function CareersPage() {

@@ -17,6 +17,28 @@ export async function generateMetadata({
   return {
     title: `${role.title} | ManaMind`,
     description: role.summary,
+    alternates: {
+      canonical: `/careers/${slug}`,
+    },
+    openGraph: {
+      title: `${role.title} | ManaMind`,
+      description: role.summary,
+      url: `/careers/${slug}`,
+      images: [
+        {
+          url: "/manamind-logo.png",
+          width: 179,
+          height: 33,
+          alt: "ManaMind logo.",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary",
+      title: `${role.title} | ManaMind`,
+      description: role.summary,
+      images: ["/manamind-logo.png"],
+    },
   };
 }
 

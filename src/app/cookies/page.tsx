@@ -1,6 +1,36 @@
 import Link from "next/link";
 import { FadeInView } from "@/components/animations/FadeInView";
 
+export const metadata = {
+  title: "Cookie Policy | ManaMind",
+  description:
+    "ManaMind's cookie policy covering analytics cookies, consent, and cookie management.",
+  alternates: {
+    canonical: "/cookies",
+  },
+  openGraph: {
+    title: "Cookie Policy | ManaMind",
+    description:
+      "ManaMind's cookie policy covering analytics cookies, consent, and cookie management.",
+    url: "/cookies",
+    images: [
+      {
+        url: "/manamind-logo.png",
+        width: 179,
+        height: 33,
+        alt: "ManaMind logo.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Cookie Policy | ManaMind",
+    description:
+      "ManaMind's cookie policy covering analytics cookies, consent, and cookie management.",
+    images: ["/manamind-logo.png"],
+  },
+};
+
 export default function CookiePolicyPage() {
   return (
     <section className="py-24 md:py-32">

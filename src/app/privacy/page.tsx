@@ -1,5 +1,35 @@
 import { FadeInView } from "@/components/animations/FadeInView";
 
+export const metadata = {
+  title: "Privacy Policy | ManaMind",
+  description:
+    "ManaMind's privacy policy for personal data, analytics, security, retention, and data subject rights.",
+  alternates: {
+    canonical: "/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy | ManaMind",
+    description:
+      "ManaMind's privacy policy for personal data, analytics, security, retention, and data subject rights.",
+    url: "/privacy",
+    images: [
+      {
+        url: "/manamind-logo.png",
+        width: 179,
+        height: 33,
+        alt: "ManaMind logo.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | ManaMind",
+    description:
+      "ManaMind's privacy policy for personal data, analytics, security, retention, and data subject rights.",
+    images: ["/manamind-logo.png"],
+  },
+};
+
 export default function PrivacyPage() {
   return (
     <section className="py-24 md:py-32">
