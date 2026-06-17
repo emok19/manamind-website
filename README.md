@@ -72,11 +72,33 @@ bio: >-
 
 To change Emil's bio, edit the `bio` text. To change his title, edit `role`. To reorder team members, change `order` (lower numbers show first).
 
-- **Add a team member:** copy an existing file in `content/team/`, rename it, edit the fields, and add the photo to `public/`. Point `photo:` at the new image, for example `photo: /team-newperson.jpg`.
-- **Add an investor / partner / press item / job:** same pattern in the matching `content/` folder. Copy an existing file as your template.
-- **Change a photo:** drop the new image into `public/`, then update the `photo:` field to match the filename.
-
 Keep the `---` lines and the field names exactly as they are. Only change the values.
+
+### Editing on GitHub in your browser (no software needed)
+
+You can do everything below at [github.com/emok19/manamind-website](https://github.com/emok19/manamind-website), signed into your GitHub account. Nothing to install.
+
+**Update an existing entry** (for example, change a team bio or a job description):
+
+1. Open the repo on GitHub and click into the right folder, for example `content` then `team`.
+2. Click the file you want, for example `emil-kostadinov.md`.
+3. Click the **pencil icon** (top right of the file) to edit it.
+4. Change the text after the field you want, for example the words after `bio:`. Leave the `---` lines and the field names (`name:`, `role:`, etc.) exactly as they are.
+5. Click the green **Commit changes** button, then **Commit changes** again in the popup.
+6. Done. The site rebuilds and the change is live in about 2 minutes.
+
+**Add a new entry** (for example, a new team member, investor, or press link). The easiest way is to copy an existing file as a template so the fields are already correct:
+
+1. Open an existing file in the same folder (for example another team member) and click the **pencil icon**.
+2. Select all the text and copy it, so you have the field structure to reuse.
+3. Go back to the folder, click **Add file** then **Create new file** (top right).
+4. Name the file ending in `.md`, for example `content/team/jane-doe.md` (lowercase, words joined by hyphens).
+5. Paste the copied text, then change the values to the new entry. Keep the `---` lines and field names.
+6. Click **Commit changes** twice, same as above. Live in about 2 minutes.
+
+**Images** (a new team photo, for example): in the GitHub folder, use **Add file** then **Upload files** to add the image to the `public/` folder, then set the `photo:` field to match the filename, for example `photo: /jane-doe.jpg`.
+
+If a new entry needs anything beyond plain text, the SEO contractor (Will) can handle it directly in the repo.
 
 ### Changing page layout or wording that is not in `content/`
 
