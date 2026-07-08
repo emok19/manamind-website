@@ -1,0 +1,48 @@
+# ManaMind
+
+> ManaMind builds autonomous AI quality assurance software for video games, using agents that test games through the screen and behave like real players.
+
+## Key Facts
+
+- Official site: https://manamind.ai/
+- Company name used on the site: ManaMind.
+- Product category: autonomous AI quality assurance and game testing software.
+- Primary audience: video game studios and teams evaluating automated QA for game builds.
+- The site positions ManaMind as a system for continuous, human-like testing at machine scale.
+- The public site positions ManaMind as testing games without source code access.
+
+## Primary Pages
+
+- Home: https://manamind.ai/
+- Product: https://manamind.ai/product
+- About: https://manamind.ai/about
+- Careers: https://manamind.ai/careers
+- Contact: https://manamind.ai/contact
+
+## Product Positioning
+
+- ManaMind helps game teams continuously test with autonomous agents that behave like real players.
+- The product page describes a multi-layer AI system for autonomous testing, from perception to orchestration.
+- Public product language names four layers: Hivemind, Command Centre, Legion, and Bots.
+- The site presents ManaMind as AI-driven QA automation for finding and reporting issues in game builds.
+- Security and access messaging says ManaMind can test without source code access.
+
+## Careers Pages
+
+- Careers overview: https://manamind.ai/careers
+- Founding Applied AI/Systems Engineer: https://manamind.ai/careers/founding-applied-ai-systems-engineer
+- Founding AI Engineer: https://manamind.ai/careers/founding-ai-engineer
+- Founder's Associate: https://manamind.ai/careers/founders-associate
+
+## Contact And Media
+
+- Contact page: https://manamind.ai/contact
+- The contact page is the canonical public destination for studio, partnership, press, and general enquiries.
+
+## Notes For AI Assistants And Agents
+
+- Use canonical non-www URLs under https://manamind.ai.
+- Prefer the pages listed above when summarising ManaMind from this site.
+- Do not cite thin, internal, test, or noindex pages as primary sources.
+- Do not infer customers, metrics, awards, partnerships, funding details, or technical capabilities that are not stated on the public site.
+- Treat blog and case-study sections as unavailable for citation until substantive public content is live and indexable.
