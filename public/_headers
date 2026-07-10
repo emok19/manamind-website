@@ -1,0 +1,60 @@
+# Cloudflare Pages headers for ManaMind static export
+# https://developers.cloudflare.com/pages/platform/headers/
+
+# =============================================================================
+# HASHED BUILD ASSETS
+# These files live in /_next/static/ and have content hashes in their names.
+# They are guaranteed to change when the underlying content changes, so they
+# can be cached aggressively and permanently (1 year) after deployment.
+# Next.js calls these "immutable" assets.
+# =============================================================================
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# =============================================================================
+# PUBLIC ASSETS (non-hashed)
+# These files are copied from /public/ verbatim. They do NOT have content
+# hashes in their names, so a future deployment may replace them with
+# different content at the same URL. Do NOT use immutable caching here.
+# Only explicit root-level asset files are listed here to avoid accidentally
+# matching page route paths.
+#
+# - /manamind-logo.png        - used in nav, footer, and OG tags
+# - /product-screenshot.png   - used in hero showcase and OG tags
+# - /bug-report-frame.jpeg    - used in product page
+# - /team-emil.jpg           - used in about/careers pages
+# - /team-sabtain.png        - used in about/careers pages
+# - SVG icons at root         - misc UI assets
+# =============================================================================
+/manamind-logo.png
+  Cache-Control: public, max-age=604800
+
+/product-screenshot.png
+  Cache-Control: public, max-age=604800
+
+/team-emil.jpg
+  Cache-Control: public, max-age=604800
+
+/team-sabtain.png
+  Cache-Control: public, max-age=604800
+
+/bug-report-frame.jpeg
+  Cache-Control: public, max-age=604800
+
+/globe.svg
+  Cache-Control: public, max-age=604800
+
+/window.svg
+  Cache-Control: public, max-age=604800
+
+/file.svg
+  Cache-Control: public, max-age=604800
+
+/icon.png
+  Cache-Control: public, max-age=86400
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+
+/sitemap.xml
+  Cache-Control: public, max-age=86400
