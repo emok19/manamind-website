@@ -72,7 +72,7 @@ export function ProductShowcase() {
             className="relative mt-16 rounded-2xl border border-white/10 shadow-2xl shadow-primary/5"
           >
             <Image
-              src="/product-screenshot.png"
+              src="/product-screenshot.webp"
               alt="ManaMind Command Centre - Bug Reports dashboard showing automated test results across builds and bots"
               width={1920}
               height={1080}
