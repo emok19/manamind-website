@@ -32,6 +32,9 @@
 /product-screenshot.png
   Cache-Control: public, max-age=604800
 
+/product-screenshot.webp
+  Cache-Control: public, max-age=604800
+
 /team-emil.jpg
   Cache-Control: public, max-age=604800
 
