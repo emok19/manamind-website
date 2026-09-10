@@ -11,6 +11,7 @@ type Channel = {
   blurb: string;
   cta: string;
   subject: string;
+  email: string;
   accent: string;
   rolePlaceholder: string;
   emailPlaceholder: string;
@@ -19,6 +20,7 @@ type Channel = {
 };
 
 const CONTACT_EMAIL = "emil@manamind.ai";
+const STUDIOS_EMAIL = "sales@manamind.ai";
 
 const CHANNELS: Channel[] = [
   {
@@ -27,6 +29,7 @@ const CHANNELS: Channel[] = [
     blurb: "Interested in using ManaMind or exploring a partnership?",
     cta: "Talk to us",
     subject: "Studios & partners enquiry",
+    email: STUDIOS_EMAIL,
     accent: "#00FF96",
     rolePlaceholder: "e.g. QA lead, Producer",
     emailPlaceholder: "you@abstergo.com",
@@ -47,6 +50,7 @@ const CHANNELS: Channel[] = [
     blurb: "For interviews, speaking opportunities, or media enquiries.",
     cta: "Contact press",
     subject: "Press & media enquiry",
+    email: CONTACT_EMAIL,
     accent: "#FF4C54",
     rolePlaceholder: "e.g. Journalist, Editor",
     emailPlaceholder: "you@outlet.com",
@@ -67,6 +71,7 @@ const CHANNELS: Channel[] = [
     blurb: "Not sure where your message fits? That’s fine, just send it through.",
     cta: "Send a message",
     subject: "General enquiry",
+    email: CONTACT_EMAIL,
     accent: "#A78BFA",
     rolePlaceholder: "e.g. Researcher, Student",
     emailPlaceholder: "you@example.com",
@@ -244,7 +249,7 @@ export function ContactConsole() {
       form.message,
     ].filter((line) => line !== null);
 
-    const href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    const href = `mailto:${activeChannel.email}?subject=${encodeURIComponent(
       activeChannel.subject,
     )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
 
