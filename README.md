@@ -4,11 +4,13 @@ Marketing website for ManaMind. Built with Next.js (static export) and Tailwind 
 
 This README is the handover guide. It explains how the site is put together, how to change content, and how to publish. You do not need to understand all of it to edit text or images, that part is in [Editing content](#editing-content).
 
+Last checked against the repository: 2 November 2026. See the [documentation index](docs/README.md) for architecture, SEO, asset provenance, and the original design references.
+
 ---
 
 ## What this is in one paragraph
 
-Every page is a static HTML file generated ahead of time. There is no server and no database. The words and images on the marketing sections (team, investors, partners, press, careers, case studies) come from plain text files in the `content/` folder. When those files change and the site is rebuilt, the live pages update. Visual layout and design live in the `src/` folder.
+Every page is a static HTML file generated ahead of time. There is no application server, database, or separate CMS/admin login. Team, investors, partners, press, careers, and case studies are read from plain text files in `content/`. Other page copy and layouts live in `src/`. Pushing or merging changes into `master` triggers GitHub Actions to build and publish the site to Cloudflare Pages.
 
 ## Tech stack
 
@@ -17,9 +19,9 @@ Every page is a static HTML file generated ahead of time. There is no server and
 | Next.js 16 (App Router) | The framework. Set to `output: "export"`, so it produces a folder of static HTML. |
 | React 19 + TypeScript | The page components. |
 | Tailwind CSS v4 | Styling. |
-| gray-matter | Reads the `content/*.md` text files at build time. |
+| gray-matter | Reads `content/<section>/*.md` frontmatter at build time. |
 | Three.js / React Three Fiber | The 3D bot visuals. |
-| GSAP / Framer Motion | Animations. |
+| Framer Motion / CSS | Animations. |
 | Cloudflare Pages | Hosting for manamind.ai. |
 
 ## Project structure
@@ -46,18 +48,31 @@ src/
     globals.css       <- global styles
   components/         <- reusable building blocks (header, footer, sections)
   lib/content/        <- loaders that read the content/ markdown files
-  data/               <- structured data (bots, case studies, roles)
+  data/               <- bot content and type definitions for roles/case studies
   config/flags.ts     <- on/off switches for sections (see Feature flags)
   types/              <- shared TypeScript types
 
 next.config.ts        <- build config (static export, image settings)
+.github/workflows/    <- automatic build and Cloudflare Pages deployment
 ```
 
 ## Editing content
 
-This is the common task. Most changes are editing a markdown file in `content/`.
+For structured content, edit a markdown file in `content/`. For headlines, buttons, and other page copy, use the relevant component in `src/`.
 
-Each file has a top section between `---` lines (called frontmatter) holding the fields, and an optional body below. Example, `content/team/emil-kostadinov.md`:
+| What you want to change | Where to edit | Where it appears |
+|---|---|---|
+| Team names, titles, photos, bios | `content/team/` | About |
+| Investor and partner names/logos | `content/investors/`, `content/partners/` | About |
+| Press articles, podcasts, mentions | `content/press/` | About, grouped by `type` (`article`, `podcast`, `mention`) |
+| Job listings and descriptions | `content/roles/` | Careers and individual job pages |
+| Case studies | `content/case-studies/` | Case Studies and published detail pages |
+| Bot names, categories, abilities, status | `src/data/bots.ts` | Product bot catalogue |
+| Headlines, buttons, contact destinations, layout | `src/app/`, `src/components/`, `src/lib/constants.ts` | Relevant pages |
+
+The Blog page is a Coming Soon page; there is no blog-post publishing system. Press entries appear on About.
+
+Each file has a top section between `---` lines (called YAML frontmatter) holding the fields. The current loaders read only those fields; text added below the closing `---` will not appear on the site. Example, `content/team/emil-kostadinov.md`:
 
 ```markdown
 ---
@@ -72,7 +87,7 @@ bio: >-
 
 To change Emil's bio, edit the `bio` text. To change his title, edit `role`. To reorder team members, change `order` (lower numbers show first).
 
-Keep the `---` lines and the field names exactly as they are. Only change the values.
+Keep the `---` lines, field names, indentation, and list structure intact. Only change the values. For a multi-line field such as `bio: >-`, keep the text indented beneath the field. If a short value contains a colon followed by a space, wrap it in quotes, for example `title: "Interview: ManaMind"`.
 
 ### Editing on GitHub in your browser (no software needed)
 
@@ -84,21 +99,27 @@ You can do everything below at [github.com/emok19/manamind-website](https://gith
 2. Click the file you want, for example `emil-kostadinov.md`.
 3. Click the **pencil icon** (top right of the file) to edit it.
 4. Change the text after the field you want, for example the words after `bio:`. Leave the `---` lines and the field names (`name:`, `role:`, etc.) exactly as they are.
-5. Click the green **Commit changes** button, then **Commit changes** again in the popup.
-6. Done. The site rebuilds and the change is live in about 2 minutes.
+5. Click **Commit changes** and add a short description. For review, choose a new branch and open a pull request targeting `master`. You can also commit directly to `master` if your permissions allow and the change is ready to publish.
+6. Changes publish only once they reach `master`. Check the **Deploy to Cloudflare Pages** run in the [Actions tab](https://github.com/emok19/manamind-website/actions/workflows/deploy-cloudflare-pages.yml). A successful run confirms deployment; a branch commit or an open pull request does not publish by itself. Build time varies.
 
 **Add a new entry** (for example, a new team member, investor, or press link). The easiest way is to copy an existing file as a template so the fields are already correct:
 
-1. Open an existing file in the same folder (for example another team member) and click the **pencil icon**.
-2. Select all the text and copy it, so you have the field structure to reuse.
+1. Open an existing file of the same type (for example another team member).
+2. Copy its raw text, including the `---` lines, so you have the field structure to reuse.
 3. Go back to the folder, click **Add file** then **Create new file** (top right).
-4. Name the file ending in `.md`, for example `content/team/jane-doe.md` (lowercase, words joined by hyphens).
+4. If you are already in `content/team/`, name the file `jane-doe.md` (lowercase, words joined by hyphens). Do not repeat the folder path. From the repository root, use the full path `content/team/jane-doe.md`.
 5. Paste the copied text, then change the values to the new entry. Keep the `---` lines and field names.
-6. Click **Commit changes** twice, same as above. Live in about 2 minutes.
+6. Commit the change and merge into `master` when ready, following the steps above. Set `order` to control display order (lower numbers first).
 
 **Images** (a new team photo, for example): in the GitHub folder, use **Add file** then **Upload files** to add the image to the `public/` folder, then set the `photo:` field to match the filename, for example `photo: /jane-doe.jpg`.
 
-If a new entry needs anything beyond plain text, the SEO contractor (Will) can handle it directly in the repo.
+Use a leading `/` in image paths and omit `public/`: `public/team/jane-doe.jpg` becomes `/team/jane-doe.jpg`. Names and letter case must match exactly. Include new assets and the content referencing them in the same branch/pull request before merging.
+
+**Job pages:** the filename determines the URL (`founding-ai-engineer.md` becomes `/careers/founding-ai-engineer`). Job descriptions use structured fields such as `about`, `roleParagraphs`, and `responsibilities`; copy an existing role's full structure. All role files are published; there is no draft flag. Delete a file to remove a role. Renaming or removing a published URL also requires updating `public/sitemap.xml`, `public/llms.txt`, and any links; use `public/_redirects` for an appropriate replacement URL.
+
+**Case studies:** the section is live. Only entries with `published: true` are published. Use `husk-protocol.md` as the current schema reference; the other three files are unpublished drafts using an older structure. Start a new entry with `published: false`. Before publishing, complete the SEO fields, organizations, game details, media, findings, results, and testimonials. The build validates required records, media IDs, and referenced assets. Keep the filename, any explicit `slug`, and `seo.canonical` aligned, and maintain the sitemap and `/llms.txt` when publishing or removing a study. Changing `published` alone does not update those files.
+
+For a new layout or content format, ask Will to update the components and loader in the repo.
 
 ### Changing page layout or wording that is not in `content/`
 
@@ -106,56 +127,75 @@ Headlines, buttons, and section copy that are written directly into the pages li
 
 ## Feature flags
 
-`src/config/flags.ts` holds simple on/off switches for whole sections. For example, Case Studies is currently hidden:
+`src/config/flags.ts` holds the Case Studies section switch. It is currently enabled:
 
 ```ts
-export const CASE_STUDIES_LIVE = false;
+export const CASE_STUDIES_LIVE = true;
 ```
 
-Set a flag to `true`, rebuild, and redeploy to make that section public. The underlying work stays in the repo either way, the flag just controls whether visitors see it.
+Setting it to `false` makes the section and generated detail pages show Coming Soon content with `noindex`; it does not remove those generated detail routes. Individual entries are controlled separately by `published` in their content files.
 
 ## Running the site locally
 
-You need [Node.js](https://nodejs.org) version 20 installed. Then, from the project folder:
+The deployment workflow uses Node.js 20. To match it locally, use the same version and run these commands from the project folder:
 
 ```bash
-npm install      # first time only, installs dependencies
+npm ci           # installs the versions recorded in package-lock.json
 npm run dev      # starts a local preview
 ```
 
 Open [http://localhost:3000](http://localhost:3000). The preview updates as you save changes. This does not affect the live site, it is only on your machine.
 
+Run `npm run build` before publishing to check the production export in `out/`. Use `npm run dev` for local preview; `npm run start` is not the preview command for this static-export setup. `npm run lint` is available separately and is not part of the deployment workflow.
+
 ## Publishing changes (deploy)
 
 The site builds to a `out/` folder of static files, which Cloudflare serves.
 
-**If auto-deploy is set up** (repo connected to Cloudflare Pages): just push your changes to the `master` branch on GitHub. Cloudflare rebuilds and publishes manamind.ai automatically in about a minute. Nothing else to do.
+**Automatic deployment is configured** in [`.github/workflows/deploy-cloudflare-pages.yml`](.github/workflows/deploy-cloudflare-pages.yml). Every push to `master` (including a merged pull request) triggers GitHub Actions to:
 
-**Manual deploy** (if auto-deploy is not connected):
+1. Check out the repository and set up Node.js 20.
+2. Run `npm ci` and `npm run build`.
+3. Upload `out/` to the Cloudflare Pages project `manamind` using Wrangler.
+
+The workflow can also be started manually from the Actions tab. It uses the repository secrets `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`; editors do not need those credentials. This is a GitHub Actions deployment, rather than relying on a Cloudflare Git integration.
+
+**Branch naming matters:** the GitHub source/default branch is `master`, but the deployment command deliberately passes `--branch=main` because Cloudflare Pages uses `main` as its production branch. Keep that distinction when deploying manually.
+
+**Manual deploy** (fallback for someone with Cloudflare credentials, from the intended `master` checkout):
 
 ```bash
-npx next build
-npx wrangler pages deploy out --project-name=manamind --branch=master --commit-dirty=true
+npm ci
+npm run build
+npx wrangler pages deploy out --project-name=manamind --branch=main --commit-dirty=true
 ```
 
-Build settings used by Cloudflare:
+Settings used by the GitHub Actions workflow:
 
 | Setting | Value |
 |---|---|
-| Build command | `npx next build` |
+| Install command | `npm ci` |
+| Build command | `npm run build` |
 | Output directory | `out` |
-| Production branch | `master` |
-| Node version | `20` (env var `NODE_VERSION=20`) |
+| GitHub source branch | `master` |
+| Cloudflare production branch argument | `main` |
+| Cloudflare Pages project | `manamind` |
+| Node version | `20` via `actions/setup-node` |
+
+If deployment fails, open the failed Actions run and inspect the install, build, or deploy step. Fix the reported content/code issue, or ask the repository owner to check the Cloudflare secrets if authentication failed. The workflow runs on pushes to `master` and manual dispatches; it does not currently run a build on pull requests.
 
 ## Gotchas worth knowing
 
 - **Static export, no server.** Anything needing a live backend (form handling, databases) will not work as a plain Next.js feature. The site is intentionally all static.
 - **Images are unoptimized.** Required for static export. Compress large images before adding them.
 - **25 MB file limit on Cloudflare Pages.** Do not commit very large files into `public/`. Source 3D exports were deliberately kept out; only the `.glb` files the site uses are included.
-- **Default branch is `master`,** not `main`. Deploys and the Cloudflare connection use `master`.
+- **GitHub uses `master`; Cloudflare's production deployment argument is `main`.** See the workflow above.
+- **Contact uses the visitor's email app.** `ContactConsole.tsx` builds a `mailto:` link: studio/partner enquiries go to `sales@manamind.ai`, press/general enquiries to `emil@manamind.ai`. There is no server-side contact submission, CRM integration, or embedded booking calendar in this checkout.
+- **SEO inventories are maintained by hand.** `public/sitemap.xml`, `public/robots.txt`, and `public/llms.txt` are checked-in files, not generated from `content/`.
 
 ## Known cleanups (optional, not blocking)
 
 - `src/app/how-it-works/page.tsx` is an orphaned stub; the homepage CTA points to a `#how-it-works` anchor instead. Either delete the route or redirect it.
-- `src/app/hero-options/page.tsx` and `src/app/test-annotations/page.tsx` look like internal design explorations and can likely be deleted.
-- SEO gaps flagged by the SEO contractor: no `sitemap.xml`, no `robots.txt`, Google Search Console not set up.
+- Internal design/test routes (`/hero-options`, `/position-finder`, `/test-annotations`, `/careers/apply-test`) are marked `noindex` but remain accessible. Decide whether they still need to be exported.
+- The homepage demo reel is a placeholder, and App Login links to `#`. Publishing either feature needs a real asset or destination.
+- Sitemap, robots, canonical metadata, social metadata, and JSON-LD are implemented. See [SEO status](docs/seo-audit.md) for remaining checks. Google Search Console ownership/submission and production performance cannot be established from the repository alone.

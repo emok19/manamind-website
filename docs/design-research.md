@@ -1,5 +1,13 @@
 # Design Research — Reference Websites
 
+> Historical design research, preserved for context. Repository implementation reviewed on 2 November 2026; external reference sites and earlier access errors have not been rechecked. Observations below describe the original research, not verified current behavior of those sites.
+
+## Current implementation notes
+
+The site uses local Swiza fonts, the brand tokens in `src/app/globals.css`, a canvas particle hero, and a four-layer product architecture (Hivemind, Command Centre, Legion, Bots). Original suggestions below for Inter, a tri-bot explanation, or a particular carousel implementation are design proposals, not maintenance instructions. For actual components and behavior, use the [implementation overview](build-plan.md).
+
+## Original research and proposed direction
+
 ## Nunu (nunu.ai) — Competitor
 **Emil likes:** "How it works" section
 

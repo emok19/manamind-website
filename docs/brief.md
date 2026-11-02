@@ -1,5 +1,17 @@
 # ManaMind Website Design Brief
 
+> Historical design brief, preserved as the original requirements rather than a description of the live implementation. Status reviewed against the repository on 2 November 2026. Use the [handover guide](../README.md) and [implementation overview](build-plan.md) for current instructions.
+
+## Current implementation status
+
+- Home, Product, About, Careers, Contact, legal pages, and the Husk Protocol case study are implemented. Case Studies is enabled; Blog and the standalone How It Works route remain Coming Soon/stub pages with `noindex`.
+- Editing uses repository Markdown and React files; there is no separate CMS. GitHub Actions deploys the static export to Cloudflare Pages.
+- Local Swiza fonts and the implemented four-layer architecture (Hivemind, Command Centre, Legion, Bots) supersede the early font and tri-bot proposals below.
+- Contact opens a prefilled email; backend contact delivery, CRM integration, and an embedded demo-booking calendar from this brief are not implemented. The homepage demo reel and App Login destination remain placeholders.
+- Requirements, sample copy, placeholders, and references below document the original design request. They do not establish current product capabilities or external account setup.
+
+## Original brief
+
 ## 1. Project Overview
 
 ManaMind is building the core intelligence that powers fully autonomous AI testing for video games, with long-term ambitions to become the default operating system for robotics across all segments.

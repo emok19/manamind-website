@@ -1,116 +1,41 @@
-# ManaMind SEO Audit
+# ManaMind SEO status
 
-## Context / Stack
+Reviewed from repository source on 2 November 2026. This replaces the earlier pre-implementation audit: its missing-sitemap, missing-metadata, and hidden-case-study findings are superseded. This review does not claim a fresh production crawl, Google Search Console inspection, Lighthouse run, or local build/lint result.
 
-- Next.js App Router.
-- Next 16.1.7 and React 19.2.3.
-- Static export via `output: "export"`.
-- Hosted on Cloudflare Pages.
-- Production domain: `https://manamind.ai`.
-- No server runtime, no CMS.
-- Page copy lives in React components.
-- Structured content lives in `content/`.
-- GA4 exists and is consent-gated.
-- Google Search Console is not currently set up.
-- `npm run build` passes.
-- `npm run lint` currently fails due to pre-existing non-SEO issues.
+## Implemented
 
-## Baseline Checks
+| Area | Current implementation |
+|---|---|
+| Hosting and rendering | Next.js static export to Cloudflare Pages at `https://manamind.ai`, deployed by GitHub Actions. No server runtime or CMS. |
+| Robots | `public/robots.txt` allows crawling and declares the canonical sitemap URL. |
+| Sitemap | `public/sitemap.xml` lists the main public pages, three career detail pages, and Husk Protocol. It is maintained by hand. |
+| Canonical URLs | Root `metadataBase` and route-level `alternates.canonical` on substantive public and legal pages. `metadataBase` alone does not create canonical links. |
+| Social previews | Root and public route metadata provide Open Graph and Twitter fields; case-study metadata uses the study's SEO fields and artwork. |
+| Structured data | `Organization` and `WebSite` in the root layout; `SoftwareApplication` on Home/Product; `Article` and `BreadcrumbList` on published case-study pages. |
+| Case studies | `CASE_STUDIES_LIVE = true`. Only `published: true` entries are loaded; Husk Protocol is published. Three draft files remain excluded. |
+| Thin/internal pages | Blog, How It Works, hero options, position finder, annotation test, and career application test have `noindex` metadata. They are still exported and accessible. |
+| AI-facing summary | `public/llms.txt` includes canonical pages, career links, and the published Husk Protocol case study. No `/llms-full.txt` is present. |
+| Legacy redirects | `public/_redirects` maps several old website URLs to current routes. |
 
-- Public routes are emitted as static HTML in `out/`.
-- Main crawlable pages include `/`, `/about`, `/product`, `/careers`, `/case-studies`, `/blog`, `/contact`, `/privacy`, `/terms`, `/cookies`, career detail pages, and case-study detail pages.
-- Internal/test-style pages are also exported: `/hero-options`, `/position-finder`, and `/test-annotations`.
-- Root metadata exists in `src/app/layout.tsx`.
-- Several main pages define their own title and description.
-- No `sitemap.xml` found in `public/` or `out/`.
-- No `robots.txt` found in `public/` or `out/`.
-- No canonical tags found in emitted HTML.
-- No Open Graph or Twitter card metadata found.
-- No JSON-LD structured data found.
-- Markdown content is loaded at build time. `content/roles` becomes crawlable career detail pages. `content/case-studies` becomes exported routes, but the live flag currently renders Coming Soon content. Press, team, investor, and partner markdown is used inside pages, not as standalone crawlable pages.
+Team, investor, partner, and press content appears inside About rather than as individual routes. Role files generate career detail pages; published case studies generate study detail pages. Blog remains a Coming Soon page.
 
-## Critical Issues
+## Remaining work and checks
 
-None found. The site builds and the primary pages produce crawlable static HTML.
+- **Keep URL inventories aligned.** New/removed/renamed roles and published case studies require manual updates to `public/sitemap.xml`, `public/llms.txt`, links, and appropriate redirects. The loaders do not maintain these files.
+- **Search Console state is unverified.** Ownership, sitemap submission, indexing, and crawl errors are external account state. The old audit's claim that it was not set up is not current evidence.
+- **No `JobPosting` schema is implemented.** Career pages have metadata and visible job content, but no role-specific JSON-LD. Add it only when the required job details are available; structured data does not guarantee a rich result.
+- **App Login is a placeholder.** `Navbar.tsx` still uses `href="#"`.
+- **Internal routes remain public.** `noindex` expresses an indexing preference, not access control. Decide whether to retain or remove the design/test routes.
+- **Placeholder content remains intentional.** Blog and How It Works are thin/noindex; the homepage demo reel is a placeholder.
+- **Production URL behavior needs a live check.** Verify HTTP/HTTPS and www/non-www handling, trailing-slash behavior, redirects, response headers, and canonical consistency against the deployed site.
+- **Performance needs current measurements.** See [performance review](seo/performance-audit.md); historical bundle sizes are not current Core Web Vitals evidence.
+- **Analytics consent needs browser verification.** Source sets analytics storage to denied and changes it through the cookie banner, but loads the GA script with `afterInteractive`. Check first visit, acceptance, rejection, reload, and reopened settings rather than assuming full consent behavior from the code alone.
 
-## High Issues
+## Validation after future changes
 
-- Missing `sitemap.xml`.
-  - Files: `public/`, `out/`
-  - Impact: Search engines have no explicit URL inventory.
-
-- Missing `robots.txt`.
-  - Files: `public/`, `out/`
-  - Impact: No crawl guidance and no sitemap discovery hint.
-
-- No canonical URL implementation.
-  - Files: `src/app/layout.tsx`, route `page.tsx` files
-  - Impact: Duplicate URL variants may be ambiguous on Cloudflare Pages.
-
-- Internal/test pages are publicly exported and indexable.
-  - Files: `src/app/hero-options/page.tsx`, `src/app/position-finder/page.tsx`, `src/app/test-annotations/page.tsx`
-  - Impact: Thin or non-production pages may enter the index.
-
-- Case-study detail pages are exported while `CASE_STUDIES_LIVE = false`.
-  - Files: `src/config/flags.ts`, `src/app/case-studies/[slug]/page.tsx`
-  - Impact: Detail URLs exist but render Coming Soon content, creating thin/duplicative pages.
-
-## Medium Issues
-
-- Metadata coverage is incomplete.
-  - Files: `src/app/cookies/page.tsx`, `src/app/privacy/page.tsx`, `src/app/terms/page.tsx`, `src/app/how-it-works/page.tsx`, internal/test pages
-  - Impact: Several pages inherit homepage title/description.
-
-- No Open Graph or Twitter metadata.
-  - Files: `src/app/layout.tsx`, route metadata exports
-  - Impact: Weak social/link previews.
-
-- No JSON-LD structured data.
-  - Files: `src/app/layout.tsx`, career detail route, product/about pages
-  - Impact: Missed eligibility for richer search understanding.
-
-- `/blog` and `/case-studies` are crawlable Coming Soon pages.
-  - Files: `src/app/blog/page.tsx`, `src/app/case-studies/page.tsx`
-  - Impact: Thin content unless intentionally indexed prelaunch.
-
-- Static export requires all SEO artifacts to be generated at build time.
-  - File: `next.config.ts`
-  - Impact: No server-side redirects, dynamic robots behavior, or runtime metadata fixes.
-
-## Low Issues
-
-- Image alt text is mostly present, but some logo/headshot alt text is minimal.
-  - Files: `src/components/about/BackedBy.tsx`, `src/components/about/TeamSection.tsx`, `src/components/layout/Navbar.tsx`, `src/components/layout/Footer.tsx`
-
-- Heading structure is mostly sound on main pages, but internal/test routes have non-production heading patterns.
-  - Files: `src/app/hero-options/page.tsx`, `src/app/position-finder/page.tsx`, `src/app/test-annotations/page.tsx`
-
-- `App Login` uses `href="#"`.
-  - File: `src/components/layout/Navbar.tsx`
-  - Impact: Poor navigation/crawl hygiene.
-
-- Performance/Core Web Vitals risks exist from many preloaded font weights, animation-heavy sections, unoptimized static images, and 3D model assets.
-  - Files: `src/app/layout.tsx`, `next.config.ts`, `public/models/`, animation-heavy components
-
-## Recommended Implementation Order
-
-1. Add `robots.txt` and `sitemap.xml`, including only canonical production URLs.
-2. Remove, hide, or `noindex` internal/test routes.
-3. Add `metadataBase` and canonical URLs for every public route.
-4. Add page-specific metadata for legal/stub pages, or mark intentionally thin pages `noindex`.
-5. Add default Open Graph and Twitter metadata plus a production social image.
-6. Decide whether `/blog`, `/case-studies`, and case-study detail pages should be indexed while content is gated.
-7. Add JSON-LD: `Organization` and `WebSite` first, then `JobPosting` for career detail pages.
-8. Review performance risks around fonts, image weights, animations, and 3D model loading.
-9. Set up Google Search Console and submit the sitemap.
-
-## Validation Steps
-
-1. Run `npm run build` and confirm `out/robots.txt` and `out/sitemap.xml` exist.
-2. Inspect exported HTML for representative routes and confirm titles, descriptions, canonicals, OG/Twitter tags, and robots directives.
-3. Crawl the exported site with Screaming Frog or a similar crawler.
-4. Validate the sitemap in Google Search Console.
-5. Test JSON-LD with Google Rich Results Test or Schema Markup Validator.
-6. Run Lighthouse or PageSpeed Insights against production URLs.
-7. Confirm Cloudflare Pages serves one preferred URL shape and that sitemap/canonical URLs match it.
-8. Re-run `npm run lint` after unrelated lint issues are addressed; current lint failures are pre-existing and not part of this SEO audit.
+1. Run `npm ci` and `npm run build`; inspect the resulting routes and copied `out/robots.txt`, `out/sitemap.xml`, and `out/llms.txt`.
+2. Inspect exported HTML for representative public, career, case-study, legal, and internal routes. Check titles, descriptions, canonical URLs, social metadata, JSON-LD, and expected `noindex` directives.
+3. Check new asset paths and every sitemap/AI-summary URL against actual exported pages. Confirm unpublished studies stay excluded.
+4. Run `npm run lint` separately and record the actual result; it is not part of the current deployment workflow.
+5. After deployment, crawl production, validate relevant structured data, inspect social previews, and run mobile/desktop performance checks.
+6. With Search Console access, confirm sitemap submission, crawl/indexing status, and URL inspection results. Do not infer account state from files in this repository.

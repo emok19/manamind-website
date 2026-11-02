@@ -1,150 +1,64 @@
-# ManaMind Website — Build Plan
+# ManaMind website implementation overview
 
-## Scope
-Build Homepage and Product pages first. All other pages (How It Works, Case Studies, About, Careers, Contact, Blog/News) as stub routes.
+Reviewed against the repository on 2 November 2026. This replaces the initial staged build plan; the site has progressed beyond its original homepage/product-only scope. See [the handover guide](../README.md) for editing and publishing instructions.
 
-## Stack
-- Next.js (App Router) + TypeScript + Tailwind CSS
-- Framer Motion (section reveals) + GSAP (scroll-linked animations)
-- Deploy to Vercel
-- Inter font via next/font
+## Stack and hosting
 
-## Brand
-- Background: #2E1339
-- Primary: #00FF96
-- Highlight: #FF4C54
-- Dark mode default, sci-fi premium aesthetic
+- Next.js 16.1.7 App Router, React 19.2.3, TypeScript, Tailwind CSS v4.
+- Static export configured in `next.config.ts`; production files are written to `out/`.
+- Cloudflare Pages hosts `https://manamind.ai`. The GitHub Action in `.github/workflows/deploy-cloudflare-pages.yml` runs on pushes to `master` and on manual dispatch, using Node.js 20, `npm ci`, `npm run build`, and Wrangler.
+- GitHub's source/default branch is `master`; Wrangler passes `--branch=main` for Cloudflare production. The Pages project is `manamind`.
+- No separate CMS, application server, database, or runtime content API.
 
-## File Structure
+## Current routes
 
-```
-src/
-├── app/
-│   ├── layout.tsx              # Root layout (Inter font, GA, global styles)
-│   ├── page.tsx                # Homepage
-│   ├── product/page.tsx        # Product page
-│   ├── how-it-works/page.tsx   # Stub
-│   ├── case-studies/page.tsx   # Stub
-│   ├── about/page.tsx          # Stub
-│   ├── careers/page.tsx        # Stub
-│   ├── contact/page.tsx        # Stub
-│   └── blog/page.tsx           # Stub
-├── components/
-│   ├── layout/
-│   │   ├── Navbar.tsx
-│   │   ├── Footer.tsx
-│   │   └── StubPage.tsx
-│   ├── home/
-│   │   ├── HeroSection.tsx
-│   │   ├── ParticleCanvas.tsx
-│   │   ├── StrikeoutHeadline.tsx
-│   │   ├── BotSection.tsx
-│   │   ├── ValueProps.tsx
-│   │   ├── LogoCarousel.tsx
-│   │   └── DemoReel.tsx
-│   ├── product/
-│   │   ├── ArchitectureSection.tsx
-│   │   ├── FeatureBreakdown.tsx
-│   │   ├── ZeroShotExplainer.tsx
-│   │   ├── BenchmarksSection.tsx
-│   │   ├── SecuritySection.tsx
-│   │   └── NumberedSteps.tsx
-│   ├── shared/
-│   │   ├── CTAButton.tsx
-│   │   ├── SectionHeading.tsx
-│   │   ├── Card.tsx
-│   │   ├── ContactForm.tsx
-│   │   └── CalendarPlaceholder.tsx
-│   └── animations/
-│       ├── FadeInView.tsx
-│       └── useGsapScrollTrigger.ts
-├── lib/
-│   ├── constants.ts
-│   └── analytics.ts
-└── styles/
-    └── globals.css
-```
+| Routes | Implementation |
+|---|---|
+| `/` | Homepage: hero, Command Centre showcase, testing pipeline, value propositions, placeholder demo reel. |
+| `/product` | Product overview, 3D bot catalogue, architecture, testing pipeline, features, benchmarks, security, contact CTA. |
+| `/about` | Company story, team, investors, partners, and press. Structured content is loaded from Markdown. |
+| `/careers`, `/careers/[slug]` | Careers overview and a generated page for each role file. |
+| `/case-studies`, `/case-studies/[slug]` | Enabled by `CASE_STUDIES_LIVE = true`; only `published: true` entries are loaded. Husk Protocol is the published study. |
+| `/contact` | Channel selector and form that opens a prefilled email in the visitor's email app. |
+| `/privacy`, `/terms`, `/cookies` | Legal/information pages with route metadata. |
+| `/blog`, `/how-it-works` | Coming Soon/stub pages marked `noindex`; not publishing systems. The homepage also has a `#how-it-works` pipeline section. |
+| `/hero-options`, `/position-finder`, `/test-annotations`, `/careers/apply-test` | Exported internal/test pages marked `noindex`. They remain accessible by URL. |
 
-## Key Design Decisions
+## Source map
 
-### Particle Hero Animation
-- Custom Canvas (~80 lines), not a library (saves ~40KB)
-- Green (#00FF96) particles with mouse-reactive connecting lines on #2E1339
-- ~80-120 particles desktop, ~40 on mobile
-- Respects prefers-reduced-motion
+| Location | Responsibility |
+|---|---|
+| `src/app/` | Route composition, metadata, root layout, global CSS. |
+| `src/components/` | Page sections, shared elements, navigation/footer, cookie banner, animations. |
+| `src/lib/content/` | Build-time Markdown frontmatter loaders for team, backers, press, roles, and case studies. |
+| `content/` | Content values. Current loaders ignore Markdown body text after frontmatter. |
+| `src/data/bots.ts` | Bot catalogue, categories, abilities, status, and model paths. |
+| `src/data/roles.ts`, `src/data/case-studies.ts` | Content type definitions; edit the corresponding Markdown files for content. |
+| `src/lib/constants.ts` | Shared navigation, analytics ID, product copy/data, and other constants. |
+| `src/config/flags.ts` | Case Studies section visibility. |
+| `public/` | Images, fonts, GLB models, evidence video/log, static SEO files, Cloudflare headers/redirects. |
 
-### Strikeout Headline (Slite-style)
-- ~~Manual QA~~ → Autonomous AI Testing
-- Red line (#FF4C54) animates across in ~0.8s
-- Green replacement text fades in after ~0.3s pause
-- CSS animation, no JS timers
+Job filenames determine career URL slugs. Case-study filenames supply a default slug; keep the filename, any explicit slug, and `seo.canonical` aligned. Published studies are validated for required fields, records, media references, and local assets. Drafts are filtered out before validation, and the three legacy drafts need migration before publication.
 
-### Logo Carousel
-- CSS infinite marquee (translateX keyframes, duplicated items)
-- Two rows: investors + partners
-- Pauses on hover
-- No GSAP needed for this pattern
+## Design and animation
 
-### Navbar
-- Fixed top, transparent on hero → solid bg-bg/90 backdrop-blur on scroll
-- Logo left, nav center, "Request Demo" CTA right
-- Mobile: hamburger with Framer Motion slide-in drawer
+- Brand tokens live in `src/app/globals.css`: background `#2E1339`, primary `#00FF96`, highlight `#FF4C54`.
+- `src/app/layout.tsx` loads local Swiza font files at weights 400, 500, 600, and 700. The original Inter proposal is superseded.
+- Framer Motion handles section reveals and many interactions. GSAP packages are also dependencies; CSS defines strikeout and marquee animations.
+- `ParticleCanvas.tsx` uses an idle-started canvas loop, 80 particles on desktop/35 on mobile, a roughly 30 fps drawing interval, and pauses when the document is hidden. It skips animation for reduced-motion preference.
+- The product bot catalogue uses Three.js/React Three Fiber/Drei and GLB assets. `BotSection.tsx` preloads models and mounts card canvases near the viewport. It is not dynamically imported.
+- `FadeInView.tsx` and some CSS animations respect reduced motion. Reduced-motion handling is not universal across every animated component; check new interactions individually.
 
-### Architecture Diagram (Product page)
-- Hivemind > Command Centre > Legion > Bots hierarchy
-- Built with positioned divs + SVG connecting lines (not an image)
-- Each node is a card with name + description
+## Integrations and limits
 
-### Animation Strategy
-- Framer Motion: section entrance animations (FadeInView wrapper)
-- GSAP: scroll-linked / timeline-based animations
-- CSS: marquee carousel, strikeout effect
-- All respect prefers-reduced-motion
+- GA4 ID `G-PP9ZLMJTTH` comes from `src/lib/constants.ts`. Root scripts load with `afterInteractive`, set default analytics storage to denied, and the cookie banner updates consent. The script is still loaded before a consent choice; this is not a claim that all tracking code is blocked until acceptance.
+- Contact submits a `mailto:` link. Studios/partners use `sales@manamind.ai`; press/general enquiries use `emil@manamind.ai`. The visitor must send the email. No CRM, backend contact delivery, or calendar booking integration is implemented.
+- Career application destinations come from each role's `applyHref`; the internal `/careers/apply-test` route contains a Tally embed experiment, separate from the contact form.
+- App Login still points to `#`; the homepage demo reel is still a placeholder.
+- Robots, sitemap, `/llms.txt`, redirects, and response headers are checked in under `public/`. They are not generated from the Markdown loaders.
 
-## Build Order
+## Maintenance checks
 
-### Batch 1 — Foundation
-1. Initialize Next.js project
-2. Install framer-motion, gsap, @gsap/react
-3. Configure tailwind.config.ts (colors, font, animations)
-4. globals.css (base styles, strikeout keyframes, scrollbar)
-5. Root layout.tsx (Inter font, GA script, dark bg)
-6. constants.ts (nav links, copy, partner/investor data)
+For a content/code change, use `npm ci`, `npm run dev` for preview, and `npm run build` for the production export. `npm run lint` is separate; the current deployment workflow does not run lint or pull-request checks. Verify deployment in the Actions tab after changes reach `master`.
 
-### Batch 2 — Layout Shell
-7. Navbar.tsx + Footer.tsx
-8. StubPage.tsx
-9. All 6 stub route pages
-→ Deploy checkpoint: navigable shell
-
-### Batch 3 — Shared Components
-10. CTAButton, SectionHeading, Card
-11. FadeInView (Framer Motion wrapper)
-12. ContactForm + CalendarPlaceholder
-
-### Batch 4 — Homepage
-13. ParticleCanvas.tsx
-14. StrikeoutHeadline.tsx
-15. HeroSection.tsx (composes above + CTA)
-16. BotSection, ValueProps, DemoReel
-17. LogoCarousel
-18. app/page.tsx (compose all sections)
-→ Deploy checkpoint
-
-### Batch 5 — Product Page
-19. NumberedSteps.tsx (reusable)
-20. ArchitectureSection.tsx
-21. FeatureBreakdown, ZeroShotExplainer, BenchmarksSection, SecuritySection
-22. app/product/page.tsx (compose all sections)
-→ Deploy checkpoint
-
-### Batch 6 — Polish
-23. Responsive audit (375px, 768px, 1024px, 1440px)
-24. Animation timing pass + prefers-reduced-motion
-25. SEO metadata (generateMetadata per page)
-26. Lighthouse performance audit
-
-## Integrations
-- Google Analytics: G-PP9ZLMJTTH via Next.js Script (afterInteractive)
-- Contact form: UI only, success toast on submit (no backend)
-- Demo booking: iCal placeholder link
+See [SEO status](seo-audit.md) and [performance review](seo/performance-audit.md) for remaining checks. External account state, search indexing, message delivery, and production performance require separate verification.

@@ -1,214 +1,32 @@
-# Performance & SEO Audit — ManaMind Website
+# ManaMind performance review
 
-**Date:** 2026-03-18
-**Stack:** Next.js 16.1.7 (Turbopack) + Tailwind CSS + Framer Motion + Three.js
-**Pages audited:** Homepage (`/`), Product (`/product`)
+Source review: 2 November 2026. Original measurement date: 18 March 2026. The site has changed substantially since that audit. This document records current source behavior separately from historical measurements; it does not report a fresh build, bundle analysis, Lighthouse score, or production Core Web Vitals result.
 
----
+## Current source findings
 
-## Bundle Analysis
-
-| Chunk | Size | Source |
+| Area | What the source shows | What still needs measurement |
 |---|---|---|
-| Three.js + R3F + Drei | ~908 KB | `@react-three/fiber`, `@react-three/drei`, `three` |
-| Framer Motion | ~220 KB | `framer-motion` (loaded on every page) |
-| App code + shared | ~128 KB | Components, layout, pages |
-| Other chunks | ~112 KB | Next.js runtime, fonts, etc. |
-| **Total static output** | **~2.1 MB** | `.next/static` |
+| 3D bot catalogue | `src/app/product/page.tsx` renders `BotSection`; the homepage does not. `BotSection.tsx` imports Three.js/Drei and `BotModel` normally, preloads all catalogue GLB models at module load, and mounts card canvases when near the viewport (`rootMargin: "400px"`). | Product-route JavaScript cost, model request timing, GPU memory/context count, and whether viewport gating gives sufficient benefit on mobile. |
+| Particle hero | `ParticleCanvas.tsx` uses 80 particles on desktop/35 on mobile, a 33 ms drawing interval, idle startup, hidden-tab pause, and skips animation for reduced motion. Pairwise connection checks remain. | Main-thread/paint cost on representative devices; the old 150-particle calculation is superseded. |
+| Fonts | Root layout loads local Swiza normal weights 400/500/600/700. More font files exist in `public/fonts/`, but they are not all declared in the layout. | Actual font transfer/preload behavior and text rendering in the browser. The old Inter-weight recommendation no longer applies. |
+| Command Centre image | `ProductShowcase.tsx` uses `/product-screenshot.webp` at declared dimensions 1920 x 1080, with `w-full` and priority loading. Static export disables Next.js runtime image optimization. | Actual transferred dimensions, LCP element, and loading priority on mobile/desktop. Social metadata still references the separate PNG. |
+| Animation | Framer Motion is used across shared UI and page sections; CSS contains additional animations. Reduced-motion support exists in `FadeInView`, ParticleCanvas, and selected CSS rules. | Runtime cost, offscreen activity, and reduced-motion behavior across all components. Package installation alone is not evidence that GSAP is in every route bundle. |
+| Analytics | Root GA scripts use Next.js `Script` with `afterInteractive` and remain in the layout's head. Default analytics storage is denied; the banner updates consent. | Network/main-thread cost and consent behavior. Placement in `head` alone does not establish render blocking; inspect actual script scheduling. |
+| Case-study media | Husk Protocol includes local WebP images and a local MP4, with required asset validation in the content loader. | Video/image loading on constrained connections, poster timing, and transferred payload. |
 
----
+## Historical measurements, not current budgets
 
-## Performance Issues
+The 18 March audit recorded roughly 908 KB for Three.js/R3F/Drei, 220 KB for Framer Motion, and 2.1 MB of `.next/static` output. These were estimates from an earlier version; they must not be used as current bundle sizes or promised savings.
 
-### Critical — Homepage
+That audit described seven eagerly mounted homepage WebGL canvases, Inter fonts, missing SEO files, and a product page without Three.js. Those descriptions are superseded by the source findings above and [current SEO status](../seo-audit.md). The old suggestions to add robots/sitemap/metadata have already been implemented.
 
-| Issue | Impact | Detail |
-|---|---|---|
-| **Three.js bundle (~908 KB)** | Massive JS payload | 7 `<Canvas>` (WebGL) instances for BotModel — one per bot with a 3D model. All load eagerly. |
-| **ParticleCanvas** | Continuous CPU/GPU usage | 150 particles with O(n²) connection checks (~11,175 distance calculations per frame) running in `requestAnimationFrame`. |
-| **7 BotModel WebGL contexts** | GPU memory + init time | Each bot with a `.obj` model gets its own Three.js canvas. Mobile devices may struggle. |
+## Recommended next review
 
-### Moderate — Both Pages
+1. Install locked dependencies with `npm ci` and build with `npm run build`. Record the commit, Node version, build output, and measurement date.
+2. Measure Home, Product, and Husk Protocol on representative mobile and desktop profiles. Record LCP, CLS, interaction responsiveness, JavaScript, image/model/video transfer, and the conditions used.
+3. Inspect the product route's model preloads and per-card canvases before choosing between dynamic imports, later asset loading, fewer active canvases, or static fallbacks. No exact savings are established by this source review.
+4. Inspect ParticleCanvas, Framer Motion sections, and 3D animation in performance traces and with reduced motion enabled.
+5. Check image sizing and loading priority against the actual LCP element. Keep locally optimized assets because `images.unoptimized` is enabled.
+6. Verify analytics behavior for first visit, acceptance, rejection, and reload, including what downloads before consent.
 
-| Issue | Impact | Detail |
-|---|---|---|
-| **Framer Motion (~220 KB)** | Loaded on every page | Used in Navbar, FadeInView, and most components. Cannot be easily removed but could be code-split. |
-| **Font: 6 weights loaded** | Extra network request size | Inter loads weights 300, 400, 500, 600, 700, 800. Only 400, 500, 600, 700 are actually used. |
-| **GA script in `<head>`** | Render-blocking risk | Should be in `<body>` (Next.js `<Script>` with `strategy="afterInteractive"` handles this, but placement in `<head>` is non-standard). |
-
-### Product Page — Clean
-
-The product page has **no Three.js dependency**. All visuals are lightweight SVG animations + Framer Motion. No significant performance concerns.
-
----
-
-## Recommended Performance Fixes
-
-### 1. Lazy-load BotModel with `next/dynamic`
-
-```tsx
-const BotModel = dynamic(() => import("./BotModel").then(m => m.BotModel), {
-  ssr: false,
-  loading: () => <BotModelSkeleton />,
-});
-```
-
-This defers the entire Three.js bundle (~908 KB) until the bot section scrolls into view. Use `IntersectionObserver` to trigger the load.
-
-### 2. Reduce ParticleCanvas load
-
-- Drop particle count from 150 → 80 (desktop) and 60 → 40 (mobile)
-- Reduce connection radius from 160 → 120 to cut O(n²) comparisons
-- Skip connection lines on mobile entirely
-- Consider replacing with a CSS/SVG alternative for better performance
-
-### 3. Trim font weights
-
-Remove weights 300 and 800 from the Inter import — they're not used anywhere in the codebase.
-
-```tsx
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-```
-
-### 4. Move GA script placement
-
-Move `<Script>` tags from `<head>` to `<body>` in layout.tsx. The `afterInteractive` strategy already defers them, but correct placement ensures no accidental blocking.
-
----
-
-## SEO Issues
-
-### Missing Entirely
-
-| Item | Status | Impact |
-|---|---|---|
-| `robots.txt` | Missing | Crawlers have no rules — default allows all, but explicit is better for control |
-| `sitemap.xml` | Missing | Google can't efficiently discover all 8 pages |
-| Open Graph meta tags | Missing | No social media preview cards (LinkedIn, Twitter/X, Slack) |
-| Twitter Card meta tags | Missing | No Twitter preview |
-| Structured data (JSON-LD) | Missing | No rich results in Google (Organization, Product, FAQ) |
-| Per-page `<title>` and `<meta description>` | Partial | Only root layout and Product page have metadata. 6 other pages use defaults. |
-| Canonical URLs | Missing | Risk of duplicate content if accessed via multiple URLs |
-
-### Present but Incomplete
-
-| Item | Status |
-|---|---|
-| `<html lang="en">` | Present |
-| Root `<title>` | Present: "ManaMind — Autonomous AI Quality Assurance for Video Games" |
-| Root `<meta description>` | Present |
-| Semantic HTML (`<main>`, `<nav>`, `<footer>`) | Present |
-| Mobile hamburger `aria-label` | Present |
-| Google Analytics | Configured with `G-PP9ZLMJTTH` |
-
----
-
-## Recommended SEO Fixes
-
-### 1. Add `robots.txt`
-
-Create `src/app/robots.ts`:
-
-```ts
-import type { MetadataRoute } from "next";
-
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://manamind.ai/sitemap.xml",
-  };
-}
-```
-
-### 2. Add `sitemap.xml`
-
-Create `src/app/sitemap.ts`:
-
-```ts
-import type { MetadataRoute } from "next";
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://manamind.ai";
-  const pages = [
-    { url: "/", priority: 1.0, changeFrequency: "weekly" },
-    { url: "/product", priority: 0.9, changeFrequency: "monthly" },
-    { url: "/how-it-works", priority: 0.8, changeFrequency: "monthly" },
-    { url: "/case-studies", priority: 0.7, changeFrequency: "monthly" },
-    { url: "/about", priority: 0.7, changeFrequency: "monthly" },
-    { url: "/careers", priority: 0.6, changeFrequency: "weekly" },
-    { url: "/contact", priority: 0.8, changeFrequency: "yearly" },
-    { url: "/blog", priority: 0.6, changeFrequency: "weekly" },
-  ];
-
-  return pages.map((page) => ({
-    url: `${baseUrl}${page.url}`,
-    lastModified: new Date(),
-    changeFrequency: page.changeFrequency,
-    priority: page.priority,
-  }));
-}
-```
-
-### 3. Add Open Graph & Twitter meta
-
-Update root `layout.tsx` metadata:
-
-```ts
-export const metadata: Metadata = {
-  metadataBase: new URL("https://manamind.ai"),
-  title: {
-    default: "ManaMind — Autonomous AI Quality Assurance for Video Games",
-    template: "%s | ManaMind",
-  },
-  description: "Human-like testing at machine scale...",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    siteName: "ManaMind",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    images: ["/og-image.png"],
-  },
-};
-```
-
-### 4. Add per-page metadata
-
-Every page needs its own `title` and `description`. Example for How It Works:
-
-```ts
-export const metadata = {
-  title: "How It Works",
-  description: "Zero-shot, fully autonomous game testing. Learn how ManaMind's AI bots test your game without code access, training data, or integration.",
-};
-```
-
-### 5. Add JSON-LD structured data
-
-Add Organization schema in layout and Product schema on `/product`.
-
-### 6. Add canonical URLs
-
-Set `metadataBase` in root layout (covered in item 3 above) — Next.js auto-generates canonical URLs from this.
-
----
-
-## Priority Order
-
-| Priority | Fix | Effort | Impact |
-|---|---|---|---|
-| P0 | Lazy-load Three.js / BotModel | Medium | Cuts ~908 KB from initial load |
-| P0 | Add sitemap.xml + robots.txt | Low | Google discoverability |
-| P0 | Add OG + Twitter meta | Low | Social sharing previews |
-| P1 | Per-page metadata for all 8 pages | Low | SEO for every page |
-| P1 | Trim font weights | Trivial | ~20 KB saved |
-| P1 | Reduce ParticleCanvas load | Low | Homepage FPS improvement |
-| P2 | JSON-LD structured data | Medium | Rich Google results |
-| P2 | Move GA script placement | Trivial | Best practice |
-| P2 | Code-split framer-motion | Hard | Would need architecture changes |
+For deployment and preview commands, use the [handover guide](../../README.md). For metadata, sitemap maintenance, and external Search Console checks, use [SEO status](../seo-audit.md).

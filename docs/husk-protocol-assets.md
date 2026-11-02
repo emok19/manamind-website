@@ -2,6 +2,8 @@
 
 Inventory date: 2026-08-17
 
+Repository inventory reviewed on 2 November 2026. Published assets live in [`public/case-studies/husk-protocol/`](../public/case-studies/husk-protocol/) and are referenced by [`content/case-studies/husk-protocol.md`](../content/case-studies/husk-protocol.md). The original local PDF path below records the source used during production; it is not a portable path or a required build input. Source-folder access and original media metadata have not been reverified in this documentation review.
+
 ## Supplied draft
 
 - `C:\Users\willc\Downloads\Husk Protocol Draft Case Study.pdf`
