@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { CopyEmail } from "@/components/contact/CopyEmail";
+import { SALES_EMAIL } from "@/lib/constants";
 
 const footerLinks = {
   Product: [
@@ -57,6 +59,10 @@ export function Footer() {
               Autonomous AI quality assurance for video games. Human-like
               testing at machine scale.
             </p>
+            <div className="mt-5">
+              <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-text-muted">Talk to us</p>
+              <CopyEmail email={SALES_EMAIL} />
+            </div>
 
             {/* Social channels */}
             <div className="mt-6 flex gap-4">

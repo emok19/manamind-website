@@ -100,4 +100,11 @@ export const FEATURES = [
   },
 ];
 
+// Public contact address, shown as plain text on the site so nobody has to dig for it.
+export const SALES_EMAIL = "sales@manamind.ai";
+
+// Where the contact form is delivered (Formspree). The form never reports success
+// unless this endpoint confirms the message was received.
+export const CONTACT_ENDPOINT = "https://formspree.io/f/xyeeaqal";
+
 export const GA_MEASUREMENT_ID = "G-PP9ZLMJTTH";

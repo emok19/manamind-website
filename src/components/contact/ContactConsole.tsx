@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CopyEmail } from "@/components/contact/CopyEmail";
+import { CONTACT_ENDPOINT, SALES_EMAIL } from "@/lib/constants";
 
 type ChannelId = "studios" | "press" | "general";
 
@@ -19,8 +21,7 @@ type Channel = {
   icon: React.ReactNode;
 };
 
-const CONTACT_EMAIL = "emil@manamind.ai";
-const STUDIOS_EMAIL = "sales@manamind.ai";
+type Status = "idle" | "sending" | "sent" | "error";
 
 const CHANNELS: Channel[] = [
   {
@@ -29,7 +30,7 @@ const CHANNELS: Channel[] = [
     blurb: "Interested in using ManaMind or exploring a partnership?",
     cta: "Talk to us",
     subject: "Studios & partners enquiry",
-    email: STUDIOS_EMAIL,
+    email: SALES_EMAIL,
     accent: "#00FF96",
     rolePlaceholder: "e.g. QA lead, Producer",
     emailPlaceholder: "you@abstergo.com",
@@ -50,7 +51,7 @@ const CHANNELS: Channel[] = [
     blurb: "For interviews, speaking opportunities, or media enquiries.",
     cta: "Contact press",
     subject: "Press & media enquiry",
-    email: CONTACT_EMAIL,
+    email: SALES_EMAIL,
     accent: "#FF4C54",
     rolePlaceholder: "e.g. Journalist, Editor",
     emailPlaceholder: "you@outlet.com",
@@ -71,7 +72,7 @@ const CHANNELS: Channel[] = [
     blurb: "Not sure where your message fits? That’s fine, just send it through.",
     cta: "Send a message",
     subject: "General enquiry",
-    email: CONTACT_EMAIL,
+    email: SALES_EMAIL,
     accent: "#A78BFA",
     rolePlaceholder: "e.g. Researcher, Student",
     emailPlaceholder: "you@example.com",
@@ -223,7 +224,7 @@ function FormField({
 }
 
 export function ContactConsole() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
   const [activeChannelId, setActiveChannelId] = useState<ChannelId>("studios");
   const [form, setForm] = useState({
     name: "",
@@ -231,33 +232,38 @@ export function ContactConsole() {
     role: "",
     company: "",
     message: "",
+    website: "",
   });
 
   const activeChannel =
     CHANNELS.find((c) => c.id === activeChannelId) ?? CHANNELS[0];
   const formAccent = activeChannel.accent;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const bodyLines = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      form.role ? `Role: ${form.role}` : null,
-      form.company ? `Company: ${form.company}` : null,
-      "",
-      form.message,
-    ].filter((line) => line !== null);
-
-    const href = `mailto:${activeChannel.email}?subject=${encodeURIComponent(
-      activeChannel.subject,
-    )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
-
-    if (typeof window !== "undefined") {
-      window.location.href = href;
+    if (form.website) return; // honeypot: bots fill hidden fields, people do not
+    setStatus("sending");
+    try {
+      const res = await fetch(CONTACT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          channel: activeChannel.label,
+          _subject: `[manamind.ai] ${activeChannel.subject}: ${form.name}`,
+          name: form.name,
+          email: form.email,
+          role: form.role,
+          company: form.company,
+          message: form.message,
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setStatus("sent");
+      if (window.gtag) window.gtag("event", "generate_lead", { channel: activeChannel.id });
+    } catch {
+      setStatus("error");
+      if (window.gtag) window.gtag("event", "contact_form_error", { channel: activeChannel.id });
     }
-
-    setSubmitted(true);
   };
 
   const update = (key: keyof typeof form) => (v: string) =>
@@ -308,14 +314,11 @@ export function ContactConsole() {
                   Transmission // {activeChannel.label}
                 </span>
               </div>
-              <span className="hidden font-mono text-[10px] uppercase tracking-widest text-text-muted/70 sm:block">
-                Encrypted
-              </span>
             </div>
 
             <div className="p-6 md:p-10">
               <AnimatePresence mode="wait">
-                {submitted ? (
+                {status === "sent" ? (
                   <motion.div
                     key="success"
                     initial={{ opacity: 0, y: 12 }}
@@ -346,18 +349,18 @@ export function ContactConsole() {
                       </svg>
                     </div>
                     <h3 className="mt-6 text-2xl font-bold text-foreground">
-                      Your email is ready.
+                      Message received.
                     </h3>
                     <p className="mx-auto mt-3 max-w-md text-text-muted">
-                      We&rsquo;ve opened your email client with the message
-                      pre-filled. Just hit send and we&rsquo;ll get back to you
-                      within 2-3 business days.
+                      Thanks{form.name ? ` ${form.name.split(" ")[0]}` : ""}. It is with
+                      the team now and we&rsquo;ll reply to {form.email} within one
+                      business day.
                     </p>
                     <button
                       type="button"
                       onClick={() => {
-                        setSubmitted(false);
-                        setForm({ name: "", email: "", role: "", company: "", message: "" });
+                        setStatus("idle");
+                        setForm({ name: "", email: "", role: "", company: "", message: "", website: "" });
                       }}
                       className="mt-8 text-sm font-medium text-text-muted underline-offset-4 hover:text-primary hover:underline"
                     >
@@ -435,20 +438,45 @@ export function ContactConsole() {
                       />
                     </label>
 
+                    {/* Honeypot, hidden from people */}
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={form.website}
+                      onChange={(e) => update("website")(e.target.value)}
+                      className="hidden"
+                      aria-hidden="true"
+                    />
+
+                    {status === "error" && (
+                      <div role="alert" className="rounded-xl border border-highlight/40 bg-highlight/10 p-4 text-sm">
+                        <p className="font-semibold text-foreground">Sorry, your message did not go through.</p>
+                        <p className="mt-1 text-text-muted">
+                          Nothing is lost: copy our address and email us directly. We reply within one business day.
+                        </p>
+                        <div className="mt-3">
+                          <CopyEmail email={SALES_EMAIL} />
+                        </div>
+                      </div>
+                    )}
+
                     <div className="flex flex-col items-start justify-between gap-4 pt-2 sm:flex-row sm:items-center">
                       <p className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
-                        We typically respond within 2-3 business days
+                        We reply within one business day
                       </p>
                       <button
                         type="submit"
-                        className="group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-semibold transition-all duration-300 hover:scale-105"
+                        disabled={status === "sending"}
+                        className="group inline-flex disabled:opacity-60 items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-semibold transition-all duration-300 hover:scale-105"
                         style={{
                           backgroundColor: formAccent,
                           color: "#1E0D26",
                           boxShadow: `0 0 24px ${formAccent}33`,
                         }}
                       >
-                        Send transmission
+                        {status === "sending" ? "Sending..." : "Send transmission"}
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -464,6 +492,11 @@ export function ContactConsole() {
                 )}
               </AnimatePresence>
             </div>
+          </div>
+
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 text-sm text-text-muted sm:flex-row">
+            <span>Prefer email? Write to us directly:</span>
+            <CopyEmail email={SALES_EMAIL} />
           </div>
         </div>
       </div>
