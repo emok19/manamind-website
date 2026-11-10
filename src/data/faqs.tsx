@@ -126,7 +126,7 @@ export const HUSK_FAQ: FaqItem[] = [
     text: "Yes, for text validation. On Husk Protocol, Wayfinder read every card the way a first-time player would and checked its on-screen text against the team's card sheet. It validated 60 cards across eight sessions and found five verified issues in 50 minutes, including a keyword with no tooltip explanation.",
     a: (
       <p>
-        Yes, for text validation. On Husk Protocol, Wayfinder read every card the way a first-time player would and checked its on-screen text against the team&rsquo;s card sheet. It validated 60 cards across eight sessions and found five verified issues in 50 minutes, including a keyword with no tooltip explanation. Read more about <Link href="/blog/who-is-manamind">who we are</Link> or <Link href="/contact">book a demo</Link>.
+        Yes, for text validation. On Husk Protocol, Wayfinder read every card the way a first-time player would and checked its on-screen text against the team&rsquo;s card sheet. It validated 60 cards across eight sessions and found five verified issues in 50 minutes, including a keyword with no tooltip explanation. Read more about <Link href="/blog/what-is-manamind">who we are</Link> or <Link href="/contact">book a demo</Link>.
       </p>
     ),
   },
