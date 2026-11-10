@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 // Minimal markdown renderer for our own blog files: ## / ### headings, paragraphs,
-// "- " lists, **bold** and [links](/path). Output is plain server-rendered HTML.
+// "- " lists, **bold**, [links](/path) and standalone ![images](/path). Output is plain server-rendered HTML.
 
 function inline(text: string, key: string): ReactNode[] {
   const out: ReactNode[] = [];
@@ -37,6 +37,15 @@ export function Markdown({ source }: { source: string }) {
       {blocks.map((block, bi) => {
         const b = block.trim();
         const key = `b${bi}`;
+        const img = b.match(/^!\[(.*?)\]\((\S+?)\)$/);
+        if (img) {
+          return (
+            <figure key={key} className="py-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={img[2]} alt={img[1]} loading="lazy" decoding="async" className="mx-auto w-full max-w-xl rounded-2xl border border-white/10" />
+            </figure>
+          );
+        }
         if (b.startsWith("### ")) return <h3 key={key} className="pt-2 text-xl font-bold text-foreground">{inline(b.slice(4), key)}</h3>;
         if (b.startsWith("## ")) return <h2 key={key} id={b.slice(3).toLowerCase().replace(/[^a-z0-9]+/g, "-")} className="scroll-mt-24 pt-6 text-2xl font-bold text-foreground md:text-3xl">{inline(b.slice(3), key)}</h2>;
         if (b.split("\n").every((l) => l.trim().startsWith("- "))) {
