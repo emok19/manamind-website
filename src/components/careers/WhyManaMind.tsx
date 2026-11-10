@@ -14,17 +14,15 @@ const reasons = [
 export function WhyManaMind() {
   return (
     <section className="relative border-t border-white/5 py-20 md:py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,255,150,0.03)_0%,transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(138,233,208,0.03)_0%,transparent_60%)]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <FadeInView>
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-mono text-3xl font-bold uppercase tracking-tight text-primary md:text-4xl">
-              {`// WHY_MANAMIND`}
-            </h2>
-            <p className="mt-6 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Why join ManaMind</p>
+            <h2 className="mt-4 text-3xl font-bold text-foreground md:text-4xl">
               Bring sci-fi into reality
-            </p>
+            </h2>
             <p className="mt-3 text-sm text-text-muted md:text-base">
               Work on the kind of technology you grew up dreaming about.
             </p>

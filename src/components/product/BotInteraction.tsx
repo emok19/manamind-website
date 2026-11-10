@@ -1,5 +1,7 @@
 "use client";
 
+import { Glow, Tiles } from "@/components/brand/Graphics";
+
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { FadeInView } from "@/components/animations/FadeInView";
@@ -12,7 +14,7 @@ const pipeline = [
     label: "Sense",
     title: "See the Screen",
     description: "Bots watch the game exactly as a player would with no engine hooks or APIs required.",
-    color: "#38BDF8",
+    color: "#FFFEBA",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="h-10 w-10">
         <rect x="4" y="8" width="32" height="24" rx="3" stroke="currentColor" strokeWidth="1.5" />
@@ -27,7 +29,7 @@ const pipeline = [
     label: "Understand",
     title: "Reason",
     description: "The system reads UI, recognises objects, and tracks game state to understand what's going on in each frame.",
-    color: "#00FF96",
+    color: "#8AE9D0",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="h-10 w-10">
         <circle cx="20" cy="20" r="14" stroke="currentColor" strokeWidth="1.5" />
@@ -42,7 +44,7 @@ const pipeline = [
     label: "Decide",
     title: "Plan the Next Action",
     description: "Based on what it sees, each bot chooses what to do next, navigate menus, explore new areas, or test edge cases.",
-    color: "#A78BFA",
+    color: "#DA97FF",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="h-10 w-10">
         <path d="M20 6v6M20 28v6M6 20h6M28 20h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -57,7 +59,7 @@ const pipeline = [
     label: "Report",
     title: "Log and Report Issues",
     description: "When something goes wrong, ManaMind records the session, generates reproduction steps, and logs a structured bug report.",
-    color: "#FF4C54",
+    color: "#DA97FF",
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="h-10 w-10">
         <rect x="8" y="4" width="24" height="32" rx="2" stroke="currentColor" strokeWidth="1.5" />
@@ -139,18 +141,20 @@ function PipelineStep({
   );
 }
 
-export function BotInteraction() {
+export function BotInteraction({ title = "From gameplay to actionable bug reports" }: { title?: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [reportOpen, setReportOpen] = useState(false);
 
   return (
-    <section id="how-it-works" ref={ref} className="border-t border-white/5 bg-bg-card py-24 md:py-32 scroll-mt-20">
+    <section id="how-it-works" ref={ref} className="relative overflow-hidden border-t border-white/5 bg-bg-card py-24 md:py-32 scroll-mt-20">
+      <Glow accent="elixir" position="bottom" strength={0.16} />
+      <Tiles seed={31} outlined fade="right" opacity={0.35} />
       <div className="mx-auto max-w-7xl px-6">
         <FadeInView>
           <SectionHeading
             label="How It Works"
-            title="From gameplay to actionable bug reports"
+            title={title}
             description="ManaMind watches and plays your game through the screen, just like a human tester."
           />
         </FadeInView>
@@ -184,7 +188,7 @@ export function BotInteraction() {
               <button
                 type="button"
                 onClick={() => setReportOpen(true)}
-                className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-background transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,150,0.3)]"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-background transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(138,233,208,0.3)]"
               >
                 View a Sample Bug Report
               </button>

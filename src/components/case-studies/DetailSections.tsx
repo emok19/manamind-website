@@ -118,7 +118,7 @@ export function DetailSections({ study }: { study: CaseStudy }) {
       <FadeInView className="mt-24">
         <SectionLabel index="03" label="What Wayfinder Found" accent={accent} />
         <h2 className="mt-4 text-2xl font-bold text-foreground md:text-3xl lg:text-4xl">
-          Five verified findings. One conservative soft flag.
+          Five verified text and localization findings
         </h2>
         <p className="mt-3 max-w-3xl text-text-muted">
           Every verified finding arrived with evidence. Ambiguous runtime text was routed to a human reviewer instead of being overstated as a bug.
@@ -145,13 +145,13 @@ export function DetailSections({ study }: { study: CaseStudy }) {
                     <span
                       className="rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
                       style={{
-                        color: isSoftFlag ? "#FBBF24" : "#00FF96",
+                        color: isSoftFlag ? "#FFFEBA" : "#8AE9D0",
                         backgroundColor: isSoftFlag
-                          ? "rgba(251,191,36,0.10)"
-                          : "rgba(0,255,150,0.08)",
+                          ? "rgba(255,254,186,0.10)"
+                          : "rgba(138,233,208,0.08)",
                         borderColor: isSoftFlag
-                          ? "rgba(251,191,36,0.35)"
-                          : "rgba(0,255,150,0.28)",
+                          ? "rgba(255,254,186,0.35)"
+                          : "rgba(138,233,208,0.28)",
                       }}
                     >
                       {finding.status}

@@ -1,4 +1,5 @@
 "use client";
+import { Tiles } from "@/components/brand/Graphics";
 
 import { motion } from "framer-motion";
 import { FadeInView } from "@/components/animations/FadeInView";
@@ -18,50 +19,40 @@ const principles: Principle[] = [
     body: "We take our work seriously, but not ourselves. We're building an environment where people enjoy showing up each day because they're solving interesting problems with people they respect.",
     closing:
       "Our goal is simple: to make ManaMind the most fun place to work on the planet (and eventually beyond it).",
-    color: "#00FF96",
+    color: "#8AE9D0",
   },
   {
     tag: "Challenge",
     title: "Choose Hard Problems",
     body: "We deliberately play on hard mode. We work in a competitive space and we lean into that. Pressure isn't something we avoid, it's something we use to get better.",
-    color: "#A78BFA",
+    color: "#DA97FF",
   },
   {
     tag: "Integrity",
     title: "Win the Right Way",
     body: "Results matter, but so does how we get there. We hold ourselves to high standards, act ethically, and step in to help teammates when they need it.",
-    color: "#38BDF8",
+    color: "#FFFEBA",
   },
   {
     tag: "Customer Obsession",
     title: "Build for Real Users",
     body: "Everything we do is grounded in the needs of game studios and QA teams. We care about shipping systems that actually help people, even when that means taking the more difficult path technically.",
-    color: "#F59E0B",
+    color: "#FFFEBA",
   },
 ];
 
 export function HowWeWork() {
   return (
-    <section className="relative border-t border-white/5 bg-bg-card py-24 md:py-32">
-      {/* Subtle dotted background */}
-      <div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, #00FF96 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-      />
+    <section className="relative overflow-hidden border-t border-white/5 bg-bg-card py-24 md:py-32">
+      <Tiles seed={53} outlined fade="right" opacity={0.35} />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <FadeInView>
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-mono text-3xl font-bold uppercase tracking-tight text-primary md:text-4xl">
-              {`// HOW_WE_WORK`}
-            </h2>
-            <p className="mt-6 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">How we work</p>
+            <h2 className="mt-4 text-3xl font-bold text-foreground md:text-4xl">
               The principles that guide our team and decisions
-            </p>
+            </h2>
           </div>
         </FadeInView>
 

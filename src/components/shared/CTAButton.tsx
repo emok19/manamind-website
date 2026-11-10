@@ -16,9 +16,9 @@ export function CTAButton({
   const base = "inline-flex items-center justify-center rounded-full px-8 py-3 text-sm font-semibold transition-all duration-300";
   const variants = {
     primary:
-      "bg-primary text-background hover:shadow-[0_0_20px_rgba(0,255,150,0.3)] hover:scale-105",
+      "bg-primary text-background hover:shadow-[0_0_20px_rgba(138,233,208,0.3)] hover:scale-105",
     outline:
-      "border border-primary text-primary hover:bg-primary/10 hover:shadow-[0_0_20px_rgba(0,255,150,0.15)]",
+      "border border-primary text-primary hover:bg-primary/10 hover:shadow-[0_0_20px_rgba(138,233,208,0.15)]",
   };
 
   return (

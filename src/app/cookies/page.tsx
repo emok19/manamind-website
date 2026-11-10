@@ -1,3 +1,4 @@
+import { Glow } from "@/components/brand/Graphics";
 import Link from "next/link";
 import { FadeInView } from "@/components/animations/FadeInView";
 
@@ -15,26 +16,27 @@ export const metadata = {
     url: "/cookies",
     images: [
       {
-        url: "/manamind-logo.png",
-        width: 179,
-        height: 33,
-        alt: "ManaMind logo.",
+        url: "/og/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ManaMind, the model for games QA.",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Cookie Policy | ManaMind",
     description:
       "ManaMind's cookie policy covering analytics cookies, consent, and cookie management.",
-    images: ["/manamind-logo.png"],
+    images: ["/og/og-default.jpg"],
   },
 };
 
 export default function CookiePolicyPage() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-3xl px-6">
+    <section className="relative overflow-hidden pb-24 pt-36 md:pb-32 md:pt-44">
+      <Glow accent="arcane" position="top" strength={0.35} />
+      <div className="relative mx-auto max-w-3xl px-6">
         <FadeInView>
           <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
             Cookie Policy
@@ -45,9 +47,9 @@ export default function CookiePolicyPage() {
           <p className="text-sm text-text-muted">Company: ManaMind Limited</p>
         </FadeInView>
 
-        <div className="mt-12 space-y-10 text-sm leading-relaxed text-text-muted">
+        <div className="mt-12 space-y-10 text-[15px] leading-relaxed text-text-muted">
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">What Are Cookies</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">What Are Cookies</h2>
             <p>
               Cookies are small text files placed on your device when you visit a website. They help
               websites function properly and provide information about how the site is used.
@@ -55,9 +57,9 @@ export default function CookiePolicyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Cookies We Use</h2>
-            <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
-              <table className="w-full text-left">
+            <h2 className="mb-3 text-xl font-bold text-foreground">Cookies We Use</h2>
+            <div className="mt-4 overflow-x-auto rounded-xl border border-white/10">
+              <table className="w-full min-w-[520px] text-left">
                 <thead>
                   <tr className="border-b border-white/10 bg-white/[0.03]">
                     <th className="px-4 py-3 font-semibold text-foreground">Cookie</th>
@@ -97,7 +99,7 @@ export default function CookiePolicyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Third-Party Processing</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Third-Party Processing</h2>
             <p>
               Analytics data is processed by Google LLC on our behalf. Google may process this data
               on servers located outside the United Kingdom. We rely on appropriate safeguards for
@@ -106,7 +108,7 @@ export default function CookiePolicyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Consent</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Consent</h2>
             <p>
               Analytics cookies are only set after you provide your consent via the cookie banner.
               You may withdraw or change your consent at any time using the &ldquo;Cookie
@@ -115,7 +117,7 @@ export default function CookiePolicyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Essential Storage</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Essential Storage</h2>
             <p>
               We store your cookie consent preference in your browser using local storage.
             </p>
@@ -126,7 +128,7 @@ export default function CookiePolicyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Managing Cookies</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Managing Cookies</h2>
             <p>
               You can manage or delete cookies through your browser settings. Blocking cookies may
               affect website functionality.
@@ -134,7 +136,7 @@ export default function CookiePolicyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">
+            <h2 className="mb-3 text-xl font-bold text-foreground">
               More Information &amp; Contact
             </h2>
             <p>

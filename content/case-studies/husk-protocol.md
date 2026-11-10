@@ -2,13 +2,14 @@
 order: 1
 published: true
 publishedAt: "2026-08-17"
-accent: "#C084FC"
+accent: "#DA97FF"
 seo:
-  title: Husk Protocol Case Study | Autonomous Game QA | ManaMind
+  title: "Husk Protocol: AI Card Game Text Validation | ManaMind"
+  h1: "Husk Protocol: how AI validated 60 cards in 50 minutes"
   description: >-
     See how OddSub and Fireshine Games used ManaMind's Wayfinder to validate 60 cards across eight sessions, finding five verified issues in 50 minutes.
   canonical: /case-studies/husk-protocol
-  openGraphImage: /case-studies/husk-protocol/husk-protocol-social.jpg
+  openGraphImage: /og/og-husk-protocol.jpg
 organizations:
   - name: OddSub
     role: Developer
@@ -40,6 +41,8 @@ genres:
   - Strategy
   - Deckbuilding
   - Card Game
+cardSummary: >-
+  Fireshine Games and indie developer OddSub gave ManaMind's Wayfinder a Steam branch and one card sheet. Wayfinder read the whole card catalogue the way a first-time player would and checked every tooltip against the sheet. Across eight sessions it validated 60 cards and found five verified text and localization issues in 50 minutes, with no SDK, scripts or engine access.
 challengeOneLiner: >-
   If a card does not explain itself, players are left guessing - and there was no systematic way to check whether every card in Husk Protocol's constantly growing portfolio still did.
 headlineMetric:

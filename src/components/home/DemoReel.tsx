@@ -1,60 +1,38 @@
-"use client";
-
-import { SectionHeading } from "@/components/shared/SectionHeading";
+import { Glow, Tiles } from "@/components/brand/Graphics";
 import { FadeInView } from "@/components/animations/FadeInView";
-import { motion } from "framer-motion";
+import { CTAButton } from "@/components/shared/CTAButton";
+import { CopyEmail } from "@/components/contact/CopyEmail";
+import { BOOKING_URL, SALES_EMAIL } from "@/lib/constants";
 
+// Demo section. The video reel will come later: for now a clean call to action.
 export function DemoReel() {
   return (
-    <section className="border-t border-white/5 bg-bg-card py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative overflow-hidden border-t border-white/5 bg-bg-card py-24 md:py-32">
+      <Glow accent="aether" position="bottom" strength={0.25} />
+      <div className="relative mx-auto max-w-7xl px-6">
         <FadeInView>
-          <SectionHeading
-            label="See It In Action"
-            title="Watch ManaMind test a live game build"
-            description="See how our agents play, discover bugs, and surface issues without any scripts or human input."
-          />
-        </FadeInView>
-
-        <FadeInView delay={0.2}>
-          <div className="mx-auto mt-12 max-w-4xl">
-            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-background">
-              {/* 16:9 aspect ratio placeholder */}
-              <div className="relative aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 text-primary">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-text-muted">
-                    Demo reel coming soon
-                  </p>
+          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-background px-6 py-16 text-center md:px-16 md:py-20">
+            <Glow accent="elixir" position="bottom" strength={0.28} />
+            <Tiles seed={83} outlined fade="radial" opacity={0.4} />
+            <div className="relative">
+              <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-widest text-primary">See it in action</span>
+              <h2 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">Watch ManaMind test a live game build</h2>
+              <p className="mx-auto mt-5 max-w-2xl text-lg text-text-muted">
+                Book a demo and watch our bots play a real build: exploring, finding bugs and writing the reports, with no scripts and no human input.
+              </p>
+              <div className="mt-9 flex flex-col items-center gap-5">
+                <div className="flex flex-wrap justify-center gap-3">
+                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-background transition-transform hover:scale-105">
+                    Book a 30 min demo
+                  </a>
+                  <CTAButton href="/contact" variant="outline">Send us a message</CTAButton>
                 </div>
-
-                {/* Request Demo overlay -shown at end of video */}
-                <div className="absolute inset-0 flex items-center justify-center bg-background/80">
-                  <motion.a
-                    href="/contact"
-                    className="rounded-full bg-primary px-8 py-3 text-sm font-semibold text-background transition-all hover:shadow-[0_0_20px_rgba(0,255,150,0.3)]"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Request Demo
-                  </motion.a>
+                <div className="flex flex-col items-center gap-2 text-sm text-text-muted sm:flex-row sm:gap-3">
+                  <span>or email us directly</span>
+                  <CopyEmail email={SALES_EMAIL} />
                 </div>
               </div>
             </div>
-
-            {/* One-liner caption */}
-            <p className="mt-4 text-center text-xs text-text-muted/60">
-              Footage captured from an unmodified production build
-            </p>
           </div>
         </FadeInView>
       </div>

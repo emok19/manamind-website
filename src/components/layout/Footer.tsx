@@ -1,11 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
+import { LogoLinear } from "@/components/brand/Logo";
 import { CopyEmail } from "@/components/contact/CopyEmail";
 import { SALES_EMAIL } from "@/lib/constants";
 
 const footerLinks = {
   Product: [
     { label: "Overview", href: "/product" },
+    { label: "Services", href: "/services" },
+    { label: "How it works", href: "/how-it-works" },
     { label: "Case Studies", href: "/case-studies" },
   ],
   Company: [
@@ -40,24 +42,19 @@ const socialLinks = [
   },
 ];
 
-export function Footer() {
+export function Footer({ showBlog = true }: { showBlog?: boolean }) {
+  const sections = Object.entries(footerLinks).map(([title, links]) => [title, links.filter((l) => showBlog || l.href !== "/blog")] as const);
   return (
     <footer className="border-t border-white/10 bg-bg-card">
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-4">
           {/* Brand */}
           <div>
-            <Link href="/">
-              <Image
-                src="/manamind-logo.png"
-                alt="ManaMind"
-                width={179}
-                height={33}
-              />
+            <Link href="/" aria-label="ManaMind home">
+              <LogoLinear className="h-5 w-auto text-wisp" />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-text-muted">
-              Autonomous AI quality assurance for video games. Human-like
-              testing at machine scale.
+              The model for games QA.
             </p>
             <div className="mt-5">
               <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-text-muted">Talk to us</p>
@@ -82,7 +79,7 @@ export function Footer() {
           </div>
 
           {/* Link Columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
+          {sections.map(([title, links]) => (
             <div key={title}>
               <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
                 {title}
@@ -110,7 +107,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-text-muted sm:flex-row">
-          <p>&copy; 2024&ndash;{new Date().getFullYear()} ManaMind. All rights reserved.</p>
+          <p>&copy; 2025&ndash;{new Date().getFullYear()} ManaMind. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/terms" className="text-primary transition-colors hover:text-primary/80">
               Terms of Use

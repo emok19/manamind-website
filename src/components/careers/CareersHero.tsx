@@ -1,5 +1,7 @@
 "use client";
 
+import { Glow, Tiles } from "@/components/brand/Graphics";
+
 import { motion } from "framer-motion";
 import { CTAButton } from "@/components/shared/CTAButton";
 
@@ -9,15 +11,16 @@ export function CareersHero() {
   return (
     <section className="relative flex min-h-[85vh] items-center overflow-hidden">
       {/* Layered radial gradients */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,255,150,0.08)_0%,transparent_55%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(167,139,250,0.05)_0%,transparent_55%)]" />
+      <Glow accent="lumen" position="bottom-left" strength={0.18} />
+      <Tiles seed={37} outlined fade="left" opacity={0.45} />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(218,151,255,0.05)_0%,transparent_55%)]" />
 
       {/* Faint scan lines */}
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(0deg, #00FF96 0px, #00FF96 1px, transparent 1px, transparent 4px)",
+            "repeating-linear-gradient(0deg, #8AE9D0 0px, #8AE9D0 1px, transparent 1px, transparent 4px)",
         }}
       />
 
@@ -65,7 +68,7 @@ export function CareersHero() {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15 }}
           className="text-4xl font-bold leading-[1.05] text-foreground md:text-5xl lg:text-6xl"
@@ -80,13 +83,6 @@ export function CareersHero() {
               transition={{ duration: 0.9, delay: 0.7 }}
             />
           </span>
-          <motion.span
-            className="ml-1 inline-block text-primary"
-            animate={{ opacity: [1, 0, 1] }}
-            transition={{ duration: 1.1, repeat: Infinity }}
-          >
-            _
-          </motion.span>
         </motion.h1>
 
         <motion.p

@@ -7,7 +7,7 @@ import { FadeInView } from "@/components/animations/FadeInView";
 export function CaseStudyCTA() {
   return (
     <section className="relative overflow-hidden py-16 md:py-20">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,150,0.08)_0%,transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(138,233,208,0.08)_0%,transparent_60%)]" />
 
       {/* Animated dotted target reticle */}
       <motion.div

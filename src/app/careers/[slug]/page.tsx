@@ -26,18 +26,18 @@ export async function generateMetadata({
       url: `/careers/${slug}`,
       images: [
         {
-          url: "/manamind-logo.png",
-          width: 179,
-          height: 33,
-          alt: "ManaMind logo.",
+          url: "/og/og-careers.jpg",
+          width: 1200,
+          height: 630,
+          alt: "ManaMind, the model for games QA.",
         },
       ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: `${role.title} | ManaMind`,
       description: role.summary,
-      images: ["/manamind-logo.png"],
+      images: ["/og/og-careers.jpg"],
     },
   };
 }

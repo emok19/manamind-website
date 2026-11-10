@@ -11,9 +11,9 @@ export function CopyEmail({ email, className = "" }: { email: string; className?
     try {
       await navigator.clipboard.writeText(email);
     } catch {
+      const range = document.createRange();
       const node = document.getElementById(`email-${email}`);
       if (node) {
-        const range = document.createRange();
         range.selectNodeContents(node);
         const sel = window.getSelection();
         sel?.removeAllRanges();
@@ -22,7 +22,7 @@ export function CopyEmail({ email, className = "" }: { email: string; className?
       }
     }
     setCopied(true);
-    if (typeof window !== "undefined" && window.gtag) window.gtag("event", "email_copied");
+    if (typeof window !== "undefined" && window.gtag) window.gtag("event", "email_copied", { email_address: email });
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -34,8 +34,8 @@ export function CopyEmail({ email, className = "" }: { email: string; className?
       <button
         type="button"
         onClick={copy}
+        className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-void transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         aria-live="polite"
-        className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-background transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         {copied ? "Copied" : "Copy"}
       </button>

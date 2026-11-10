@@ -51,7 +51,7 @@ export function RoleDetail({ role }: { role: Role }) {
           ))}
         </div>
 
-        <Section eyebrow="// ABOUT_US" title="About us">
+        <Section eyebrow="01" title="About us">
           <div className="space-y-3 text-[15px] leading-relaxed text-text-muted md:text-base">
             {role.about.map((p, i) => (
               <p key={i}>{p}</p>
@@ -59,7 +59,7 @@ export function RoleDetail({ role }: { role: Role }) {
           </div>
         </Section>
 
-        <Section eyebrow="// THE_ROLE" title="The role">
+        <Section eyebrow="02" title="The role">
           <div className="space-y-4 text-[15px] leading-relaxed text-text-muted md:text-base">
             {role.roleParagraphs.map((p, i) => (
               <p key={i}>{p}</p>
@@ -67,7 +67,7 @@ export function RoleDetail({ role }: { role: Role }) {
           </div>
         </Section>
 
-        <Section eyebrow="// RESPONSIBILITIES" title="Key responsibilities">
+        <Section eyebrow="03" title="Key responsibilities">
           <ul className="space-y-5">
             {role.responsibilities.map((r, i) => (
               <li
@@ -90,7 +90,7 @@ export function RoleDetail({ role }: { role: Role }) {
           </ul>
         </Section>
 
-        <Section eyebrow="// FIT" title="You're a good fit if you...">
+        <Section eyebrow="04" title="You're a good fit if you...">
           <p className="text-[15px] leading-relaxed text-text-muted md:text-base">
             {role.fitIntro}
           </p>
@@ -121,7 +121,7 @@ export function RoleDetail({ role }: { role: Role }) {
           )}
         </Section>
 
-        <Section eyebrow="// OFFER" title="What's on offer">
+        <Section eyebrow="05" title="What's on offer">
           <div className="grid gap-4 md:grid-cols-2">
             {offers.map((o) => (
               <div
@@ -150,7 +150,7 @@ export function RoleDetail({ role }: { role: Role }) {
             href={role.applyHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-primary px-10 py-3.5 text-sm font-bold uppercase tracking-widest text-background transition-all duration-300 hover:scale-105 hover:shadow-[0_0_24px_rgba(0,255,150,0.4)]"
+            className="mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-primary px-10 py-3.5 text-sm font-bold uppercase tracking-widest text-background transition-all duration-300 hover:scale-105 hover:shadow-[0_0_24px_rgba(138,233,208,0.4)]"
           >
             Apply
             <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">

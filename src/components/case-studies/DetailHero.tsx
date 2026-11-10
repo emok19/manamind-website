@@ -1,4 +1,5 @@
 "use client";
+import { Tiles } from "@/components/brand/Graphics";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -73,14 +74,7 @@ export function DetailHero({ study }: { study: CaseStudy }) {
           background: `radial-gradient(ellipse at top, ${accent}1f 0%, transparent 60%)`,
         }}
       />
-      <div
-        className="absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
+      <Tiles seed={61} outlined fade="radial" opacity={0.45} />
 
       <div className="relative mx-auto max-w-6xl px-6">
         <Link
@@ -147,8 +141,8 @@ export function DetailHero({ study }: { study: CaseStudy }) {
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-text-muted">
               Autonomous content validation
             </p>
-            <h1 className="mt-3 text-4xl font-bold leading-none text-foreground md:text-5xl">
-              {study.game.title}
+            <h1 className="mt-3 text-3xl font-bold leading-tight text-foreground md:text-4xl">
+              {study.seo.h1 ?? study.game.title}
             </h1>
             <div className="mt-5 flex flex-wrap items-center gap-2">
               {study.genres.map((genre) => (

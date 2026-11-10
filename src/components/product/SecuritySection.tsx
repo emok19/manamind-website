@@ -10,7 +10,7 @@ const pillars = [
     description:
       "ManaMind interacts with games exclusively through rendered frames and standard input signals. It does not require access to source code, engine internals, or proprietary debugging interfaces.",
     subtitle: "",
-    color: "#00FF96",
+    color: "#8AE9D0",
     icon: (
       <svg viewBox="0 0 48 48" fill="none" className="h-10 w-10">
         <path d="M14 20V16a10 10 0 0120 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -30,7 +30,7 @@ const pillars = [
     description:
       "ManaMind records gameplay sessions only to generate bug reports, reproduction steps, and visual evidence. Data collection is limited to what is required for testing and debugging.",
     subtitle: "",
-    color: "#38BDF8",
+    color: "#FFFEBA",
     icon: (
       <svg viewBox="0 0 48 48" fill="none" className="h-10 w-10">
         <rect x="6" y="6" width="16" height="16" rx="3" stroke="currentColor" strokeWidth="2" />
@@ -51,7 +51,7 @@ const pillars = [
     description:
       "To accommodate different studio policies, ManaMind can be deployed in controlled infrastructure rather than requiring builds to be uploaded to public cloud services.",
     subtitle: "",
-    color: "#A78BFA",
+    color: "#DA97FF",
     icon: (
       <svg viewBox="0 0 48 48" fill="none" className="h-10 w-10">
         <path d="M24 4l16 8v12c0 10-7 18-16 22C15 42 8 34 8 24V12l16-8z" stroke="currentColor" strokeWidth="2" />
@@ -143,7 +143,7 @@ export function SecuritySection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="border-t border-white/5 bg-bg-card py-24 md:py-32">
+    <section ref={ref} id="security" className="scroll-mt-20 border-t border-white/5 bg-bg-card py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
         <FadeInView>
           <div className="mx-auto max-w-3xl text-center">
@@ -151,7 +151,7 @@ export function SecuritySection() {
               Security & Privacy
             </span>
             <h2 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
-              Built for unreleased and sensitive builds
+              Secure game testing for unreleased builds
             </h2>
             <p className="mt-4 text-lg text-text-muted">
               ManaMind is designed for confidential environments, from early prototypes to pre-release builds, while minimising system access to your assets.

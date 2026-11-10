@@ -14,19 +14,17 @@ export function WhoThrives() {
   return (
     <section className="relative border-t border-white/5 bg-bg-card py-24 md:py-32">
       {/* Diagonal accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(167,139,250,0.05)_0%,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(218,151,255,0.05)_0%,transparent_50%)]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="mx-auto grid max-w-6xl gap-16 md:grid-cols-[minmax(0,5fr),minmax(0,7fr)] md:gap-12">
           {/* Left: heading column */}
           <FadeInView>
             <div className="md:sticky md:top-24">
-              <h2 className="font-mono text-3xl font-bold uppercase tracking-tight text-primary md:text-4xl">
-                {`// WHO_THRIVES_HERE`}
-              </h2>
-              <p className="mt-6 text-2xl font-bold leading-tight tracking-tight text-foreground md:text-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Who thrives here</p>
+              <h2 className="mt-4 text-3xl font-bold leading-tight text-foreground md:text-4xl">
                 You&rsquo;ll feel at home if you<span className="text-primary">...</span>
-              </p>
+              </h2>
               <p className="mt-6 text-base leading-relaxed text-text-muted">
                 We&rsquo;re not looking for everyone. We&rsquo;re looking for
                 the few who recognise themselves in this list.

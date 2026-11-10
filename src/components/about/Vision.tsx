@@ -10,7 +10,7 @@ const stages = [
     status: "now",
     label: "Now",
     title: "Autonomous game testing",
-    color: "#00FF96",
+    color: "#8AE9D0",
     glow: true,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
@@ -20,10 +20,25 @@ const stages = [
     ),
   },
   {
+    // Technical Vision, phase 1.5: agents that work on the bug stream and turn reports into fixes.
     status: "next",
     label: "Next",
-    title: "General software testing (apps, ERPs, websites)",
-    color: "#A78BFA",
+    title: "Closed-loop QA: from bug reports to proposed fixes, with proof they work",
+    color: "#8AE9D0",
+    glow: false,
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+        <path d="M4 12a8 8 0 0113.7-5.6M20 12a8 8 0 01-13.7 5.6" strokeLinecap="round" />
+        <path d="M18 3v4h-4M6 21v-4h4" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9.5 12l1.8 1.8L15 10" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    status: "next",
+    label: "Then",
+    title: "General software testing (websites, apps and other software)",
+    color: "#DA97FF",
     glow: false,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
@@ -36,7 +51,7 @@ const stages = [
     status: "future",
     label: "Long Term",
     title: "Robotics",
-    color: "#38BDF8",
+    color: "#FFFEBA",
     glow: false,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
@@ -54,9 +69,9 @@ export function Vision() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="relative overflow-hidden border-t border-white/5 bg-bg-card py-24 md:py-32">
+    <section ref={ref} className="mm-cv relative overflow-hidden border-t border-white/5 bg-bg-card py-24 md:py-32">
       {/* Background glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(0,255,150,0.04)_0%,transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(138,233,208,0.04)_0%,transparent_60%)]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <FadeInView>
@@ -78,7 +93,7 @@ export function Vision() {
           <div className="relative">
             {/* Vertical connector */}
             <motion.div
-              className="absolute top-0 w-px bg-gradient-to-b from-primary/40 via-[#A78BFA]/30 to-[#38BDF8]/20"
+              className="absolute top-0 w-px bg-gradient-to-b from-primary/40 via-[#DA97FF]/30 to-[#FFFEBA]/20"
               style={{ height: "100%", left: "calc(1rem + 1.125rem)" }}
               initial={{ scaleY: 0 }}
               animate={inView ? { scaleY: 1 } : {}}
@@ -130,7 +145,7 @@ export function Vision() {
                     className="flex-1 rounded-2xl border p-6 sm:p-8"
                     style={{
                       borderColor: stage.glow ? `${stage.color}30` : "rgba(255,255,255,0.07)",
-                      backgroundColor: stage.glow ? `${stage.color}06` : "rgba(30,13,38,0.4)",
+                      backgroundColor: stage.glow ? `${stage.color}06` : "rgba(14,0,56,0.4)",
                     }}
                   >
                     <div className="flex items-center gap-3">

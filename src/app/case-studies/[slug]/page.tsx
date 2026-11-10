@@ -1,3 +1,5 @@
+import { FAQ } from "@/components/shared/FAQ";
+import { HUSK_FAQ } from "@/data/faqs";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getCaseStudies, getCaseStudy } from "@/lib/content/case-studies";
@@ -123,7 +125,7 @@ export default async function CaseStudyDetailPage({
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://manamind.ai/",
+            item: "https://manamind.ai",
           },
           {
             "@type": "ListItem",
@@ -147,6 +149,9 @@ export default async function CaseStudyDetailPage({
       <JsonLd data={structuredData} />
       <DetailHero study={study} />
       <DetailSections study={study} />
+      {study.slug === "husk-protocol" ? (
+        <FAQ title="Game localization testing FAQ" items={HUSK_FAQ} />
+      ) : null}
       <CaseStudyCTA />
     </>
   );
