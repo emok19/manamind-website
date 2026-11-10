@@ -55,7 +55,7 @@ You can see the full architecture on our [automated game testing](/product) page
 Each ManaMind bot is an autonomous tester with a specific role, strategy and set of abilities.
 
 - **Trailblazer** navigates menus, settings, onboarding flows and end-to-end player journeys, checking that every screen is reachable and every setting works. It also plays through progression systems and quests, making sure the game can always be completed. Its job is to catch the worst bug of all: a soft-lock that leaves a player stuck for good.
-- **Replicator** replays sessions across devices and builds, reproduces reported bugs and finds the exact build where a regression first appeared. It makes sure your game behaves the same everywhere: across devices, resolutions, aspect ratios, operating systems, GPU tiers and input methods, and from one build to the next. Performance such as frame rate, load times and memory is tracked over time, so regressions are caught as soon as they appear.
+- **Replicator** replays sessions across devices and builds, reproduces reported bugs and finds the exact build where a regression first appeared. It makes sure your game behaves the same everywhere: across devices, resolutions, aspect ratios, operating systems, GPU tiers and input methods, and from one build to the next. The same tests are replayed across many configurations and builds. Performance such as frame rate, load times and memory is tracked over time, so regressions are caught as soon as they appear.
 
 Together, our bots are designed to cover five areas of video game QA: functional, compliance, compatibility, localisation and network. Compliance, localisation and network QA are in early access. [Explore our services](/services).
 
@@ -63,11 +63,11 @@ The approach is already working with studios. On Husk Protocol, developed by Odd
 
 ## Why "ManaMind"? The story behind the name and logo
 
+![The ManaMind symbol: one M for Mana and one M for Mind, combining into one larger M](/blog/manamind-logo-mana-mind.gif)
+
 In games, mana is the energy that powers a character's abilities. Mind is the intelligence that decides how to use them. ManaMind puts the two together: an AI that understands games well enough to play them, and to test them.
 
-The gaming roots run through the whole brand. Our bots' abilities have hero names, not feature names. Our colours are named after the fantasy genre: Void, our deep purple, alongside Arcane, Aether, Elixir and Lumen.
-
-The logo tells the same story. The symbol is made of four shapes mirrored down the middle. Together they form two "M"s, one for Mana and one for Mind, which combine into one larger M. Look closely at the wordmark and you'll find a hidden "AI" at its centre. In the stacked version of the logo, the symbol points straight at it. AI is at the heart of everything we do.
+The gaming roots run through the whole brand. Our bots have Hero Abilities, not features. Our colours are named after the fantasy genre: Void, our deep purple, alongside Arcane, Aether, Elixir and Lumen.
 
 ## What we believe
 
