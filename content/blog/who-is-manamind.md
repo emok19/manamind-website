@@ -1,6 +1,6 @@
 ---
-title: "Who is ManaMind? The model for games QA"
-seoTitle: "Who Is ManaMind? AI Game QA That Plays Like Your Players"
+title: "What is ManaMind? The model for games QA"
+seoTitle: "What Is ManaMind? AI Game QA That Plays Like Your Players"
 description: "ManaMind's AI agents play your game like real players and report bugs automatically. Meet the team and the story behind the model for game QA."
 date: "2026-11-10"
 author: "ManaMind"
