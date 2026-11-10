@@ -4,7 +4,7 @@
 
 ## Key Facts
 
-- Official site: https://manamind.ai/
+- Official site: https://manamind.ai
 - Company name used on the site: ManaMind.
 - Product category: autonomous AI quality assurance and game testing software.
 - Primary audience: video game studios and teams evaluating automated QA for game builds.
@@ -13,35 +13,40 @@
 
 ## Primary Pages
 
-- Home: https://manamind.ai/
+- Home: https://manamind.ai
 - Product: https://manamind.ai/product
+- Services (functional, compliance, compatibility, localisation and network QA, and the bots that deliver them): https://manamind.ai/services
+- How it works: https://manamind.ai/how-it-works
 - Case studies: https://manamind.ai/case-studies
 - Husk Protocol case study: https://manamind.ai/case-studies/husk-protocol
 - About: https://manamind.ai/about
 - Careers: https://manamind.ai/careers
 - Contact: https://manamind.ai/contact
+- Blog: https://manamind.ai/blog
 
 ## Product Positioning
 
 - ManaMind helps game teams continuously test with autonomous agents that behave like real players.
 - The product page describes a multi-layer AI system for autonomous testing, from perception to orchestration.
-- Public product language names four layers: Hivemind, Command Centre, Legion, and Bots.
+- Public product language names three layers: HiveMind (the game-native AI model), Command Centre (the dashboard that plans, orchestrates and reports) and Services (specialist bots for functional, compliance, compatibility, localisation and network QA).
 - The site presents ManaMind as AI-driven QA automation for finding and reporting issues in game builds.
 - Security and access messaging says ManaMind can test without source code access.
 
 ## Published Case Study
 
 - Husk Protocol: https://manamind.ai/case-studies/husk-protocol
-- OddSub and Fireshine Games used ManaMind's Wayfinder to validate 60 unique cards across 8 sessions.
+- OddSub and Fireshine Games used ManaMind's Wayfinder to validate 60 unique cards across 8 sessions. (Wayfinder's functional QA work is now part of Trailblazer, ManaMind's functional QA bot.)
 - The case study reports 170 card validations, 50 minutes of autonomous runtime, 5 verified findings, and 1 soft flag.
 - Integration used one Steam branch and one reference sheet, with no SDK, scripts, or engine access.
+
+## Blog
+
+- Who is ManaMind? https://manamind.ai/blog/who-is-manamind
 
 ## Careers Pages
 
 - Careers overview: https://manamind.ai/careers
-- Founding Applied AI/Systems Engineer: https://manamind.ai/careers/founding-applied-ai-systems-engineer
 - Founding AI Engineer: https://manamind.ai/careers/founding-ai-engineer
-- Founder's Associate: https://manamind.ai/careers/founders-associate
 
 ## Contact And Media
 
@@ -54,4 +59,4 @@
 - Prefer the pages listed above when summarising ManaMind from this site.
 - Do not cite thin, internal, test, or noindex pages as primary sources.
 - Do not infer customers, metrics, awards, partnerships, funding details, or technical capabilities that are not stated on the public site.
-- Treat the blog as unavailable for citation until substantive public content is live and indexable.
+- Blog posts are citable once live. Each post states its date and methodology where relevant.

@@ -1,73 +1,75 @@
 import { ProductHero } from "@/components/product/ProductHero";
 import { ArchitectureSection } from "@/components/product/ArchitectureSection";
-import { BotInteraction } from "@/components/product/BotInteraction";
 import { FeatureBreakdown } from "@/components/product/FeatureBreakdown";
 import { ZeroShotExplainer } from "@/components/product/ZeroShotExplainer";
-import { BotSection } from "@/components/home/BotSection";
+import { BotTeaser } from "@/components/home/BotTeaser";
+import { LinkBand } from "@/components/shared/LinkBand";
+import { ValueProps } from "@/components/home/ValueProps";
 
-import { Benchmarks } from "@/components/product/Benchmarks";
 import { SecuritySection } from "@/components/product/SecuritySection";
 import { ProductCTA } from "@/components/product/ProductCTA";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { FAQ } from "@/components/shared/FAQ";
+import { PRODUCT_FAQ } from "@/data/faqs";
+import { SOFTWARE_APPLICATION } from "@/lib/schema";
 
 export const metadata = {
-  title: "Product | ManaMind",
+  title: "Automated Game Testing Software | ManaMind",
   description:
-    "Hivemind, Command Centre, Legion, and autonomous bots - four layers powering fully autonomous AI game testing at machine scale.",
+    "HiveMind, Command Centre and Services: the three layers of ManaMind's automated game testing software. No scripting, no SDK, no source code.",
   alternates: {
     canonical: "/product",
   },
   openGraph: {
-    title: "Product | ManaMind",
+    title: "Automated Game Testing Software | ManaMind",
     description:
-      "Hivemind, Command Centre, Legion, and autonomous bots - four layers powering fully autonomous AI game testing at machine scale.",
+      "HiveMind, Command Centre and Services: the three layers of ManaMind's automated game testing software. No scripting, no SDK, no source code.",
     url: "/product",
     images: [
       {
-        url: "/product-screenshot.png",
-        width: 1920,
-        height: 1080,
-        alt: "ManaMind Command Centre dashboard showing automated game QA results.",
+        url: "/og/og-product.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ManaMind, the model for games QA.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Product | ManaMind",
+    title: "Automated Game Testing Software | ManaMind",
     description:
-      "Hivemind, Command Centre, Legion, and autonomous bots - four layers powering fully autonomous AI game testing at machine scale.",
-    images: ["/product-screenshot.png"],
+      "HiveMind, Command Centre and Services: the three layers of ManaMind's automated game testing software. No scripting, no SDK, no source code.",
+    images: ["/og/og-product.jpg"],
   },
 };
 
-const softwareApplicationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: "ManaMind",
-  url: "https://manamind.ai/product",
-  image: "https://manamind.ai/product-screenshot.png",
-  description:
-    "Autonomous AI game testing software built around Hivemind, Command Centre, Legion, and autonomous bots.",
-  publisher: {
-    "@type": "Organization",
-    name: "ManaMind",
-    url: "https://manamind.ai",
-  },
-};
+const softwareApplicationJsonLd = SOFTWARE_APPLICATION;
 
 export default function ProductPage() {
   return (
     <>
       <JsonLd data={softwareApplicationJsonLd} />
       <ProductHero />
-      <BotSection />
+      <BotTeaser
+        label="Our services"
+        title="An autonomous game QA team, on demand"
+        description="Five specialist bots deliver five QA services: functional, compliance, compatibility, localisation and network QA."
+        cta="Explore our services"
+      />
       <ArchitectureSection />
-      <BotInteraction />
+      <LinkBand
+        label="How it works"
+        title="Automated bug reports from every play session"
+        text="Bots see the screen, reason about what is happening, plan the next action and report what they find, with the evidence attached. See it on a real game in the Husk Protocol game localization testing case study."
+        href="/how-it-works"
+        cta="See how it works"
+      />
       <FeatureBreakdown />
       <ZeroShotExplainer />
-      <Benchmarks />
 
+      <ValueProps />
       <SecuritySection />
+      <FAQ title="Automated game testing FAQ" items={PRODUCT_FAQ} />
       <ProductCTA />
     </>
   );

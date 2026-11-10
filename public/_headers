@@ -2,6 +2,17 @@
 # https://developers.cloudflare.com/pages/platform/headers/
 
 # =============================================================================
+# SECURITY HEADERS (all routes)
+# =============================================================================
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://formspree.io https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; media-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://formspree.io
+
+# =============================================================================
 # HASHED BUILD ASSETS
 # These files live in /_next/static/ and have content hashes in their names.
 # They are guaranteed to change when the underlying content changes, so they
@@ -23,7 +34,7 @@
 # - /product-screenshot.png   - used in hero showcase and OG tags
 # - /bug-report-frame.jpeg    - used in product page
 # - /team-emil.jpg           - used in about/careers pages
-# - /team-sabtain.png        - used in about/careers pages
+# - /team-sabtain.webp        - used in about/careers pages
 # - SVG icons at root         - misc UI assets
 # =============================================================================
 /manamind-logo.png
@@ -38,19 +49,7 @@
 /team-emil.jpg
   Cache-Control: public, max-age=604800
 
-/team-sabtain.png
-  Cache-Control: public, max-age=604800
-
-/bug-report-frame.jpeg
-  Cache-Control: public, max-age=604800
-
-/globe.svg
-  Cache-Control: public, max-age=604800
-
-/window.svg
-  Cache-Control: public, max-age=604800
-
-/file.svg
+/team-sabtain.webp
   Cache-Control: public, max-age=604800
 
 /icon.png

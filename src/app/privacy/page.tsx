@@ -1,3 +1,4 @@
+import { Glow } from "@/components/brand/Graphics";
 import { FadeInView } from "@/components/animations/FadeInView";
 
 export const metadata = {
@@ -14,26 +15,27 @@ export const metadata = {
     url: "/privacy",
     images: [
       {
-        url: "/manamind-logo.png",
-        width: 179,
-        height: 33,
-        alt: "ManaMind logo.",
+        url: "/og/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ManaMind, the model for games QA.",
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Privacy Policy | ManaMind",
     description:
       "ManaMind's privacy policy for personal data, analytics, security, retention, and data subject rights.",
-    images: ["/manamind-logo.png"],
+    images: ["/og/og-default.jpg"],
   },
 };
 
 export default function PrivacyPage() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="mx-auto max-w-3xl px-6">
+    <section className="relative overflow-hidden pb-24 pt-36 md:pb-32 md:pt-44">
+      <Glow accent="arcane" position="top" strength={0.35} />
+      <div className="relative mx-auto max-w-3xl px-6">
         <FadeInView>
           <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
             Privacy Policy
@@ -51,9 +53,9 @@ export default function PrivacyPage() {
           </p>
         </FadeInView>
 
-        <div className="mt-12 space-y-10 text-sm leading-relaxed text-text-muted">
+        <div className="mt-12 space-y-10 text-[15px] leading-relaxed text-text-muted">
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Introduction</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Introduction</h2>
             <p>
               ManaMind Ltd (&ldquo;ManaMind&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;,
               &ldquo;our&rdquo;) provides AI-powered QA automation software for video game
@@ -66,7 +68,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">What Data We Collect</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">What Data We Collect</h2>
             <p>We may collect:</p>
 
             <h3 className="mt-4 mb-2 font-semibold text-foreground">A. Business Contact Data</h3>
@@ -98,7 +100,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">
+            <h2 className="mb-3 text-xl font-bold text-foreground">
               Lawful Basis for Processing
             </h2>
             <p>We process data under:</p>
@@ -111,7 +113,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">How We Use Data</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">How We Use Data</h2>
             <p>We use data to:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>Provide and operate our services</li>
@@ -124,7 +126,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Data Sharing</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Data Sharing</h2>
             <p>We may share data with:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>Cloud infrastructure providers (e.g. hosting providers)</li>
@@ -138,7 +140,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">International Transfers</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">International Transfers</h2>
             <p>
               If data is transferred outside the UK, we ensure appropriate safeguards (e.g. Standard
               Contractual Clauses).
@@ -146,7 +148,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Data Retention</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Data Retention</h2>
             <p>We retain data only as long as necessary to:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>Fulfil contractual obligations</li>
@@ -159,7 +161,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Security</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Security</h2>
             <p>
               We implement appropriate technical and organisational safeguards, including:
             </p>
@@ -172,7 +174,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Data Subject Rights</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Data Subject Rights</h2>
             <p>Individuals have the right to:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>Access their data</li>
@@ -191,7 +193,7 @@ export default function PrivacyPage() {
           </div>
 
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-foreground">Updates</h2>
+            <h2 className="mb-3 text-xl font-bold text-foreground">Updates</h2>
             <p>
               We may update this policy periodically. The latest version will be available on our
               website.

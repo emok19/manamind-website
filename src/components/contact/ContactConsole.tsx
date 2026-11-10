@@ -1,9 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CopyEmail } from "@/components/contact/CopyEmail";
-import { CONTACT_ENDPOINT, SALES_EMAIL } from "@/lib/constants";
+import { SALES_EMAIL, BOOKING_URL } from "@/lib/constants";
+import { LogoSymbol } from "@/components/brand/Logo";
+import Link from "next/link";
+import { bots, services } from "@/data/bots";
+
+// Where the form is delivered (Formspree). If it is missing or the request fails,
+// the visitor is shown the email address instead. We never show "sent" unless the
+// endpoint confirmed it.
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? "https://formspree.io/f/xyeeaqal";
 
 type ChannelId = "studios" | "press" | "general";
 
@@ -11,181 +19,59 @@ type Channel = {
   id: ChannelId;
   label: string;
   blurb: string;
-  cta: string;
   subject: string;
-  email: string;
   accent: string;
   rolePlaceholder: string;
   emailPlaceholder: string;
   companyPlaceholder: string;
-  icon: React.ReactNode;
 };
-
-type Status = "idle" | "sending" | "sent" | "error";
 
 const CHANNELS: Channel[] = [
   {
     id: "studios",
     label: "Studios & partners",
-    blurb: "Interested in using ManaMind or exploring a partnership?",
-    cta: "Talk to us",
+    blurb: "Using ManaMind on your game, a pilot, or a partnership.",
     subject: "Studios & partners enquiry",
-    email: SALES_EMAIL,
-    accent: "#00FF96",
+    accent: "#8AE9D0",
     rolePlaceholder: "e.g. QA lead, Producer",
-    emailPlaceholder: "you@abstergo.com",
+    emailPlaceholder: "you@studio.com",
     companyPlaceholder: "Studio",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
-        <path
-          d="M9 11V7a3 3 0 016 0v4M5 11h14l-1 9H6l-1-9z"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
   },
   {
     id: "press",
     label: "Press & media",
-    blurb: "For interviews, speaking opportunities, or media enquiries.",
-    cta: "Contact press",
+    blurb: "Interviews, speaking opportunities and media enquiries.",
     subject: "Press & media enquiry",
-    email: SALES_EMAIL,
-    accent: "#FF4C54",
+    accent: "#FFFEBA",
     rolePlaceholder: "e.g. Journalist, Editor",
     emailPlaceholder: "you@outlet.com",
     companyPlaceholder: "Organisation",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
-        <path
-          d="M3 11l18-7v16l-18-7v-2zM7 17v3a1 1 0 001 1h2a1 1 0 001-1v-1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
   },
   {
     id: "general",
-    label: "General enquiries",
-    blurb: "Not sure where your message fits? That’s fine, just send it through.",
-    cta: "Send a message",
+    label: "Anything else",
+    blurb: "Not sure where it fits? Send it anyway, we read everything.",
     subject: "General enquiry",
-    email: SALES_EMAIL,
-    accent: "#A78BFA",
+    accent: "#DA97FF",
     rolePlaceholder: "e.g. Researcher, Student",
     emailPlaceholder: "you@example.com",
     companyPlaceholder: "Organisation",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
-        <path
-          d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
   },
 ];
 
-function ChannelCard({
-  channel,
-  active,
-  onSelect,
-}: {
-  channel: Channel;
-  active: boolean;
-  onSelect: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onSelect}
-      aria-pressed={active}
-      className="group relative block w-full overflow-hidden rounded-2xl border bg-bg-card p-6 text-left transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-      style={{
-        borderColor: active ? channel.accent : "rgba(255,255,255,0.1)",
-        boxShadow: active ? `0 0 30px ${channel.accent}33` : "none",
-      }}
-      onMouseEnter={(e) => {
-        if (active) return;
-        e.currentTarget.style.borderColor = channel.accent;
-        e.currentTarget.style.boxShadow = `0 0 30px ${channel.accent}22`;
-      }}
-      onMouseLeave={(e) => {
-        if (active) return;
-        e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-        e.currentTarget.style.boxShadow = "none";
-      }}
-    >
-      <div className="flex items-center justify-between">
-        <div
-          className="flex h-9 w-9 items-center justify-center rounded-lg border"
-          style={{
-            color: channel.accent,
-            borderColor: `${channel.accent}40`,
-            backgroundColor: `${channel.accent}10`,
-          }}
-        >
-          {channel.icon}
-        </div>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted">
-          Channel
-        </span>
-      </div>
+type Status = "idle" | "sending" | "sent" | "error";
 
-      <h3 className="mt-5 text-lg font-bold text-foreground">{channel.label}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-text-muted">{channel.blurb}</p>
+const FIELD_BG = { backgroundColor: "rgba(14,0,56,.6)" };
 
-      <div className="mt-5 flex items-center justify-between text-sm font-medium">
-        <span style={{ color: channel.accent }}>{channel.cta}</span>
-        {active ? (
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            className="h-4 w-4"
-            style={{ color: channel.accent }}
-          >
-            <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        ) : (
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="h-4 w-4 transition-transform group-hover:translate-x-1"
-            style={{ color: channel.accent }}
-          >
-            <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )}
-      </div>
-
-      <span
-        className="absolute inset-x-0 bottom-0 h-px transition-transform duration-500"
-        style={{
-          background: channel.accent,
-          transformOrigin: "left",
-          transform: active ? "scaleX(1)" : "scaleX(0)",
-        }}
-      />
-    </button>
-  );
-}
-
-function FormField({
+function Field({
   label,
   name,
   type = "text",
   required,
   value,
   onChange,
-  accent,
   placeholder,
+  autoComplete,
 }: {
   label: string;
   name: string;
@@ -193,231 +79,190 @@ function FormField({
   required?: boolean;
   value: string;
   onChange: (v: string) => void;
-  accent: string;
   placeholder?: string;
+  autoComplete?: string;
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-[11px] font-semibold uppercase tracking-widest text-text-muted">
+      <span className="mb-2 block text-xs font-semibold uppercase tracking-widest text-text-muted">
         {label}
-        {required && <span className="ml-1 text-highlight">*</span>}
+        {required && <span className="ml-1 text-primary">*</span>}
       </span>
       <input
         type={type}
         name={name}
         required={required}
         value={value}
+        autoComplete={autoComplete}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-foreground placeholder:text-text-muted/50 transition-colors focus:outline-none"
-        onFocus={(e) => {
-          e.currentTarget.style.borderColor = accent;
-          e.currentTarget.style.boxShadow = `0 0 0 3px ${accent}1A`;
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-          e.currentTarget.style.boxShadow = "none";
-        }}
+        className="w-full rounded-xl border border-white/15 px-4 py-3 text-[15px] text-foreground placeholder:text-text-muted/60 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+        style={FIELD_BG}
       />
     </label>
   );
 }
 
+const EMPTY = { name: "", email: "", role: "", company: "", message: "", website: "", platforms: "", engine: "", stage: "" };
+
+const NEXT_STEPS: [string, string][] = [
+  ["We reply within one business day", "A real person from the team, not an autoresponder."],
+  ["A 30 minute call", "We learn about your game, platforms and what slows your QA down."],
+  ["A demo on your kind of game", "You see the bots play, find issues and write the reports."],
+];
+
 export function ContactConsole() {
   const [status, setStatus] = useState<Status>("idle");
-  const [activeChannelId, setActiveChannelId] = useState<ChannelId>("studios");
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    role: "",
-    company: "",
-    message: "",
-    website: "",
-  });
+  const [channelId, setChannelId] = useState<ChannelId>("studios");
+  const [form, setForm] = useState(EMPTY);
+  const [party, setParty] = useState<string[]>([]);
+  const [picked, setPicked] = useState<string[]>([]);
 
-  const activeChannel =
-    CHANNELS.find((c) => c.id === activeChannelId) ?? CHANNELS[0];
-  const formAccent = activeChannel.accent;
+  // Services picked on /services arrive as ?services=functional,localisation.
+  // The older ?bots=wayfinder,rosetta links still work. Both are sent with the
+  // enquiry, so the team knows what to prepare and which services are in demand.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const list = (key: string) => params.get(key)?.split(",").filter(Boolean) ?? [];
+    const serviceIds = list("services");
+    const ALIASES: Record<string, string> = { wayfinder: "trailblazer" }; // Wayfinder retired 9 Nov 2026
+    const botIds = list("bots").map((id) => ALIASES[id] ?? id);
+    const chosen = services.filter((s) => serviceIds.includes(s.id) || bots.some((b) => botIds.includes(b.id) && b.category === s.id));
+    const team = bots.filter((b) => botIds.includes(b.id) || serviceIds.includes(b.category)).map((b) => b.name);
+    if (chosen.length) {
+      const labels = chosen.map((s) => s.label);
+      setPicked(labels);
+      setParty(team);
+      setForm((f) => ({ ...f, message: f.message || `We are interested in ${labels.join(", ")}. Our game is...` }));
+    }
+  }, []);
+
+  const channel = CHANNELS.find((c) => c.id === channelId) ?? CHANNELS[0];
+  const update = (key: keyof typeof form) => (v: string) => setForm((prev) => ({ ...prev, [key]: v }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (form.website) return; // honeypot: bots fill hidden fields, people do not
     setStatus("sending");
     try {
+      if (!CONTACT_ENDPOINT) throw new Error("No contact endpoint configured");
       const res = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          channel: activeChannel.label,
-          _subject: `[manamind.ai] ${activeChannel.subject}: ${form.name}`,
+          channel: channel.label,
+          _subject: `[manamind.ai] ${channel.subject}: ${form.name}`,
           name: form.name,
           email: form.email,
           role: form.role,
           company: form.company,
           message: form.message,
+          platforms: form.platforms,
+          engine: form.engine,
+          game_stage: form.stage,
+          services_selected: picked.join(", "),
+          bots_selected: party.join(", "),
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setStatus("sent");
-      if (window.gtag) window.gtag("event", "generate_lead", { channel: activeChannel.id });
+      if (window.gtag) window.gtag("event", "generate_lead", { channel: channel.id });
     } catch {
       setStatus("error");
-      if (window.gtag) window.gtag("event", "contact_form_error", { channel: activeChannel.id });
+      if (window.gtag) window.gtag("event", "contact_form_error", { channel: channel.id });
     }
   };
 
-  const update = (key: keyof typeof form) => (v: string) =>
-    setForm((prev) => ({ ...prev, [key]: v }));
+  const reset = () => {
+    setStatus("idle");
+    setForm(EMPTY);
+  };
 
   return (
-    <section className="relative pb-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mx-auto max-w-5xl">
-          <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-text-muted">
-            What are you reaching out about?
-          </p>
-          <div className="grid gap-4 md:grid-cols-3">
-            {CHANNELS.map((c) => (
-              <ChannelCard
-                key={c.id}
-                channel={c}
-                active={c.id === activeChannelId}
-                onSelect={() => setActiveChannelId(c.id)}
-              />
-            ))}
-          </div>
-
-          <div className="mt-12 flex items-center gap-4 text-text-muted">
-            <span className="h-px flex-1 bg-white/10" />
-            <span className="font-mono text-[10px] uppercase tracking-widest">
-              Or send a detailed message
-            </span>
-            <span className="h-px flex-1 bg-white/10" />
-          </div>
-        </div>
-
-        <div className="mx-auto mt-10 max-w-3xl">
-          <div
-            className="overflow-hidden rounded-3xl border bg-bg-card transition-colors duration-500"
-            style={{ borderColor: `${formAccent}30` }}
-          >
-            <div className="flex items-center justify-between border-b border-white/5 bg-black/30 px-6 py-3">
-              <div className="flex items-center gap-3">
-                <span
-                  className="h-2 w-2 rounded-full transition-colors duration-500"
-                  style={{
-                    backgroundColor: formAccent,
-                    boxShadow: `0 0 8px ${formAccent}`,
-                  }}
-                />
-                <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted">
-                  Transmission // {activeChannel.label}
-                </span>
+    <section id="message" className="relative scroll-mt-24 pb-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+          {/* Form */}
+          <div data-form-card className="overflow-hidden rounded-3xl border border-white/10 bg-bg-card/80 backdrop-blur-sm">
+            <div className="border-b border-white/10 px-6 pt-6 md:px-10 md:pt-8">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-text-muted">What is it about?</p>
+              <div className="flex flex-wrap gap-2 pb-6" role="radiogroup" aria-label="Enquiry type">
+                {CHANNELS.map((c) => {
+                  const active = c.id === channelId;
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      onClick={() => setChannelId(c.id)}
+                      className="rounded-full border px-4 py-2 text-sm font-semibold transition-colors"
+                      style={{
+                        borderColor: active ? c.accent : "rgba(255,255,255,.15)",
+                        background: active ? c.accent : "transparent",
+                        color: active ? "#170055" : "var(--text-muted)",
+                      }}
+                    >
+                      {c.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             <div className="p-6 md:p-10">
               <AnimatePresence mode="wait">
                 {status === "sent" ? (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.4 }}
-                    className="py-8 text-center"
-                  >
-                    <div
-                      className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border"
-                      style={{
-                        borderColor: `${formAccent}50`,
-                        backgroundColor: `${formAccent}14`,
-                      }}
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke={formAccent}
-                        strokeWidth="2"
-                        className="h-7 w-7"
-                      >
-                        <path
-                          d="M5 13l4 4L19 7"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                  <motion.div key="sent" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="py-6 text-center" role="status">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-void">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-7 w-7"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     </div>
-                    <h3 className="mt-6 text-2xl font-bold text-foreground">
-                      Message received.
-                    </h3>
+                    <h3 className="mt-6 text-2xl font-bold text-foreground">Message received.</h3>
                     <p className="mx-auto mt-3 max-w-md text-text-muted">
-                      Thanks{form.name ? ` ${form.name.split(" ")[0]}` : ""}. It is with
-                      the team now and we&rsquo;ll reply to {form.email} within one
-                      business day.
+                      Thanks{form.name ? ` ${form.name.split(" ")[0]}` : ""}. It is with the team now and we will reply to {form.email} within one business day.
                     </p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setStatus("idle");
-                        setForm({ name: "", email: "", role: "", company: "", message: "", website: "" });
-                      }}
-                      className="mt-8 text-sm font-medium text-text-muted underline-offset-4 hover:text-primary hover:underline"
-                    >
+                    <button type="button" onClick={reset} className="mt-8 text-sm font-medium text-text-muted underline-offset-4 hover:text-primary hover:underline">
                       Send another message
                     </button>
                   </motion.div>
                 ) : (
-                  <motion.form
-                    key="form"
-                    onSubmit={handleSubmit}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-5"
-                  >
+                  <motion.form key="form" onSubmit={handleSubmit} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-5">
+                    <p className="text-sm text-text-muted">{channel.blurb}</p>
                     <div className="grid gap-5 md:grid-cols-2">
-                      <FormField
-                        label="Name"
-                        name="name"
-                        required
-                        value={form.name}
-                        onChange={update("name")}
-                        accent={formAccent}
-                        placeholder="Your name"
-                      />
-                      <FormField
-                        label="Email"
-                        name="email"
-                        type="email"
-                        required
-                        value={form.email}
-                        onChange={update("email")}
-                        accent={formAccent}
-                        placeholder={activeChannel.emailPlaceholder}
-                      />
-                      <FormField
-                        label="Role"
-                        name="role"
-                        value={form.role}
-                        onChange={update("role")}
-                        accent={formAccent}
-                        placeholder={activeChannel.rolePlaceholder}
-                      />
-                      <FormField
-                        label="Company"
-                        name="company"
-                        value={form.company}
-                        onChange={update("company")}
-                        accent={formAccent}
-                        placeholder={activeChannel.companyPlaceholder}
-                      />
+                      <Field label="Name" name="name" required value={form.name} onChange={update("name")} placeholder="Your name" autoComplete="name" />
+                      <Field label="Work email" name="email" type="email" required value={form.email} onChange={update("email")} placeholder={channel.emailPlaceholder} autoComplete="email" />
+                      <Field label="Role" name="role" value={form.role} onChange={update("role")} placeholder={channel.rolePlaceholder} autoComplete="organization-title" />
+                      <Field label="Company" name="company" value={form.company} onChange={update("company")} placeholder={channel.companyPlaceholder} autoComplete="organization" />
                     </div>
 
+                    {channelId === "studios" ? (
+                      <details className="group rounded-xl border border-white/10 px-4 py-3">
+                        <summary className="cursor-pointer list-none text-sm font-semibold text-foreground">
+                          <span className="mr-2 inline-block transition-transform group-open:rotate-90">&rsaquo;</span>
+                          About your game <span className="font-normal text-text-muted">(optional, helps us prepare)</span>
+                        </summary>
+                        <div className="mt-4 grid gap-4 md:grid-cols-3">
+                          <Field label="Platforms" name="platforms" value={form.platforms} onChange={update("platforms")} placeholder="PC, Android, iOS..." />
+                          <Field label="Engine" name="engine" value={form.engine} onChange={update("engine")} placeholder="Unity, Unreal, Godot..." />
+                          <Field label="Stage" name="stage" value={form.stage} onChange={update("stage")} placeholder="Alpha, beta, live..." />
+                        </div>
+                      </details>
+                    ) : null}
+
+                    {channelId === "studios" && picked.length ? (
+                      <div className="rounded-xl border border-primary/30 bg-primary/[0.06] px-4 py-3 text-sm">
+                        <p className="text-text-muted">
+                          Services you picked: <b className="text-foreground">{picked.join(", ")}</b>
+                        </p>
+                        <p className="mt-1 text-xs text-text-muted">
+                          Delivered by {party.join(", ")}. <Link href="/services" className="font-semibold text-primary hover:underline">Change</Link>
+                        </p>
+                      </div>
+                    ) : null}
+
                     <label className="block">
-                      <span className="mb-2 block text-[11px] font-semibold uppercase tracking-widest text-text-muted">
-                        Message <span className="ml-1 text-highlight">*</span>
+                      <span className="mb-2 block text-xs font-semibold uppercase tracking-widest text-text-muted">
+                        Message <span className="ml-1 text-primary">*</span>
                       </span>
                       <textarea
                         name="message"
@@ -425,67 +270,41 @@ export function ContactConsole() {
                         rows={5}
                         value={form.message}
                         onChange={(e) => update("message")(e.target.value)}
-                        placeholder="Tell us what's on your mind. We read everything."
-                        className="w-full resize-none rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-foreground placeholder:text-text-muted/50 transition-colors focus:outline-none"
-                        onFocus={(e) => {
-                          e.currentTarget.style.borderColor = formAccent;
-                          e.currentTarget.style.boxShadow = `0 0 0 3px ${formAccent}1A`;
-                        }}
-                        onBlur={(e) => {
-                          e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                          e.currentTarget.style.boxShadow = "none";
-                        }}
+                        placeholder="Tell us about your game, your platforms and what you would like to test."
+                        className="w-full resize-none rounded-xl border border-white/15 px-4 py-3 text-[15px] text-foreground placeholder:text-text-muted/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25"
+                        style={FIELD_BG}
                       />
                     </label>
 
                     {/* Honeypot, hidden from people */}
-                    <input
-                      type="text"
-                      name="website"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={form.website}
-                      onChange={(e) => update("website")(e.target.value)}
-                      className="hidden"
-                      aria-hidden="true"
-                    />
+                    <input type="text" name="website" tabIndex={-1} autoComplete="off" value={form.website} onChange={(e) => update("website")(e.target.value)} className="hidden" aria-hidden="true" />
 
-                    {status === "error" && (
-                      <div role="alert" className="rounded-xl border border-highlight/40 bg-highlight/10 p-4 text-sm">
-                        <p className="font-semibold text-foreground">Sorry, your message did not go through.</p>
-                        <p className="mt-1 text-text-muted">
-                          Nothing is lost: copy our address and email us directly. We reply within one business day.
-                        </p>
-                        <div className="mt-3">
-                          <CopyEmail email={SALES_EMAIL} />
-                        </div>
+                    {status === "error" ? (
+                      <div role="alert" className="rounded-2xl border border-lumen/60 bg-lumen/10 p-4 text-sm">
+                        <p className="font-semibold text-lumen">Sorry, your message did not go through.</p>
+                        <p className="mt-1 text-text-muted">Nothing is lost: copy our address and email us directly, we reply within one business day.</p>
+                        <div className="mt-3"><CopyEmail email={SALES_EMAIL} /></div>
                       </div>
-                    )}
+                    ) : null}
 
                     <div className="flex flex-col items-start justify-between gap-4 pt-2 sm:flex-row sm:items-center">
-                      <p className="font-mono text-[11px] uppercase tracking-widest text-text-muted">
-                        We reply within one business day
-                      </p>
+                      <p className="text-xs text-text-muted">We reply within one business day.</p>
                       <button
                         type="submit"
                         disabled={status === "sending"}
-                        className="group inline-flex disabled:opacity-60 items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-semibold transition-all duration-300 hover:scale-105"
-                        style={{
-                          backgroundColor: formAccent,
-                          color: "#1E0D26",
-                          boxShadow: `0 0 24px ${formAccent}33`,
-                        }}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-void transition-transform hover:scale-[1.03] disabled:opacity-60"
                       >
-                        {status === "sending" ? "Sending..." : "Send transmission"}
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
-                        >
-                          <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        {status === "sending" ? (
+                          <>
+                            <LogoSymbol className="mm-sending h-3 w-auto" title="" />
+                            Sending
+                          </>
+                        ) : (
+                          <>
+                            Send message
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-4 w-4"><path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </>
+                        )}
                       </button>
                     </div>
                   </motion.form>
@@ -494,10 +313,47 @@ export function ContactConsole() {
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 text-sm text-text-muted sm:flex-row">
-            <span>Prefer email? Write to us directly:</span>
-            <CopyEmail email={SALES_EMAIL} />
-          </div>
+          {/* Direct options, always visible */}
+          <aside className="space-y-4">
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => { if (window.gtag) window.gtag("event", "book_demo_click", { location: "contact" }); }}
+              className="group block rounded-3xl bg-primary p-6 text-void transition-transform hover:scale-[1.02]"
+            >
+              <p className="text-xs font-bold uppercase tracking-widest opacity-70">Fastest way</p>
+              <p className="mt-2 font-display text-xl font-bold">Book a 30 minute demo</p>
+              <p className="mt-1 text-sm opacity-80">Pick a time that suits you. We&rsquo;ll show ManaMind on your kind of game.</p>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold">
+                Choose a time <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">&rarr;</span>
+              </span>
+            </a>
+
+            <div className="rounded-3xl border border-white/10 bg-bg-card/80 p-6">
+              <p className="text-xs font-semibold uppercase tracking-widest text-primary">Prefer email?</p>
+              <h3 className="mt-2 text-lg font-bold text-foreground">Write to us directly</h3>
+              <p className="mt-2 text-sm text-text-muted">Studios, publishers, partners and press:</p>
+              <div className="mt-2"><CopyEmail email={SALES_EMAIL} /></div>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-bg-card/80 p-6">
+              <p className="text-xs font-semibold uppercase tracking-widest text-primary">What happens next</p>
+              <ol className="mt-4 space-y-4">
+                {NEXT_STEPS.map(([t, d], i) => (
+                  <li key={t} className="flex gap-3">
+                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-void">{i + 1}</span>
+                    <span className="text-sm"><b className="block text-foreground">{t}</b><span className="text-text-muted">{d}</span></span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-bg-card/80 p-6">
+              <p className="text-xs font-semibold uppercase tracking-widest text-text-muted">ManaMind Limited</p>
+              <p className="mt-2 text-sm text-text-muted">London, United Kingdom</p>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

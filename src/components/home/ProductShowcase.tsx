@@ -16,28 +16,28 @@ const hotspots: Array<{
 }> = [
   {
     annotation: "Export issues directly to your existing workflow",
-    bot: { initial: "R", name: "Reporter", color: "#FFB84C" },
+    bot: { initial: "R", name: "Reporter", color: "#FFFEBA" },
     x: 28.9,
     y: 9.9,
     tooltipAlign: "center",
   },
   {
     annotation: "See which bot discovered each issue",
-    bot: { initial: "W", name: "Wayfinder", color: "#00FF96" },
+    bot: { initial: "T", name: "Trailblazer", color: "#8AE9D0" },
     x: 60.8,
     y: 31.9,
     tooltipAlign: "center",
   },
   {
     annotation: "Confidence scoring helps prioritise what to fix first",
-    bot: { initial: "B", name: "Breaker", color: "#FF4C54" },
+    bot: { initial: "B", name: "Breaker", color: "#DA97FF" },
     x: 67,
     y: 32.1,
     tooltipAlign: "center",
   },
   {
     annotation: "Auto-generated reports with repo steps directly from gameplay",
-    bot: { initial: "S", name: "Scout", color: "#4CC9FF" },
+    bot: { initial: "S", name: "Scout", color: "#8AE9D0" },
     x: 93.4,
     y: 9.9,
     tooltipAlign: "center",
@@ -58,7 +58,7 @@ export function ProductShowcase() {
               Command Centre
             </span>
             <h2 className="text-2xl font-bold text-foreground md:text-3xl lg:text-4xl">
-              Your autonomous QA team, reporting in real time.
+              Automated game QA, reporting in real time
             </h2>
             <p className="mt-4 text-lg text-text-muted">
               Track what your bots find across every build, all in one place.

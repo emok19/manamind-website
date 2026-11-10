@@ -1,54 +1,15 @@
-"use client";
-
-import { motion } from "framer-motion";
-
+// Compact contact header (9 Nov 2026): the form and the "Book a 30 minute demo" card sit in the
+// first screen, so the old hero with its two buttons is gone. The H1 stays for SEO (fix 2).
 export function ContactHero() {
   return (
-    <section className="relative overflow-hidden pt-36 pb-12 md:pt-44 md:pb-16">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,255,150,0.08)_0%,transparent_60%)]" />
-      <div
-        className="absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
-
-      <div className="relative mx-auto max-w-4xl px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-          </span>
-          Channel open
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl"
-        >
-          Get in <span className="text-primary">touch</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-muted"
-        >
-          Whether you&rsquo;re a studio exploring autonomous testing, a
-          researcher interested in our work, or someone who just wants to learn
-          more, we&rsquo;d love to hear from you.
-        </motion.p>
-      </div>
-    </section>
+    <header className="relative mx-auto max-w-6xl px-6 pt-32 pb-8 md:pt-36 md:pb-10">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Contact</p>
+      <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
+        Book a demo or <span className="text-primary">get in touch</span>
+      </h1>
+      <p className="mt-4 max-w-2xl text-base leading-relaxed text-text-muted md:text-lg">
+        Send us a message, or book a 30 minute demo straight into our calendar. A real person replies within one business day.
+      </p>
+    </header>
   );
 }

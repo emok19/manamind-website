@@ -1,6 +1,8 @@
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Product", href: "/product" },
+  { label: "Services", href: "/services" },
+  { label: "How it works", href: "/how-it-works" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },
@@ -68,20 +70,16 @@ export const VALUE_PROPS = [
 
 export const ARCHITECTURE = {
   hivemind: {
-    name: "Hivemind",
-    description: "Hivemind is our proprietary vLMM and the perception and reasoning layer that interprets game frames, understands UI, and decides what each bot should do next.",
+    name: "HiveMind",
+    description: "HiveMind is our own game-native AI model: it watches the screen, understands the game and its interface, and decides what each bot should do next.",
   },
   commandCentre: {
     name: "Command Centre",
-    description: "The Command Centre is where teams configure, monitor, and manage every aspect of their AI-driven QA pipeline - from launching sessions to reviewing critical findings.",
+    description: "The Command Centre is your team's dashboard: describe what to test in plain language, and it picks the right bots, deploys and orchestrates the runs, and brings back live progress and final reports.",
   },
-  legion: {
-    name: "Legion",
-    description: "Launches, coordinates, and scales hundreds of bot instances across machines and test sessions.",
-  },
-  bots: {
-    name: "Bots",
-    description: "Autonomous agents that interact with your game through the screen - just like human testers.",
+  services: {
+    name: "Services",
+    description: "Specialist bots grouped by QA service: functional, compliance, compatibility, localisation and network. Each bot is fine-tuned from our own models for one class of testing tasks and plays your game through the screen, like a real player.",
   },
 };
 
@@ -100,11 +98,11 @@ export const FEATURES = [
   },
 ];
 
-// Public contact address, shown as plain text on the site so nobody has to dig for it.
+// Public contact addresses. Shown as plain text on the site so nobody has to dig for them.
 export const SALES_EMAIL = "sales@manamind.ai";
+export const GENERAL_EMAIL = SALES_EMAIL; // single public address for now
 
-// Where the contact form is delivered (Formspree). The form never reports success
-// unless this endpoint confirms the message was received.
-export const CONTACT_ENDPOINT = "https://formspree.io/f/xyeeaqal";
+// Book a demo directly (Google Calendar appointment schedule, 30 min with Yagiz).
+export const BOOKING_URL = "https://calendar.app.google/1ToQCcGLCvrzDWiL9";
 
 export const GA_MEASUREMENT_ID = "G-PP9ZLMJTTH";

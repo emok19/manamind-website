@@ -1,12 +1,15 @@
 "use client";
 
+import { Glow, Tiles } from "@/components/brand/Graphics";
+
 import { motion } from "framer-motion";
 
 export function AboutHero() {
   return (
     <section className="relative flex min-h-[50vh] items-center overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,150,0.04)_0%,transparent_70%)]" />
+      <Glow accent="aether" position="bottom" strength={0.3} />
+      <Tiles seed={13} outlined fade="radial" opacity={0.5} />
 
       {/* Animated grid dots */}
       <div className="absolute inset-0">
@@ -42,12 +45,12 @@ export function AboutHero() {
         </motion.span>
 
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-4xl font-bold text-foreground md:text-5xl lg:text-6xl"
         >
-          Autonomous testing infrastructure
+          Autonomous testing infrastructure{" "}
           <br />
           for{" "}
           <span className="text-primary">interactive worlds</span>

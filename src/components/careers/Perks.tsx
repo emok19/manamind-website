@@ -8,20 +8,13 @@ import { FadeInView } from "@/components/animations/FadeInView";
 type RetreatPhoto = { src: string; caption: string; aspect?: string };
 
 const retreatPhotos: RetreatPhoto[] = [
-  { src: "/retreats/chateau-exterior.jpeg", caption: "Loire Valley, France" },
-  { src: "/retreats/morocco-pool.jpeg", caption: "Marrakech, Morocco" },
-  { src: "/retreats/outdoor-coast.jpeg", caption: "Floda, Sweden" },
-  { src: "/retreats/chateau-team.jpeg", caption: "Loire Valley, France" },
-  { src: "/retreats/morocco-fez.jpeg", caption: "Marrakech, Morocco" },
-  { src: "/retreats/chateau-staircase.jpeg", caption: "Loire Valley, France" },
-  { src: "/retreats/sweden-team.jpeg", caption: "Tenerife, Spain", aspect: "1 / 1" },
-];
-
-const merchPhotos: RetreatPhoto[] = [
-  { src: "/merch/placeholder-1.svg", caption: "Patches" },
-  { src: "/merch/placeholder-2.svg", caption: "Jacket" },
-  { src: "/merch/placeholder-3.svg", caption: "Bot figures" },
-  { src: "/merch/placeholder-4.svg", caption: "Stickers" },
+  { src: "/retreats/chateau-exterior.webp", caption: "Loire Valley, France" },
+  { src: "/retreats/morocco-pool.webp", caption: "Marrakech, Morocco" },
+  { src: "/retreats/outdoor-coast.webp", caption: "Floda, Sweden" },
+  { src: "/retreats/chateau-team.webp", caption: "Loire Valley, France" },
+  { src: "/retreats/morocco-fez.webp", caption: "Marrakech, Morocco" },
+  { src: "/retreats/chateau-staircase.webp", caption: "Loire Valley, France" },
+  { src: "/retreats/sweden-team.webp", caption: "Tenerife, Spain", aspect: "1 / 1" },
 ];
 
 type Perk = {
@@ -40,7 +33,7 @@ const perks: Perk[] = [
     title: "Company retreats",
     tagline: "We don't do generic off-sites",
     body: "Through our network, the team has worked and travelled from places like a 16th-century French château, remote locations in the Moroccan desert, and private island environments in Hawaii. These trips are an opportunity to step away from daily work, think long-term, and spend time with other builders in our ecosystem.",
-    color: "#00FF96",
+    color: "#8AE9D0",
     photos: retreatPhotos,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -50,26 +43,11 @@ const perks: Perk[] = [
     ),
   },
   {
-    id: "merch",
-    title: "The coolest merch ever",
-    tagline: "Milestones become physical artefacts",
-    body: "We are all nerds here so when we had the opportunity to start making our own merch, of course, we went all in. As we build out ManaMind's ecosystem of autonomous agents, we're creating a line of physical collectibles to represent them. Each major milestone unlocks unique velcro patches for your company jacket, and contributors to new bot releases receive a physical figure of that agent.",
-    color: "#F59E0B",
-    photos: merchPhotos,
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M8 8l8 8M16 8l-8 8" strokeLinecap="round" opacity="0.4" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-    ),
-  },
-  {
     id: "early-games",
     title: "Early access to unreleased games",
     tagline: "See games before they release",
     body: "Because we work directly with studios, we often get access to unreleased builds months before launch. In this job, playing games isn't procrastination, it's literally part of the work!",
-    color: "#A78BFA",
+    color: "#DA97FF",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <rect x="2" y="6" width="20" height="12" rx="3" />
@@ -84,7 +62,7 @@ const perks: Perk[] = [
     title: "Work with the coolest tech available",
     tagline: "Cutting-edge AI infrastructure",
     body: "As part of the Nvidia Inception program, we get early and priority access to new GPUs, tooling, and technical support. This allows our team to experiment with and deploy state-of-the-art AI infrastructure without the constraints that often slow down smaller companies.",
-    color: "#38BDF8",
+    color: "#FFFEBA",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <rect x="4" y="4" width="16" height="16" rx="2" />
@@ -98,7 +76,7 @@ const perks: Perk[] = [
     title: "Central London office",
     tagline: "Heart of the UK games industry",
     body: "We operate from UKIE's offices near Farringdon, surrounded by other game studios and startups. The space is filled with industry history, gaming memorabilia, and people building the next generation of interactive entertainment.",
-    color: "#EC4899",
+    color: "#DA97FF",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <path d="M12 22s8-7 8-13a8 8 0 10-16 0c0 6 8 13 8 13z" strokeLinecap="round" strokeLinejoin="round" />
@@ -111,7 +89,7 @@ const perks: Perk[] = [
     title: "Competitive compensation",
     tagline: "Salary and equity aligned with impact",
     body: "We offer competitive salaries and meaningful equity packages so that the people building ManaMind share in the long-term value they help create.",
-    color: "#22D3EE",
+    color: "#8AE9D0",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <circle cx="12" cy="12" r="9" />
@@ -124,10 +102,24 @@ const perks: Perk[] = [
     title: "Health and dental coverage",
     tagline: "Support beyond the workplace",
     body: "Staying healthy is a key priority for our team. That's why we offer optional top-tier health and dental covers for our team.",
-    color: "#34D399",
+    color: "#8AE9D0",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    id: "merch",
+    title: "The coolest merch ever",
+    tagline: "Milestones become physical artefacts",
+    body: "We are all nerds here so when we had the opportunity to start making our own merch, of course, we went all in. As we build out ManaMind's ecosystem of autonomous agents, we're creating a line of physical collectibles to represent them. Each major milestone unlocks unique velcro patches for your company jacket, and contributors to new bot releases receive a physical figure of that agent.",
+    color: "#FFFEBA",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M8 8l8 8M16 8l-8 8" strokeLinecap="round" opacity="0.4" />
+        <circle cx="12" cy="12" r="3" />
       </svg>
     ),
   },
@@ -259,17 +251,15 @@ export function Perks() {
 
   return (
     <section className="relative border-t border-white/5 py-24 md:py-32">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(0,255,150,0.04)_0%,transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(138,233,208,0.04)_0%,transparent_60%)]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <FadeInView>
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-mono text-3xl font-bold uppercase tracking-tight text-primary md:text-4xl">
-              {`// PERKS`}
-            </h2>
-            <p className="mt-6 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Perks</p>
+            <h2 className="mt-4 text-3xl font-bold text-foreground md:text-4xl">
               How we look after the team
-            </p>
+            </h2>
           </div>
         </FadeInView>
 
@@ -283,13 +273,21 @@ export function Perks() {
                     <div className="absolute left-8 top-full z-0 h-4 w-px bg-gradient-to-b from-white/10 to-transparent" />
                   )}
 
-                  <motion.button
-                    type="button"
+                  <motion.div
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isExpanded}
                     onClick={() => setExpanded(isExpanded ? null : perk.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setExpanded(isExpanded ? null : perk.id);
+                      }
+                    }}
                     className="group relative mb-4 w-full cursor-pointer overflow-hidden rounded-2xl border text-left transition-colors"
                     style={{
                       borderColor: isExpanded ? `${perk.color}40` : "rgba(255,255,255,0.07)",
-                      backgroundColor: isExpanded ? `${perk.color}06` : "rgba(30,13,38,0.6)",
+                      backgroundColor: isExpanded ? `${perk.color}06` : "rgba(14,0,56,0.6)",
                     }}
                     whileHover={{ scale: 1.005 }}
                     whileTap={{ scale: 0.995 }}
@@ -343,7 +341,7 @@ export function Perks() {
                         {isExpanded && <ExpandedBody perk={perk} />}
                       </AnimatePresence>
                     </div>
-                  </motion.button>
+                  </motion.div>
                 </div>
               </FadeInView>
             );
@@ -354,7 +352,7 @@ export function Perks() {
           <div className="mx-auto mt-16 max-w-3xl">
             <div className="relative rounded-2xl border border-primary/20 bg-primary/[0.03] p-8 text-center">
               <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-primary/30 bg-background px-4 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-primary">
-                {`// CLOSING`}
+                Our promise
               </span>
               <p className="text-base leading-relaxed text-text-muted md:text-lg">
                 Great work happens when people feel supported, inspired, and

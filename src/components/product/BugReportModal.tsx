@@ -3,74 +3,44 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const ACCENT = "#A78BFA";
+const ACCENT = "#DA97FF";
 
+// Sample report rebuilt from a real, published finding (Husk Protocol case study, verified by Wayfinder).
+// Only facts stated in the approved case study are used.
 const metadata: { label: string; value: string }[] = [
-  { label: "Report ID", value: "BR-2026-0017" },
-  { label: "Date", value: "22/04/2026" },
-  { label: "Game / Project", value: "Project Titan (v0.8.2)" },
-  { label: "Platform", value: "Mobile" },
-  { label: "Session ID", value: "OV-TITAN-MOB-220426-022" },
-  { label: "Bot", value: "Overseer" },
-  { label: "Build Number", value: "2026.04.21-rc2" },
-  { label: "Environment", value: "Staging" },
+  { label: "Game", value: "Husk Protocol (OddSub / Fireshine Games)" },
+  { label: "Platform", value: "Windows (Steam)" },
+  { label: "Build", value: "Steam branch, alpha" },
+  { label: "Bot", value: "Wayfinder" },
+  { label: "Task", value: "Validate compendium cards" },
+  { label: "Reference", value: "Team card and tooltip sheet" },
 ];
 
 const categories = [
-  { label: "Visual / Rendering", on: false },
-  { label: "Geometry / Clipping", on: true },
-  { label: "Physics", on: false },
-  { label: "Animation", on: false },
   { label: "UI / UX", on: true },
-  { label: "Gameplay Logic", on: true },
-  { label: "Contextual / Semantic", on: false },
-];
-
-const severities = [
-  { label: "Critical", on: false, color: "#FF4C54" },
-  { label: "Major", on: true, color: "#FBBF24" },
-  { label: "Minor", on: false, color: "#FDE68A" },
-  { label: "Cosmetic", on: false, color: "#86EFAC" },
-];
-
-const detectionLayers = [
-  { label: "Layer 1 (State / Logs)", on: false },
-  { label: "Layer 2 (Video)", on: true },
-  { label: "Layer 3 (Screenshot)", on: true },
+  { label: "Text / Localisation", on: true },
+  { label: "Gameplay Logic", on: false },
+  { label: "Visual / Rendering", on: false },
 ];
 
 const reproducibility = [
-  { label: "Always", on: false },
-  { label: "Often", on: false },
-  { label: "Sometimes", on: true },
+  { label: "Always (3 of 3 sweeps)", on: true },
+  { label: "Sometimes", on: false },
   { label: "Rarely", on: false },
 ];
 
-const regression = [
-  { label: "Yes", on: false },
-  { label: "No", on: false },
-  { label: "Unknown", on: true },
-];
-
 const evidence = [
-  "The player character is shown in a raised-arm combat pose.",
-  "The arm overlaps/intersects the face region instead of aligning naturally around the head.",
-  "The clipping is clearly visible in the centre of the screen on the player model.",
-  "The issue appears on the character's upper body, specifically where the arm crosses the face/hood line.",
+  "The Grapple card text reads \u201cpurge 1 random Buff\u201d.",
+  "Hovering the card shows a tooltip explaining Buff.",
+  "No tooltip explains Purge, unlike every other keyword in the catalogue.",
+  "The same keyword is explained correctly on a different card.",
 ];
 
 const steps = [
-  "Launch Project Titan on build 2026.04.21-rc2.",
-  "Enter a combat encounter.",
-  "Wait for the player character to enter the raised-arm combat/idle pose.",
-  "Observe the upper body and head area of the character model.",
-  "Check whether the arm intersects the face during the pose.",
-];
-
-const attachments: { label: string; value: string }[] = [
-  { label: "Screenshot / Frame", value: "/sessions/BR-2026-0017/frame_01432.png" },
-  { label: "Video Clip", value: "/sessions/BR-2026-0017/clip_02m14s_02m32s.mp4" },
-  { label: "Log Reference", value: "session OV-TITAN-PC-220426-014 | timestamp 00:02:21.481–00:02:29.903" },
+  "Launch Husk Protocol from the Steam branch.",
+  "Open the card compendium.",
+  "Hover the Grapple card and read its keyword tooltips.",
+  "Compare the on-screen text with the reference sheet.",
 ];
 
 export function BugReportModal({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -132,10 +102,10 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
               {/* Header */}
               <div
                 className="px-6 py-7 sm:px-10 sm:py-9"
-                style={{ background: "linear-gradient(135deg, rgba(167,139,250,0.18), rgba(167,139,250,0.05))" }}
+                style={{ background: "linear-gradient(135deg, rgba(218,151,255,0.18), rgba(218,151,255,0.05))" }}
               >
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-text-muted/70">
-                  Internal · Sample Output
+                  Sample report · Real finding
                 </p>
                 <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                   <h2 className="text-3xl font-black tracking-tight text-foreground sm:text-4xl">
@@ -146,9 +116,9 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                   </span>
                 </div>
                 <p className="mt-2 text-[13px] text-text-muted">
-                  Detected by <span className="font-semibold text-foreground">Overseer</span>
+                  Detected by <span className="font-semibold text-foreground">Wayfinder</span>
                   <span className="mx-2 opacity-50">|</span>
-                  Powered by <span className="font-semibold text-foreground">Hivemind VLM</span>
+                  Powered by <span className="font-semibold text-foreground">HiveMind</span>
                 </p>
               </div>
 
@@ -178,23 +148,6 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                         ))}
                       </div>
                     </FieldRow>
-                    <FieldRow label="Severity">
-                      <div className="flex flex-wrap gap-1.5">
-                        {severities.map((s) => (
-                          <CheckPill key={s.label} label={s.label} on={s.on} accent={s.color} />
-                        ))}
-                      </div>
-                    </FieldRow>
-                    <FieldRow label="Detection Layer">
-                      <div className="flex flex-wrap gap-1.5">
-                        {detectionLayers.map((l) => (
-                          <CheckPill key={l.label} {...l} />
-                        ))}
-                      </div>
-                    </FieldRow>
-                    <FieldRow label="Confidence">
-                      <span className="font-mono text-sm font-semibold text-foreground">0.96</span>
-                    </FieldRow>
                   </div>
                 </Section>
 
@@ -203,27 +156,19 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                   <div className="space-y-3">
                     <FieldRow label="Bug Title">
                       <p className="text-[15px] font-semibold leading-relaxed text-foreground">
-                        Player character arm clips through face during combat pose
+                        Grapple invokes Purge without explaining it
                       </p>
                     </FieldRow>
                     <FieldRow label="Location">
                       <p className="text-[14px] leading-relaxed text-foreground/90">
-                        Player character model — upper body / head / raised arm area
+                        Card compendium, Grapple card tooltip
                       </p>
                     </FieldRow>
                     <FieldRow label="Description">
                       <div className="space-y-2 text-[14px] leading-relaxed text-text-muted">
                         <p>
-                          During combat, the player character enters a pose where the raised arm
-                          intersects the character&apos;s face/head instead of sitting cleanly in
-                          front of or beside the head. In the captured frame, the forearm/hand
-                          visually passes through the face area, creating obvious model clipping.
-                        </p>
-                        <p>
-                          This appears to be a character pose, rigging, or animation issue
-                          affecting the upper-body combat stance. The arm placement breaks the
-                          silhouette of the character and makes the pose look anatomically
-                          incorrect.
+                          Grapple says &ldquo;purge 1 random Buff&rdquo;. Its Buff tooltip renders correctly, but no Purge tooltip
+                          appears. A first-time player has no way to know what Purge does to their deck.
                         </p>
                       </div>
                     </FieldRow>
@@ -239,9 +184,7 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                     </FieldRow>
                     <FieldRow label="Player Impact">
                       <p className="text-[14px] leading-relaxed text-text-muted">
-                        This does not appear to block gameplay, but it noticeably reduces visual
-                        quality and polish during combat. It can make character animation look
-                        broken or unfinished and may distract players during encounters.
+                        New players are left guessing what the card does. The team already knew the keyword, so it was easy to miss in-house.
                       </p>
                     </FieldRow>
                   </div>
@@ -253,13 +196,6 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                     <FieldRow label="Reproducibility">
                       <div className="flex flex-wrap gap-1.5">
                         {reproducibility.map((r) => (
-                          <CheckPill key={r.label} {...r} />
-                        ))}
-                      </div>
-                    </FieldRow>
-                    <FieldRow label="Regression?">
-                      <div className="flex flex-wrap gap-1.5">
-                        {regression.map((r) => (
                           <CheckPill key={r.label} {...r} />
                         ))}
                       </div>
@@ -278,14 +214,12 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                     </FieldRow>
                     <FieldRow label="Expected Result">
                       <p className="text-[14px] leading-relaxed text-text-muted">
-                        The character&apos;s arm should animate naturally and remain properly
-                        separated from the face/head model, with no visible clipping.
+                        Purge shows a tooltip explaining it, like every other keyword.
                       </p>
                     </FieldRow>
                     <FieldRow label="Actual Result">
                       <p className="text-[14px] leading-relaxed text-text-muted">
-                        The raised arm clips through the character&apos;s face/head area during the
-                        combat pose.
+                        Only the Buff tooltip appears. Purge is left unexplained.
                       </p>
                     </FieldRow>
                   </div>
@@ -301,57 +235,23 @@ export function BugReportModal({ open, onClose }: { open: boolean; onClose: () =
                       <div className="flex items-center justify-center overflow-hidden rounded-md border border-white/[0.07] bg-black/40 p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src="/bug-report-frame.jpeg"
-                          alt="Captured frame showing the player character's arm clipping through the face during the combat pose."
+                          src="/case-studies/husk-protocol/grapple.webp"
+                          alt="Husk Protocol Grapple card showing a Buff tooltip while the Purge keyword has no tooltip."
                           className="block max-h-[320px] w-auto rounded"
                         />
                       </div>
                     </div>
-                    <KeyValue
-                      label={attachments[1].label}
-                      value={attachments[1].value}
-                      mono
-                      borderBottom
-                    />
                     <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 px-4 py-3">
-                      <span className="text-[10px] font-semibold uppercase tracking-widest text-text-muted/70">
-                        Log File
-                      </span>
-                      <a
-                        href="/OV-TITAN-MOB-220426-023_player_model_clipping_detailed.log"
-                        download
-                        className="group flex items-center gap-3 rounded-lg border border-white/[0.07] bg-white/[0.02] p-3 transition-colors hover:border-white/15 hover:bg-white/[0.04]"
-                      >
-                        <span
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md"
-                          style={{ backgroundColor: `${ACCENT}18`, color: ACCENT }}
-                        >
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 1H3.5C2.67 1 2 1.67 2 2.5v11c0 .83.67 1.5 1.5 1.5h9c.83 0 1.5-.67 1.5-1.5V6L9 1z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-                            <path d="M9 1v5h5" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-                            <path d="M5.5 9.5h5M5.5 12h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-                          </svg>
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate font-mono text-[12px] text-foreground/90">
-                            OV-TITAN-MOB-220426-023_player_model_clipping_detailed.log
-                          </p>
-                          <p className="mt-0.5 text-[11px] text-text-muted/70">
-                            5.3 KB · session log · timestamp 00:02:21.481–00:02:29.903
-                          </p>
-                        </div>
-                        <span className="shrink-0 text-text-muted transition-colors group-hover:text-foreground">
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 2v9M4 8l4 4 4-4M3 14h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </span>
+                      <span className="text-[11px] font-semibold uppercase tracking-widest text-text-muted/70">Source</span>
+                      <a href="/case-studies/husk-protocol" className="text-[14px] font-semibold text-primary hover:underline">
+                        Husk Protocol case study: all five verified findings
                       </a>
                     </div>
                   </div>
                 </Section>
 
                 <p className="border-t border-white/5 pt-5 text-center text-[12px] italic text-text-muted/70">
-                  Generated by ManaMind Command Centre · Questions? Contact the CTO.
+                  Generated by ManaMind Command Centre
                 </p>
               </div>
             </div>

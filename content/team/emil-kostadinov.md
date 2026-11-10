@@ -2,7 +2,8 @@
 order: 1
 name: Emil Kostadinov
 role: Co-Founder & CEO
-photo: /team-emil.jpg
+linkedin: https://www.linkedin.com/in/emilkostadinov/
+photo: /team/emil.webp
 bio: >-
   Emil is a lifelong gamer and racing driver who's been part of the startup
   world since his teens. He holds an Oxford MBA and is an EWOR Fellow, and is

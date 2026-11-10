@@ -165,7 +165,7 @@ export function BackedBy({
   press: PressMention[];
 }) {
   return (
-    <section className="border-t border-white/5 py-24 md:py-32">
+    <section className="mm-cv border-t border-white/5 py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
         {/* Investors & Partners */}
         <FadeInView>

@@ -31,7 +31,7 @@ export function Roles({ roles: roleData }: { roles: Role[] }) {
                 transition={{ duration: 1.5, repeat: Infinity }}
               />
               <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-primary">
-                {roles.length} Open Roles
+                {roles.length} Open {roles.length === 1 ? "Role" : "Roles"}
               </span>
             </div>
             <h2 className="text-3xl font-bold text-foreground md:text-5xl">
@@ -100,7 +100,7 @@ export function Roles({ roles: roleData }: { roles: Role[] }) {
                   <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-primary">
                     View Role
                   </span>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/40 bg-primary/[0.05] text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-background group-hover:shadow-[0_0_24px_rgba(0,255,150,0.4)]">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/40 bg-primary/[0.05] text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-background group-hover:shadow-[0_0_24px_rgba(138,233,208,0.4)]">
                     <svg
                       viewBox="0 0 24 24"
                       fill="none"

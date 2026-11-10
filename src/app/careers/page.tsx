@@ -7,32 +7,32 @@ import { Perks } from "@/components/careers/Perks";
 import { getRoles } from "@/lib/content/roles";
 
 export const metadata = {
-  title: "Careers | ManaMind",
+  title: "Careers at ManaMind: AI Game Testing Jobs, London",
   description:
     "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
   alternates: {
     canonical: "/careers",
   },
   openGraph: {
-    title: "Careers | ManaMind",
+    title: "Careers at ManaMind: AI Game Testing Jobs, London",
     description:
       "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
     url: "/careers",
     images: [
       {
-        url: "/manamind-logo.png",
-        width: 179,
-        height: 33,
-        alt: "ManaMind logo.",
+        url: "/og/og-careers.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ManaMind, the model for games QA.",
       },
     ],
   },
   twitter: {
-    card: "summary",
-    title: "Careers | ManaMind",
+    card: "summary_large_image",
+    title: "Careers at ManaMind: AI Game Testing Jobs, London",
     description:
       "Help us build the future of autonomous testing. Open roles, principles, and perks at ManaMind.",
-    images: ["/manamind-logo.png"],
+    images: ["/og/og-careers.jpg"],
   },
 };
 

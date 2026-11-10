@@ -8,6 +8,8 @@ export type TeamMember = {
   role: string;
   photo: string;
   bio?: string;
+  /** Full LinkedIn profile URL. Optional: the link is only shown when it is set. */
+  linkedin?: string;
   order?: number;
 };
 

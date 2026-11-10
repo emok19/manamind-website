@@ -37,11 +37,11 @@ export function CaseStudyCard({ study, index }: { study: CaseStudy; index: numbe
     >
       <Link
         href={`/case-studies/${study.slug}`}
-        className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_0_40px_rgba(0,255,150,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transform-none motion-reduce:transition-none"
+        className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_0_40px_rgba(138,233,208,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary motion-reduce:transform-none motion-reduce:transition-none"
       >
         <div className="flex items-center justify-between border-b border-white/5 bg-black/20 px-5 py-2.5">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(0,255,150,0.6)]" />
+            <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_8px_rgba(138,233,208,0.6)]" />
             <span className="font-mono text-[10px] uppercase tracking-widest text-text-muted">
               Published case study
             </span>
@@ -105,6 +105,9 @@ export function CaseStudyCard({ study, index }: { study: CaseStudy; index: numbe
             <p className="mt-4 text-sm leading-relaxed text-text-muted">
               {study.challengeOneLiner}
             </p>
+            {study.cardSummary ? (
+              <p className="mt-3 text-sm leading-relaxed text-text-muted">{study.cardSummary}</p>
+            ) : null}
 
             <div className="mt-5 rounded-xl border border-white/10 bg-black/20 p-4">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-text-muted">

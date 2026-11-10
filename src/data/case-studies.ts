@@ -46,6 +46,7 @@ export type CaseStudy = {
     description: string;
     canonical: string;
     openGraphImage: string;
+    h1?: string;
   };
   organizations: CaseStudyOrganization[];
   game: {
@@ -59,6 +60,8 @@ export type CaseStudy = {
   platforms: Platform[];
   genres: string[];
   challengeOneLiner: string;
+  /** One-paragraph summary shown on the case studies index (SEO v1). */
+  cardSummary?: string;
   headlineMetric: { value: string; label: string };
   snapshot: Array<{ label: string; value: string }>;
   challenge: {

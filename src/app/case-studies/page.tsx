@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { CaseStudiesHero } from "@/components/case-studies/CaseStudiesHero";
 import { CaseStudyGrid } from "@/components/case-studies/CaseStudyGrid";
 import { CaseStudyCTA } from "@/components/case-studies/CaseStudyCTA";
+import { BugGallery } from "@/components/case-studies/BugGallery";
 import { ComingSoon } from "@/components/layout/ComingSoon";
 import { CASE_STUDIES_LIVE } from "@/config/flags";
 import { getCaseStudies } from "@/lib/content/case-studies";
 
 export const metadata: Metadata = {
-  title: "Case Studies | ManaMind",
+  title: "Game QA Case Studies: AI Testing Results | ManaMind",
   description:
     "See how studios use ManaMind to uncover issues earlier, increase test coverage, and reduce QA costs.",
   alternates: { canonical: "/case-studies" },
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/case-studies/husk-protocol/husk-protocol-social.jpg",
+        url: "/og/og-case-studies.jpg",
         width: 1200,
         height: 630,
         alt: "ManaMind autonomous game QA case studies",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     title: "Game QA Case Studies | ManaMind",
     description:
       "See how game teams use ManaMind's autonomous agents to validate builds and find player-facing issues.",
-    images: ["/case-studies/husk-protocol/husk-protocol-social.jpg"],
+    images: ["/og/og-case-studies.jpg"],
   },
   robots: CASE_STUDIES_LIVE
     ? { index: true, follow: true }
@@ -53,6 +54,7 @@ export default function CaseStudiesPage() {
     <>
       <CaseStudiesHero />
       <CaseStudyGrid studies={getCaseStudies()} />
+      <BugGallery studies={getCaseStudies()} />
       <CaseStudyCTA />
     </>
   );

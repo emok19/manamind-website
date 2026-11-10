@@ -32,7 +32,7 @@ function VisualModVisual({ inView }: { inView: boolean }) {
       {/* Scan line sweep */}
       <motion.line
         x1="0" y1="0" x2="100" y2="0"
-        stroke="#00FF96"
+        stroke="#8AE9D0"
         strokeWidth="0.6"
         initial={{ y1: 0, y2: 0 }}
         animate={inView ? { y1: [0, 100, 0], y2: [0, 100, 0] } : {}}
@@ -52,7 +52,7 @@ function VisualModVisual({ inView }: { inView: boolean }) {
             x={box.x} y={box.y} width={box.w} height={box.h}
             rx="1.5"
             fill="none"
-            stroke="#00FF96"
+            stroke="#8AE9D0"
             strokeWidth="0.5"
             strokeDasharray="2 1"
             animate={{ strokeDashoffset: [0, -12] }}
@@ -69,7 +69,7 @@ function VisualModVisual({ inView }: { inView: boolean }) {
             x={box.x + box.w / 2}
             y={box.y + box.h / 2 + 1}
             textAnchor="middle"
-            fill="#00FF96"
+            fill="#8AE9D0"
             fontSize="2.5"
             fontFamily="monospace"
             fontWeight="600"
@@ -108,7 +108,7 @@ function VisualModVisual({ inView }: { inView: boolean }) {
           width="2"
           height="5"
           rx="1"
-          fill="#00FF96"
+          fill="#8AE9D0"
           animate={inView ? { x: [14, 84, 14] } : {}}
           transition={{ duration: 6, repeat: Infinity, ease: "linear", delay: 2.5 }}
         />
@@ -119,7 +119,7 @@ function VisualModVisual({ inView }: { inView: boolean }) {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 0.6 } : {}}
         transition={{ delay: 0.5 }}
-        stroke="#00FF96"
+        stroke="#8AE9D0"
         strokeWidth="0.5"
         fill="none"
       >
@@ -151,7 +151,7 @@ function NLPModVisual({ inView }: { inView: boolean }) {
       {/* Objective section */}
       <motion.text
         x="5" y="10"
-        fill="#A78BFA"
+        fill="#DA97FF"
         fontSize="3"
         fontFamily="monospace"
         fontWeight="700"
@@ -179,7 +179,7 @@ function NLPModVisual({ inView }: { inView: boolean }) {
           />
           <motion.text
             x="8" y={obj.y + 1}
-            fill="#A78BFA"
+            fill="#DA97FF"
             fontSize="2.2"
             fontFamily="monospace"
           >
@@ -188,7 +188,7 @@ function NLPModVisual({ inView }: { inView: boolean }) {
           {/* Processing arrow */}
           <motion.path
             d={`M 52 ${obj.y} L 56 ${obj.y}`}
-            stroke="#A78BFA"
+            stroke="#DA97FF"
             strokeWidth="0.5"
             fill="none"
             markerEnd="url(#arrowNLP)"
@@ -246,7 +246,7 @@ function NLPModVisual({ inView }: { inView: boolean }) {
             x={t.x - 2} y={t.y - 4}
             width="40" height="7"
             rx="1"
-            fill="#A78BFA"
+            fill="#DA97FF"
             opacity={0}
             animate={inView ? { opacity: [0, 0.15, 0] } : {}}
             transition={{ duration: 1.5, delay: 2.5 + i * 0.4, repeat: Infinity, repeatDelay: 3 }}
@@ -256,7 +256,7 @@ function NLPModVisual({ inView }: { inView: boolean }) {
 
       <defs>
         <marker id="arrowNLP" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto">
-          <path d="M0 0 L4 2 L0 4" fill="#A78BFA" />
+          <path d="M0 0 L4 2 L0 4" fill="#DA97FF" />
         </marker>
       </defs>
     </svg>
@@ -312,7 +312,7 @@ function InteractionModVisual({ inView }: { inView: boolean }) {
             width={input.label.length > 1 ? 16 : 10}
             height={10}
             rx="2"
-            fill="#38BDF8"
+            fill="#FFFEBA"
             animate={inView ? { opacity: [0, 0.3, 0] } : {}}
             transition={{ duration: 0.6, delay: input.delay + 0.5, repeat: Infinity, repeatDelay: 2 + i * 0.3 }}
           />
@@ -320,7 +320,7 @@ function InteractionModVisual({ inView }: { inView: boolean }) {
             x={input.x}
             y={input.y + 1}
             textAnchor="middle"
-            fill="#38BDF8"
+            fill="#FFFEBA"
             fontSize={input.label.length > 1 ? "2.5" : "3.5"}
             fontFamily="monospace"
             fontWeight="700"
@@ -342,8 +342,8 @@ function InteractionModVisual({ inView }: { inView: boolean }) {
         >
           <path
             d="M66 38 L66 50 L69 47 L72 53 L74 52 L71 46 L75 46 Z"
-            fill="#38BDF8"
-            stroke="#38BDF8"
+            fill="#FFFEBA"
+            stroke="#FFFEBA"
             strokeWidth="0.3"
             strokeLinejoin="round"
           />
@@ -368,7 +368,7 @@ function InteractionModVisual({ inView }: { inView: boolean }) {
         {/* Button press pulse */}
         <motion.circle
           cx="62" cy="82" r="1.5"
-          fill="#38BDF8"
+          fill="#FFFEBA"
           animate={inView ? { opacity: [0, 0.6, 0] } : {}}
           transition={{ duration: 0.5, delay: 3, repeat: Infinity, repeatDelay: 2 }}
         />
@@ -448,7 +448,7 @@ function AudioModVisual({ inView }: { inView: boolean }) {
             cx={x} cy={30}
             r="2"
             fill="none"
-            stroke="#FBBF24"
+            stroke="#FFFEBA"
             strokeWidth="0.4"
             animate={inView ? { r: [2, 4, 2], opacity: [0.6, 0, 0.6] } : {}}
             transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
@@ -463,7 +463,7 @@ function AudioModVisual({ inView }: { inView: boolean }) {
         transition={{ delay: 2 }}
       >
         <rect x="25" y="80" width="50" height="10" rx="5" fill="#FBBF2410" stroke="#FBBF2430" strokeWidth="0.4" />
-        <text x="50" y="86.5" textAnchor="middle" fill="#FBBF24" fontSize="3" fontFamily="monospace" fontWeight="600">
+        <text x="50" y="86.5" textAnchor="middle" fill="#FFFEBA" fontSize="3" fontFamily="monospace" fontWeight="600">
           COMING SOON
         </text>
       </motion.g>
@@ -476,7 +476,7 @@ function AudioModVisual({ inView }: { inView: boolean }) {
 const modalities = [
   {
     category: "Visual",
-    color: "#00FF96",
+    color: "#8AE9D0",
     headline: "Seeing and understanding gameplay as both moments and motion",
     visual: VisualModVisual,
     icon: (
@@ -504,7 +504,7 @@ const modalities = [
   },
   {
     category: "Natural Language",
-    color: "#A78BFA",
+    color: "#DA97FF",
     headline: "Interpreting instructions and in-game text",
     visual: NLPModVisual,
     icon: (
@@ -532,7 +532,7 @@ const modalities = [
   },
   {
     category: "Interaction",
-    color: "#38BDF8",
+    color: "#FFFEBA",
     headline: "Executing actions through real player inputs",
     visual: InteractionModVisual,
     icon: (
@@ -558,7 +558,7 @@ const modalities = [
   },
   {
     category: "Audio",
-    color: "#FBBF24",
+    color: "#FFFEBA",
     headline: "Extending testing into sound and timing",
     visual: AudioModVisual,
     icon: (
@@ -633,12 +633,12 @@ export function FeatureBreakdown() {
   const Visual = modality.visual;
 
   return (
-    <section ref={ref} className="py-24 md:py-32">
+    <section ref={ref} className="mm-cv py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
         <FadeInView>
           <SectionHeading
             label="How Our Bots Interact With Your Game"
-            title="Testing games like real players, not scripts"
+            title="AI playtesting: testing games like real players, not scripts"
             description="ManaMind's agents observe the game world and interact through normal player inputs, allowing them to test any title without internal integration."
           />
         </FadeInView>

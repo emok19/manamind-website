@@ -9,7 +9,7 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 const layers = [
   {
     key: "hivemind" as const,
-    color: "#00FF96",
+    color: "#8AE9D0",
     subtitle: "The brain behind autonomous game testing.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -26,7 +26,7 @@ const layers = [
   },
   {
     key: "commandCentre" as const,
-    color: "#FF4C54",
+    color: "#DA97FF",
     subtitle: "The control dashboard.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
@@ -40,31 +40,14 @@ const layers = [
       "Configure test objectives, priorities, and focus areas",
       "Review, triage, and assign issues with severity classification",
       "Export structured reports into your existing QA workflow",
+      "Picks the right bots for each test from your description, or lets you choose them yourself",
+      "Deploys, orchestrates and monitors test runs across machines and devices",
     ],
   },
   {
-    key: "legion" as const,
-    color: "#A78BFA",
-    subtitle: "The orchestration swarm.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
-        <path d="M4 6h16M4 12h16M4 18h16" />
-        <circle cx="8" cy="6" r="2" fill="currentColor" opacity="0.3" />
-        <circle cx="16" cy="12" r="2" fill="currentColor" opacity="0.3" />
-        <circle cx="10" cy="18" r="2" fill="currentColor" opacity="0.3" />
-      </svg>
-    ),
-    details: [
-      "Dynamically spawns and terminates bot instances based on test needs",
-      "Distributes bots across environments to maximise coverage and throughput",
-      "Coordinates multi-agent exploration to avoid redundant testing paths",
-      "Automatically balances workload across available compute resources",
-    ],
-  },
-  {
-    key: "bots" as const,
-    color: "#38BDF8",
-    subtitle: "Autonomous testers.",
+    key: "services" as const,
+    color: "#FFFEBA",
+    subtitle: "Specialist bots for every kind of QA.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-6 w-6">
         <rect x="3" y="4" width="7" height="7" rx="1.5" />
@@ -78,6 +61,8 @@ const layers = [
       </svg>
     ),
     details: [
+      "Five QA services: functional, compliance, compatibility, localisation and network",
+      "Each service is delivered by specialist bots, fine-tuned from our own models for one class of testing tasks",
       "Expands test coverage beyond what manual QA can realistically achieve",
       "Executes test sessions continuously without fatigue or bias",
       "Runs in parallel to compress weeks of testing into hours",
@@ -125,8 +110,8 @@ export function ArchitectureSection() {
         <FadeInView>
           <SectionHeading
             label="Architecture"
-            title="Architecture designed for fully autonomous testing"
-            description="Four coordinated layers, from perception to execution."
+            title="Architecture built for fully autonomous game testing"
+            description="Three coordinated layers: the model that understands games, the dashboard that runs the tests, and the specialist bots that play them."
             titleClassName="text-xl md:text-2xl lg:text-3xl"
           />
         </FadeInView>
@@ -149,7 +134,7 @@ export function ArchitectureSection() {
                     className="group relative mb-4 w-full cursor-pointer overflow-hidden rounded-2xl border text-left transition-colors"
                     style={{
                       borderColor: isExpanded ? `${layer.color}40` : "rgba(255,255,255,0.07)",
-                      backgroundColor: isExpanded ? `${layer.color}06` : "rgba(30,13,38,0.6)",
+                      backgroundColor: isExpanded ? `${layer.color}06` : "rgba(14,0,56,0.6)",
                     }}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.995 }}

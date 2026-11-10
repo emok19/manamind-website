@@ -1,13 +1,26 @@
 @import "tailwindcss";
 
+/* ManaMind Brand Playbook v0.1 palette
+   Void #170055 (primary) · Arcane #7E4DB9 · Aether #DA97FF · Elixir #8AE9D0 · Lumen #FFFEBA
+   Obsidian #121114 · Wisp #FFFFFF */
 :root {
-  --background: #2E1339;
-  --foreground: #F0F0F0;
-  --primary: #00FF96;
-  --highlight: #FF4C54;
-  --bg-lighter: #3D1F4A;
-  --bg-card: #1E0D26;
-  --text-muted: #A89BAE;
+  --void: #170055;
+  --void-deep: #0E0038;
+  --void-lift: #21086A;
+  --arcane: #7E4DB9;
+  --aether: #DA97FF;
+  --elixir: #8AE9D0;
+  --lumen: #FFFEBA;
+  --obsidian: #121114;
+  --wisp: #FFFFFF;
+
+  --background: var(--void);
+  --foreground: var(--wisp);
+  --primary: var(--elixir);
+  --highlight: var(--aether);
+  --bg-lighter: var(--void-lift);
+  --bg-card: var(--void-deep);
+  --text-muted: #C7BEE6;
 }
 
 @theme inline {
@@ -18,14 +31,50 @@
   --color-bg-lighter: var(--bg-lighter);
   --color-bg-card: var(--bg-card);
   --color-text-muted: var(--text-muted);
-  --font-sans: var(--font-swiza);
+  --color-void: var(--void);
+  --color-arcane: var(--arcane);
+  --color-aether: var(--aether);
+  --color-elixir: var(--elixir);
+  --color-lumen: var(--lumen);
+  --color-wisp: var(--wisp);
+  --font-sans: var(--font-retni);
+  --font-display: var(--font-retni);
+  --font-mono: var(--font-retni);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-swiza), system-ui, sans-serif;
+  font-family: var(--font-retni), Arial, sans-serif;
 }
+
+/* Typography: Retni Sans for headlines too (Bold, 110% line height, +3% tracking).
+   Fraktion Sans was dropped on 9 Nov 2026: its licence does not cover our website. */
+h1, h2, h3, h4 {
+  font-family: var(--font-retni), Arial, sans-serif;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+/* Brand label style (replaces the old terminal mono labels) */
+.font-mono {
+  letter-spacing: 0.08em;
+}
+
+/* ManaMind Spectrum and Glows */
+.mm-spectrum {
+  background: linear-gradient(90deg, #170055 0%, #7E4DB9 25%, #DA97FF 50%, #8AE9D0 75%, #FFFEBA 100%);
+}
+.mm-spectrum-text {
+  background: linear-gradient(90deg, #DA97FF 0%, #8AE9D0 55%, #FFFEBA 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.mm-glow-arcane { background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(126,77,185,.55) 0%, rgba(23,0,85,0) 70%); }
+.mm-glow-aether { background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(218,151,255,.35) 0%, rgba(23,0,85,0) 70%); }
+.mm-glow-elixir { background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(138,233,208,.30) 0%, rgba(23,0,85,0) 70%); }
+.mm-glow-lumen  { background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(255,254,186,.25) 0%, rgba(23,0,85,0) 70%); }
 
 /* Strikeout animation for hero headline */
 @keyframes strikethrough {
@@ -129,4 +178,38 @@ body {
   .animate-marquee {
     animation: none;
   }
+}
+
+/* E6: the M symbol pulses piece by piece while the form sends */
+.mm-sending polygon { animation: mm-piece 0.9s ease-in-out infinite; }
+.mm-sending polygon:nth-child(2) { animation-delay: .12s; }
+.mm-sending polygon:nth-child(3) { animation-delay: .24s; }
+.mm-sending polygon:nth-child(4) { animation-delay: .36s; }
+@keyframes mm-piece { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+
+/* E4: brand Tiles drift in as a section scrolls into view (scroll-driven, progressive enhancement) */
+@supports (animation-timeline: view()) {
+  .mm-tiles svg {
+    animation: mm-tiles-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+}
+@keyframes mm-tiles-in {
+  from { opacity: 0; transform: translateY(24px) scale(1.03); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mm-sending polygon, .mm-tiles svg { animation: none !important; }
+}
+
+/* Contact: highlight the form when "Send a message" is used */
+@keyframes mm-flash { 0% { box-shadow: 0 0 0 0 rgba(138,233,208,0); border-color: rgba(255,255,255,.1); } 25% { box-shadow: 0 0 0 3px rgba(138,233,208,.55), 0 0 40px rgba(138,233,208,.25); border-color: #8AE9D0; } 100% { box-shadow: 0 0 0 0 rgba(138,233,208,0); border-color: rgba(255,255,255,.1); } }
+.mm-flash { animation: mm-flash 1.6s ease-out; }
+
+/* Sections with continuous (infinite) animations: let the browser skip layout and
+   paint while they are off screen, so looping visuals cost nothing until scrolled to. */
+.mm-cv {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }

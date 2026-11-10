@@ -1,5 +1,7 @@
 "use client";
 
+import { Glow, Tiles } from "@/components/brand/Graphics";
+
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { FadeInView } from "@/components/animations/FadeInView";
@@ -7,8 +9,8 @@ import { FadeInView } from "@/components/animations/FadeInView";
 const comparisons = [
   {
     metric: "Test Exploration",
-    manual: { value: "~15%", detail: "of game surface tested per cycle" },
-    mana: { value: "Up to 99%", detail: "gameplay explored in a single run" },
+    manual: { value: "Partial", detail: "coverage limited by time and available testers" },
+    mana: { value: "Broad", detail: "gameplay explored autonomously in every run" },
   },
   {
     metric: "Availability",
@@ -26,9 +28,9 @@ const comparisons = [
     mana: { value: "Runs directly", detail: "on your game build - no SDKs, scripts, or engine access required" },
   },
   {
-    metric: "Cost Reduction",
+    metric: "QA Cost",
     manual: { value: "Linear", detail: "with team size and testing hours" },
-    mana: { value: "Up to 65%", detail: "reduction in QA operating costs" },
+    mana: { value: "Flat", detail: "QA cost that does not grow with headcount" },
   },
   {
     metric: "Scalability",
@@ -83,10 +85,10 @@ function ComparisonRow({
       {/* Comparison bars */}
       <div className="grid grid-cols-2 gap-3">
         {/* Manual QA side */}
-        <div className="relative overflow-hidden rounded-xl border border-white/5 bg-[#1a0a22] p-5">
-          <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-transparent" />
+        <div className="relative overflow-hidden rounded-xl border border-white/5 bg-[#0E0038] p-5">
+          <div className="absolute inset-0 bg-gradient-to-r from-aether/5 to-transparent" />
           <div className="relative">
-            <p className="font-mono text-lg font-bold text-red-400/80 md:text-xl">
+            <p className="font-mono text-lg font-bold text-aether/80 md:text-xl">
               <AnimatedCounter text={item.manual.value} inView={inView} />
             </p>
             <p className="mt-1 text-xs leading-relaxed text-text-muted/70">
@@ -96,7 +98,7 @@ function ComparisonRow({
         </div>
 
         {/* ManaMind side */}
-        <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-[#0a1a15] p-5">
+        <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-[#0E0038] p-5">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
           {/* Glow pulse */}
           <motion.div
@@ -142,7 +144,7 @@ export function ValueProps() {
       className="relative border-t border-white/5 bg-bg-card py-24 md:py-32 overflow-hidden"
     >
       {/* Background grid effect */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(0,255,150,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,150,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      <Glow accent="arcane" position="bottom" strength={0.4} />
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Header */}
@@ -152,7 +154,7 @@ export function ValueProps() {
               Manual Testing vs Autonomous Testing
             </span>
             <h2 className="text-2xl font-bold text-foreground md:text-3xl lg:text-4xl">
-              Why teams are moving beyond manual QA
+              Why studios are moving beyond manual QA testing for games
             </h2>
             <p className="mt-4 text-lg text-text-muted">
               Manual testing alone can&apos;t keep up with modern game complexity. ManaMind augments your QA process with autonomous, continuous testing.
@@ -168,8 +170,8 @@ export function ValueProps() {
           className="mt-16 mb-8 grid grid-cols-2 gap-3 pl-0"
         >
           <div className="flex items-center gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-4 py-2.5">
-            <div className="h-2 w-2 rounded-full bg-red-400/60" />
-            <span className="font-mono text-sm font-semibold uppercase tracking-widest text-red-400/70">
+            <div className="h-2 w-2 rounded-full bg-aether/60" />
+            <span className="font-mono text-sm font-semibold uppercase tracking-widest text-aether/70">
               Manual QA
             </span>
           </div>
@@ -208,7 +210,7 @@ export function ValueProps() {
               </div>
               <motion.a
                 href="/contact"
-                className="ml-4 shrink-0 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-background transition-all hover:shadow-[0_0_20px_rgba(0,255,150,0.3)]"
+                className="ml-4 shrink-0 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-background transition-all hover:shadow-[0_0_20px_rgba(138,233,208,0.3)]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >

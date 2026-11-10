@@ -23,7 +23,7 @@ export function ZeroShotExplainer() {
         <FadeInView>
           <SectionHeading
             label="Zero-Shot Testing"
-            title="Start testing immediately - no scripting or training"
+            title="No-code test automation: start testing immediately"
             description="Our bots apply prior knowledge of games to operate in new titles without any per-game training or scripting."
           />
         </FadeInView>

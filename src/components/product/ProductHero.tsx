@@ -1,13 +1,14 @@
 "use client";
 
+import { Glow, Tiles } from "@/components/brand/Graphics";
+
 import { motion } from "framer-motion";
 import { CTAButton } from "@/components/shared/CTAButton";
 
 const layers = [
-  { name: "Hivemind", subtitle: "Perception & reasoning", color: "#00FF96", y: 0 },
-  { name: "Command Centre", subtitle: "Test planning & control", color: "#FF4C54", y: 1 },
-  { name: "Legion", subtitle: "Agent coordination", color: "#A78BFA", y: 2 },
-  { name: "Bots", subtitle: "In-game execution", color: "#38BDF8", y: 3 },
+  { name: "HiveMind", subtitle: "Perception & reasoning", color: "#DA97FF", y: 0 },
+  { name: "Command Centre", subtitle: "Planning & orchestration", color: "#8AE9D0", y: 1 },
+  { name: "Services", subtitle: "Specialist bots in action", color: "#FFFEBA", y: 2 },
 ];
 
 function DataPulse({ fromY, toY, delay, color }: { fromY: number; toY: number; delay: number; color: string }) {
@@ -44,7 +45,7 @@ function LayerBlock({
   yPos: number;
   index: number;
 }) {
-  const y = 10 + yPos * 22;
+  const y = 20 + yPos * 22;
 
   return (
     <motion.g
@@ -58,10 +59,10 @@ function LayerBlock({
         y={y}
         width="70"
         height="16"
-        rx="3"
-        fill={`${color}08`}
-        stroke={`${color}40`}
-        strokeWidth="0.4"
+        rx="0.6"
+        fill="rgba(14,0,56,0.85)"
+        stroke={`${color}55`}
+        strokeWidth="0.35"
       />
 
       {/* Glow effect */}
@@ -70,7 +71,7 @@ function LayerBlock({
         y={y}
         width="70"
         height="16"
-        rx="3"
+        rx="0.6"
         fill="none"
         stroke={color}
         strokeWidth="0.6"
@@ -85,9 +86,10 @@ function LayerBlock({
         y={y + 7}
         textAnchor="middle"
         fill={color}
-        fontSize="3.5"
-        fontFamily="monospace"
+        fontSize="3.6"
+        fontFamily="var(--font-retni), Arial, sans-serif"
         fontWeight="700"
+        letterSpacing="0.15"
       >
         {name}
       </text>
@@ -97,15 +99,15 @@ function LayerBlock({
         x="50"
         y={y + 12}
         textAnchor="middle"
-        fill={`${color}80`}
-        fontSize="2"
-        fontFamily="monospace"
+        fill="#C7BEE6"
+        fontSize="2.1"
+        fontFamily="var(--font-retni), Arial, sans-serif"
       >
         {subtitle}
       </text>
 
       {/* Connection line down */}
-      {index < 3 && (
+      {index < 2 && (
         <motion.line
           x1="50"
           y1={y + 16}
@@ -127,7 +129,8 @@ export function ProductHero() {
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,150,0.04)_0%,transparent_70%)]" />
+      <Glow accent="arcane" position="bottom-right" strength={0.55} />
+      <Tiles seed={17} outlined fade="left" opacity={0.45} />
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-6 py-32 lg:grid-cols-2">
         {/* Text side */}
@@ -142,14 +145,13 @@ export function ProductHero() {
           </motion.span>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-4xl font-bold text-foreground md:text-5xl lg:text-6xl"
           >
-            The engine behind
-            <br />
-            <span className="text-primary">autonomous testing</span>
+            Automated game testing software{" "}
+            <span className="text-primary">that plays like a human</span>
           </motion.h1>
 
           <motion.p
@@ -158,8 +160,8 @@ export function ProductHero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-6 max-w-xl text-lg text-text-muted"
           >
-            A multi-layer AI system, from perception to orchestration, that
-            tests your game like a coordinated team of real players.
+            Three layers, from perception to orchestration to specialist bots,
+            that test your game like a coordinated team of real players.
           </motion.p>
 
           <motion.div
@@ -203,14 +205,12 @@ export function ProductHero() {
             ))}
 
             {/* Data pulses flowing between layers */}
-            <DataPulse fromY={26} toY={32} delay={1.5} color="#00FF96" />
-            <DataPulse fromY={48} toY={54} delay={2.0} color="#FF4C54" />
-            <DataPulse fromY={70} toY={76} delay={2.5} color="#A78BFA" />
+            <DataPulse fromY={36} toY={42} delay={1.5} color="#8AE9D0" />
+            <DataPulse fromY={58} toY={64} delay={2.0} color="#DA97FF" />
 
             {/* Upward feedback pulses */}
-            <DataPulse fromY={76} toY={70} delay={3.0} color="#38BDF8" />
-            <DataPulse fromY={54} toY={48} delay={3.5} color="#A78BFA" />
-            <DataPulse fromY={32} toY={26} delay={4.0} color="#FF4C54" />
+            <DataPulse fromY={64} toY={58} delay={3.0} color="#FFFEBA" />
+            <DataPulse fromY={42} toY={36} delay={3.5} color="#DA97FF" />
           </svg>
         </motion.div>
       </div>

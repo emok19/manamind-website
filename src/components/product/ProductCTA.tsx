@@ -1,5 +1,7 @@
 "use client";
 
+import { Glow, Tiles } from "@/components/brand/Graphics";
+
 import { motion } from "framer-motion";
 import { CTAButton } from "@/components/shared/CTAButton";
 import { FadeInView } from "@/components/animations/FadeInView";
@@ -8,7 +10,8 @@ export function ProductCTA() {
   return (
     <section className="relative overflow-hidden py-24 md:py-32">
       {/* Background glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,150,0.06)_0%,transparent_60%)]" />
+      <Glow accent="lumen" position="bottom" strength={0.2} />
+      <Tiles seed={41} fade="radial" opacity={0.12} />
 
       {/* Floating particles */}
       {Array.from({ length: 6 }).map((_, i) => (
@@ -37,7 +40,7 @@ export function ProductCTA() {
             Secure By Design
           </span>
           <h2 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
-            Built for teams working under strict NDAs
+            Game QA for teams under strict NDAs
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-text-muted">
             Game builds often contain unreleased content and licensed IP. ManaMind is designed to test them without increasing your security risk.
