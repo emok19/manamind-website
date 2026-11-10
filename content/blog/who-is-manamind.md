@@ -38,7 +38,7 @@ ManaMind's bots watch and play a game through the screen, just like a human test
 - **No SDK or engine integration.** Nothing to implement inside your game.
 - **No scripting.** You describe the test in plain language, and the bots work out how to do it.
 
-The bots test through the screen, and they can move from one game to the next without being rebuilt for each project. That's what makes [AI game testing](/) different from scripted automation: it adapts to your game, easily.
+The bots test through the screen, and they can move from one game to the next without being rebuilt for each project. That's what makes [autonomous game testing](/) different from scripted automation: it adapts to your game, easily.
 
 ## How automated game testing works at ManaMind
 
