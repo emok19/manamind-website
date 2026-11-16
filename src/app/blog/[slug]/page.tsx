@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return { title: "Blog | ManaMind" };
-  const image = post.image ?? "/og/og-default.jpg";
+  const image = post.cover ?? post.image ?? "/og/og-default.jpg";
   return {
     title: post.seoTitle,
     description: post.description,
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url: `/blog/${post.slug}`,
       type: "article",
       publishedTime: post.date,
-      images: [{ url: image, alt: post.imageAlt ?? post.title }],
+      images: [{ url: image, width: 1200, height: 630, alt: post.cover ? post.title : (post.imageAlt ?? post.title) }],
     },
     twitter: { card: "summary_large_image", title: post.seoTitle, description: post.description, images: [image] },
   };
@@ -47,7 +47,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     datePublished: post.date,
     dateModified: post.date,
     mainEntityOfPage: url,
-    image: `https://manamind.ai${post.image ?? "/og/og-default.jpg"}`,
+    image: `https://manamind.ai${post.cover ?? post.image ?? "/og/og-default.jpg"}`,
     author: { "@type": "Organization", name: post.author, url: "https://manamind.ai" },
     publisher: {
       "@type": "Organization",

@@ -51,7 +51,9 @@ export default function BlogPage() {
               className="group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-bg-card/80 transition-colors hover:border-primary/50"
             >
               <div className="relative aspect-[1200/630] overflow-hidden bg-void">
-                {p.image ? (
+                {p.cover ? (
+                  <img src={p.cover} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+                ) : p.image ? (
                   <img src={p.image} alt="" loading="lazy" className="h-full w-full bg-white object-contain p-3" />
                 ) : (
                   <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_50%_120%,rgba(218,151,255,0.45),transparent_60%)]">

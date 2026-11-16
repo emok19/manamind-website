@@ -5,7 +5,7 @@ Yagiz's content plan (ManaMind SEO v1, section 5). Do not publish until he says 
 | Date | Post | Status in this repo |
 |---|---|---|
 | 9 Nov | What is ManaMind? | content/blog/what-is-manamind.md, waiting for Emil's approval |
-| 16 Nov | Why we built a game-native AI model | Google Doc only, not in this folder yet |
+| 16 Nov | Why we built a game-native AI model | content/blog/why-we-built-a-game-native-ai-model.md, published 16 Nov |
 | 23 Nov | Game QA: the complete guide to game testing in 2026 | Word draft in 06 Marketing/Content/BlogPosts, not in this folder yet |
 | 30 Nov | Where a specialist model beats frontier AI at reading games | hivemind-vs-frontier-ai-game-qa-benchmarks.md (title to align with the plan) |
 | Month 2 | From seeing the game to playing it | from-seeing-the-game-to-playing-it.md |
