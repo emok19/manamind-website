@@ -42,6 +42,7 @@
 ## Blog
 
 - What is ManaMind? https://manamind.ai/blog/what-is-manamind
+- Why we built our own AI model to test games: https://manamind.ai/blog/why-we-built-a-game-native-ai-model
 
 ## Careers Pages
 

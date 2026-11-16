@@ -7,6 +7,7 @@ author: "ManaMind"
 status: published
 source: "06 Marketing/Content/BlogPosts/Week 1 Who Is ManaMind Blog and LinkedIn Post (Yagiz's version of 9 Nov 2026, aligned with the new website)"
 keywords: ["game qa", "qa testing for games", "ai game testing", "video game qa", "automated game testing"]
+cover: "/blog/covers/what-is-manamind.jpg"
 excerpt: "Who we are, what our bots do, and the story behind the name and the logo."
 faq:
   - q: "What does ManaMind do?"

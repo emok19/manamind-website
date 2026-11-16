@@ -2,25 +2,26 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 // Minimal markdown renderer for our own blog files: ## / ### headings, paragraphs,
-// "- " lists, **bold**, [links](/path) and standalone ![images](/path). Output is plain server-rendered HTML.
+// "- " and "1. " lists, **bold**, *italic*, [links](/path) and standalone ![images](/path). Output is plain server-rendered HTML.
 
 function inline(text: string, key: string): ReactNode[] {
   const out: ReactNode[] = [];
-  const re = /\*\*(.+?)\*\*|\[(.+?)\]\((.+?)\)/g;
+  const re = /\*\*(.+?)\*\*|\*([^*\s][^*]*?)\*|\[(.+?)\]\((.+?)\)/g;
   let last = 0;
   let m: RegExpExecArray | null;
   let i = 0;
   while ((m = re.exec(text))) {
     if (m.index > last) out.push(text.slice(last, m.index));
     if (m[1]) out.push(<strong key={`${key}-b${i++}`} className="font-semibold text-foreground">{m[1]}</strong>);
+    else if (m[2]) out.push(<em key={`${key}-i${i++}`}>{m[2]}</em>);
     else {
-      const href = m[3];
+      const href = m[4];
       const cls = "font-semibold text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary";
       out.push(
         href.startsWith("/") ? (
-          <Link key={`${key}-l${i++}`} href={href} className={cls}>{inline(m[2], `${key}-li${i}`)}</Link>
+          <Link key={`${key}-l${i++}`} href={href} className={cls}>{inline(m[3], `${key}-li${i}`)}</Link>
         ) : (
-          <a key={`${key}-l${i++}`} href={href} className={cls} target="_blank" rel="noopener noreferrer">{m[2]}</a>
+          <a key={`${key}-l${i++}`} href={href} className={cls} target="_blank" rel="noopener noreferrer">{m[3]}</a>
         ),
       );
     }
@@ -58,6 +59,18 @@ export function Markdown({ source }: { source: string }) {
                 </li>
               ))}
             </ul>
+          );
+        }
+        if (b.split("\n").every((l) => /^\d+\.\s/.test(l.trim()))) {
+          return (
+            <ol key={key} className="space-y-3 pl-1">
+              {b.split("\n").map((l, li) => (
+                <li key={li} className="flex gap-3">
+                  <span aria-hidden="true" className="w-5 shrink-0 font-semibold text-primary">{li + 1}.</span>
+                  <span>{inline(l.trim().replace(/^\d+\.\s+/, ""), `${key}-${li}`)}</span>
+                </li>
+              ))}
+            </ol>
           );
         }
         return <p key={key}>{inline(b.replace(/\n/g, " "), key)}</p>;
