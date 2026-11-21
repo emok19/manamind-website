@@ -3,7 +3,8 @@ order: 2
 name: Sabtain Ahmad
 role: Co-Founder & CTO
 linkedin: https://www.linkedin.com/in/sabtainahmad/
-photo: /team/sabtain.webp
+slug: sabtain-ahmad
+photo: /team/sabtain-ahmad.webp
 bio: >-
   ML PhD researcher with a career in distributed machine learning algorithms and
   gaming.
