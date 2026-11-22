@@ -33,23 +33,18 @@ const organizationJsonLd = {
   legalName: "ManaMind Limited",
   url: "https://manamind.ai",
   logo: "https://manamind.ai/manamind-logo.png",
-  description: "ManaMind builds AI agents that test video games the way real players do, with no source code, SDK or scripting.",
-  foundingDate: "2025-01-03",
-  address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
-  email: "sales@manamind.ai",
-  identifier: { "@type": "PropertyValue", propertyID: "Companies House (UK) company number", value: "16161630" },
-  founder: FOUNDERS.map((f) => ({
+  description:
+    "AI-powered autonomous game testing and QA platform using vision-based agents that play builds like human players without SDKs or source code access.",
+  foundingDate: "2024",
+  founders: FOUNDERS.map((f) => ({
     "@type": "Person",
-    "@id": `${founderUrl(f)}#person`,
+    "@id": `${founderUrl(f)}/#person`,
     name: f.name,
-    jobTitle: f.jobTitle,
     url: founderUrl(f),
-    sameAs: f.profiles.map((p) => p.url),
   })),
-  // TODO: add the official Discord, X and Crunchbase URLs when confirmed (SEO fix 12).
+  identifier: { "@type": "PropertyValue", propertyID: "Companies House UK", value: "16161630" },
   sameAs: [
-    "https://www.linkedin.com/company/manamind",
-    "https://www.youtube.com/@ManaMindAI",
+    "https://uk.linkedin.com/company/manamind",
     "https://find-and-update.company-information.service.gov.uk/company/16161630",
     "https://pitchbook.com/profiles/company/1130554-99",
     "https://www.svv.ai/portfolio/manamind",

@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { FOUNDERS, founderJsonLd, getFounder } from "@/data/founders";
 
-// Founder profile pages: one clear page per founder that ties the person to ManaMind for Google's Knowledge Graph.
+// Founder profile pages for Google's Knowledge Graph (copy from the "Google Knowledge Panel To do" doc).
 export function generateStaticParams() {
   return FOUNDERS.map((f) => ({ slug: f.slug }));
 }
@@ -56,7 +56,7 @@ export default async function FounderPage({ params }: { params: Promise<{ slug: 
             </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground md:text-4xl">{f.name}</h1>
-              <p className="mt-2 text-lg text-primary">{f.roleLine}</p>
+              <p className="mt-2 text-lg font-semibold text-primary">{f.roleLine}</p>
             </div>
           </header>
 
@@ -66,36 +66,16 @@ export default async function FounderPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
 
-          <div className="mt-14 grid gap-10 md:grid-cols-2">
-            <section>
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">Education</h2>
-              <ul className="mt-4 space-y-3">
-                {f.education.map((e) => (
-                  <li key={e.school} className="text-foreground">
-                    {e.degree}
-                    <span className="block text-sm text-text-muted">{e.school}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-            <section>
-              <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">Profiles</h2>
-              <ul className="mt-4 space-y-2">
-                {f.profiles.map((p) => (
-                  <li key={p.url}>
-                    <a href={p.url} target="_blank" rel="noopener noreferrer me" className={linkClass}>{p.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
-
           <section className="mt-14">
-            <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">Selected press</h2>
-            <ul className="mt-4 space-y-2">
-              {f.press.map((p) => (
-                <li key={p.url}>
-                  <a href={p.url} target="_blank" rel="noopener noreferrer" className={linkClass}>{p.label}</a>
+            <h2 className="text-base font-bold text-foreground">{f.linksHeading}</h2>
+            <ul className="mt-4 list-disc space-y-2 pl-5 marker:text-primary">
+              {f.links.map((l) => (
+                <li key={l.label}>
+                  {l.url ? (
+                    <a href={l.url} target="_blank" rel="noopener noreferrer" className={linkClass}>{l.label}</a>
+                  ) : (
+                    <span className="text-text-muted">{l.label}</span>
+                  )}
                 </li>
               ))}
             </ul>
