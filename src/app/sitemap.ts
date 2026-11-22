@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/content/blog";
 import { getCaseStudies } from "@/lib/content/case-studies";
 import { getRoles } from "@/lib/content/roles";
+import { FOUNDERS } from "@/data/founders";
 
 // SEO v1 fixes 15 and 16: one homepage URL form (matches the canonical), lastmod on every entry,
 // and new blog posts / case studies / roles added automatically at build time.
@@ -27,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...(posts.length >= 3 ? [{ url: `${BASE}/blog`, lastModified: latest(posts.map((p) => p.date)), priority: 0.7 }] : []),
     ...posts.map((p) => ({ url: `${BASE}/blog/${p.slug}`, lastModified: p.date, priority: 0.7 })),
     { url: `${BASE}/about`, lastModified: PAGES_UPDATED, priority: 0.6 },
+    ...FOUNDERS.map((f) => ({ url: `${BASE}/team/${f.slug}`, lastModified: "2026-11-20", priority: 0.5 })),
     { url: `${BASE}/careers`, lastModified: PAGES_UPDATED, priority: 0.5 },
     ...getRoles().map((r) => ({ url: `${BASE}/careers/${r.slug}`, lastModified: PAGES_UPDATED, priority: 0.4 })),
     { url: `${BASE}/contact`, lastModified: PAGES_UPDATED, priority: 0.7 },

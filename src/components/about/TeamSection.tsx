@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FadeInView } from "@/components/animations/FadeInView";
 import type { TeamMember } from "@/lib/content/team";
 
@@ -31,9 +32,15 @@ export function TeamSection({ team }: { team: TeamMember[] }) {
           {team.map((member) => (
             <li key={member.name} className="flex flex-col items-center text-center">
               <div className="mb-4 h-36 w-36 overflow-hidden rounded-2xl border border-white/[0.07] bg-background/60 sm:h-40 sm:w-40">
-                <Image src={member.photo} alt={member.name} width={160} height={160} className="h-full w-full object-cover" />
+                <Image src={member.photo} alt={member.slug ? `${member.name}, ${member.role} of ManaMind` : member.name} width={160} height={160} className="h-full w-full object-cover" />
               </div>
-              <h3 className="text-base font-bold text-foreground">{member.name}</h3>
+              <h3 className="text-base font-bold text-foreground">
+                {member.slug ? (
+                  <Link href={`/team/${member.slug}`} className="transition-colors hover:text-primary">{member.name}</Link>
+                ) : (
+                  member.name
+                )}
+              </h3>
               <p className="mt-0.5 text-xs text-text-muted">{member.role}</p>
               {member.linkedin ? (
                 <a

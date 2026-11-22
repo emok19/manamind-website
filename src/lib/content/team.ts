@@ -10,6 +10,8 @@ export type TeamMember = {
   bio?: string;
   /** Full LinkedIn profile URL. Optional: the link is only shown when it is set. */
   linkedin?: string;
+  /** Set for members with their own profile page at /team/<slug> (founders, src/data/founders.ts). */
+  slug?: string;
   order?: number;
 };
 

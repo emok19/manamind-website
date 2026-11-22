@@ -8,6 +8,7 @@ import { StickyCTA } from "@/components/layout/StickyCTA";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { GA_MEASUREMENT_ID } from "@/lib/constants";
 import { getRoles } from "@/lib/content/roles";
+import { FOUNDERS, ORG_ID, founderUrl } from "@/data/founders";
 import "./globals.css";
 
 const retni = localFont({
@@ -23,24 +24,30 @@ const retni = localFont({
   ],
 });
 
+// Organization entity for Google's Knowledge Graph. Founders point to their /team pages (src/data/founders.ts).
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": ORG_ID,
   name: "ManaMind",
+  legalName: "ManaMind Limited",
   url: "https://manamind.ai",
   logo: "https://manamind.ai/manamind-logo.png",
-  description: "ManaMind builds AI agents that test video games the way real players do, with no source code, SDK or scripting.",
+  description:
+    "AI-powered autonomous game testing and QA platform using vision-based agents that play builds like human players without SDKs or source code access.",
   foundingDate: "2025",
-  address: { "@type": "PostalAddress", addressLocality: "London", addressCountry: "GB" },
-  email: "sales@manamind.ai",
-  founder: [
-    { "@type": "Person", name: "Emil Kostadinov", jobTitle: "Co-Founder & CEO", sameAs: ["https://www.linkedin.com/in/emilkostadinov/"] },
-    { "@type": "Person", name: "Sabtain Ahmad", jobTitle: "Co-Founder & CTO", sameAs: ["https://www.linkedin.com/in/sabtainahmad/"] },
-  ],
-  // TODO before go-live: add the official Discord, X and Crunchbase URLs (SEO fix 12).
+  founder: FOUNDERS.map((f) => ({
+    "@type": "Person",
+    "@id": `${founderUrl(f)}/#person`,
+    name: f.name,
+    url: founderUrl(f),
+  })),
+  identifier: { "@type": "PropertyValue", propertyID: "Companies House UK", value: "16161630" },
   sameAs: [
-    "https://www.linkedin.com/company/manamind",
-    "https://www.youtube.com/@ManaMindAI",
+    "https://uk.linkedin.com/company/manamind",
+    "https://find-and-update.company-information.service.gov.uk/company/16161630",
+    "https://pitchbook.com/profiles/company/1130554-99",
+    "https://www.svv.ai/portfolio/manamind",
   ],
 };
 
@@ -49,10 +56,7 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: "ManaMind",
   url: "https://manamind.ai",
-  publisher: {
-    "@type": "Organization",
-    name: "ManaMind",
-  },
+  publisher: { "@id": ORG_ID },
 };
 
 export const metadata: Metadata = {
