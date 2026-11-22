@@ -35,8 +35,8 @@ const organizationJsonLd = {
   logo: "https://manamind.ai/manamind-logo.png",
   description:
     "AI-powered autonomous game testing and QA platform using vision-based agents that play builds like human players without SDKs or source code access.",
-  foundingDate: "2024",
-  founders: FOUNDERS.map((f) => ({
+  foundingDate: "2025",
+  founder: FOUNDERS.map((f) => ({
     "@type": "Person",
     "@id": `${founderUrl(f)}/#person`,
     name: f.name,
